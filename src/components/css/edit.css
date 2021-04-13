@@ -1,0 +1,33 @@
+.add-input input {
+    background-color: rgb(71, 71, 71);
+    color: white;
+    margin-left: 10px;
+    display: inline-block;
+}
+
+.add-input input::placeholder {
+    background-color: rgb(71, 71, 71);
+    color: rgb(153, 153, 153);
+}
+
+.add-input table tr td {
+    padding: 10px;
+}
+
+.add-input select {
+    width: 80px;
+    text-align: center;
+    text-align-last: center;
+    background-color: rgb(185, 185, 185);
+}
+
+.add-input option {
+    text-align: center;
+}
+
+.table-row-key {
+    top: 50%;
+    width: 15px;
+    display: inline-block;
+    vertical-align: middle;
+}

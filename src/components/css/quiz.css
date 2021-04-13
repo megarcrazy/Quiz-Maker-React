@@ -1,0 +1,45 @@
+#add-button {
+    font-size: 1.2em;
+    color: white;
+    background-color: rgb(41, 41, 41);
+}
+
+#add-button:hover {
+    background-color: rgb(53, 53, 53);
+    text-decoration: none;
+}
+
+#submit-button {
+    background-color: rgb(53, 53, 53);
+    width: 100px;
+    padding: 5px;
+}
+
+#submit-button:hover {
+    background-color: rgb(97, 97, 97);
+}
+
+.quiz-table {
+    margin: 40px 0 40px 0px; 
+    width: 512px;
+    background-color: rgb(66, 66, 66);
+}
+
+.quiz-table thead {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.quiz-table tr {
+    width: 100%;
+    border: 1px solid rgb(255, 255, 255);
+}
+
+.quiz-table td {
+    width: 100%;
+    padding: 20px;
+}
+
+.quiz-table button {
+    width: 70px;
+}

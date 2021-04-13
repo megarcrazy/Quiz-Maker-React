@@ -1,0 +1,17 @@
+.navbar {
+    display: block;
+    min-width: 1024px;
+}
+
+.navigationLogo {
+    font-size: 1.6em;
+    margin: 0 50px 0 50px;
+}
+
+.navLink {
+    margin: 0 40px 0 0;
+}
+
+.navLink:hover {
+    text-decoration: underline !important;
+}

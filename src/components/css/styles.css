@@ -1,0 +1,52 @@
+body {
+    color: white;
+}
+
+table {
+    display: table !important;
+}
+
+.middle {
+    display: table !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.float-left {
+    float: left;
+}
+
+.inline {
+    display: inline-block;;
+}
+
+.content {
+    padding: 65px 65px 5px 65px !important;
+}
+
+.no-underline:hover {
+    text-decoration: none;
+}
+
+.fill {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.large-text {
+    font-size: 1.4em;
+}
+
+.add-space {
+    padding: 100px 0 30px 0;
+}
+
+.my-button-style {
+    margin: 0 10px 0 10px;
+}
