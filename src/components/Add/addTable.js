@@ -1,20 +1,19 @@
 import React from 'react';
 // Components
 
-function AddTable({number}) {
+function AddTable({questionNumber}) {
     // Title
     const title = 
     <tr>
         <td>
             <div className="fill">
-                <div className="table-row-key">{number + 1}.</div> 
+                <div className="table-row-key">{questionNumber + 1}.</div> 
                 <div className="fill">
                     <input type="text" className="fill large-text"
-                    id={`${number}question`} name={`${number}question`} 
+                    id={`${questionNumber}question`} name={`${questionNumber}question`} 
                     placeholder="Question" required />
                 </div>
             </div>
-            
         </td>
     </tr>
 
@@ -26,7 +25,7 @@ function AddTable({number}) {
                     <div className="table-row-key">{`${key}.`}</div> 
                     <div className="fill">
                         <input type="text" className="fill"
-                        id={`question${number}${key}`} name={`question${number}${key}`} 
+                        id={`question${questionNumber}${key}`} name={`question${questionNumber}${key}`} 
                         required />
                     </div>
                 </div>
@@ -38,10 +37,10 @@ function AddTable({number}) {
     const choices = 
     <tr>
         <td>
-            <div classname="fill">
+            <div className="fill">
                 <div className="float-left">Answer</div> 
                 <div className="middle">
-                    <select id={`${number}answer`} name={`${number}answer`} >
+                    <select id={`${questionNumber}answer`} name={`${questionNumber}answer`} >
                         <option value="a">a</option>
                         <option value="b">b</option>
                         <option value="c">c</option>
@@ -53,7 +52,7 @@ function AddTable({number}) {
     </tr>
 
     return (
-        <table key={number} className="quiz-table middle">
+        <table key={questionNumber} className="quiz-table middle">
             <thead className="thead-light">{title}</thead>
             <tbody>{questions}</tbody>
             <tbody>{choices}</tbody>

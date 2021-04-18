@@ -13,15 +13,20 @@ function Add() {
     const newTitle = 
     <tr>
         <td>
-            <input type="text" className="fill large-text"
-            id={`title`} name={`title`} 
-            placeholder="Title" />
+            <div className="fill">
+                <div className="table-row-key"></div> 
+                <div className="fill">
+                    <input type="text" className="fill large-text"
+                    id={`title`} name={`title`} 
+                    placeholder="Title" />
+                </div>
+            </div>
         </td>
     </tr>;
 
     // Tables
-    const tables = Array.from(Array(length).keys()).map((number) =>
-        <AddTable number={number}/>
+    const tables = [...Array(length).keys()].map((questionNumber) =>
+        <AddTable key={questionNumber} questionNumber={questionNumber}/>
     );
 
     // Confirm Button
@@ -36,12 +41,12 @@ function Add() {
         <div className="content">
             <h1>{title}</h1>
             <p>{message}</p>
-            <form className="add-input">
+            <div className="add-input">
                 <table className="quiz-table middle">
                     <thead className="thead-light">{newTitle}</thead>
                 </table>
                 {tables}
-            </form>
+            </div>
             <div className="add-space">{confirmButton}</div>
         </div>
     )

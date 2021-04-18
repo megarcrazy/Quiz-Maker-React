@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from "react-router-dom";
 // Components
 import EditTable from '../components/Edit/editTable.js';
@@ -8,13 +8,41 @@ import '../components/css/edit.css';
 import data from '../local/quizData.json';
 
 function Edit() {
+    
     const title = "Edit";
     const message = "Please confirm after finishing your edit."
+
     const { number } = useParams();
-    
+    const currentQuizData = data[number - 1];
+    const quizLength = currentQuizData["Questions"].length;
+
+    const [currentQuizTitle, setCurrentQuizTitle] = useState(currentQuizData["Title"]);
+
+    const handleTitleChange = (e) => {
+        setCurrentQuizTitle(e.target.value );
+    }
+
+    // Title 
+    const newTitle = 
+    <tr>
+        <td>
+            <div className="fill">
+                <div className="table-row-key"></div> 
+                <div className="fill">
+                    <input type="text" className="fill large-text"
+                    id={`title`} name={`title`} 
+                    value={currentQuizTitle}
+                    onChange={(e) => {handleTitleChange(e)}}
+                    required/>
+                </div>
+            </div>
+        </td>
+    </tr>;
+
     // Tables
-    const tables = Array.from(Array(data[number - 1]["Questions"].length).keys()).map((number) =>
-        <EditTable key={number} number={number} data={data[number]}/>
+    const tables = [...Array(quizLength).keys()].map((questionNumber) =>
+        <EditTable key={questionNumber} questionNumber={questionNumber} 
+        data={data[questionNumber]}/>
     );
 
     // Confirm button
@@ -30,6 +58,9 @@ function Edit() {
             <h1>{title}</h1>
             <p>{message}</p>
             <form className="add-input">
+                <table className="quiz-table middle">
+                    <thead className="thead-light">{newTitle}</thead>
+                </table>
                 {tables}
                 {confirmButton}
             </form>

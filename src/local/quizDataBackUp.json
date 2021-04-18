@@ -10,7 +10,10 @@
             "b": ["Watt", "The Dark Side"],
             "c": ["Wat", "Newton"],
             "d": ["Nani", "kg"]
-        }
+        },
+        "Answers": [
+            "b", "c"
+        ]
     },
     {
         "Title": "Mathematics",
@@ -23,6 +26,9 @@
             "b": ["2", "9!"],
             "c": ["1and1", "huh"],
             "d": ["11", "45"]
-        }
+        },
+        "Answers": [
+            "b", "d"
+        ]
     }
 ]
