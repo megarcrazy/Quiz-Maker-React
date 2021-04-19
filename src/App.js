@@ -4,9 +4,7 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 // Pages
 import Home from './pages/Home';
 import Quiz from './pages/Quiz';
-import Add from './pages/Add';
 import Play from './pages/Play';
-import Edit from './pages/Edit';
 import About from './pages/About';
 // Components
 import NavigationBar from './components/navigationBar';
@@ -25,9 +23,7 @@ function App() {
           <Switch>
             <Route path={["/", "/home"]} exact component={Home} />
             <Route path="/quiz" exact component={Quiz} />
-            <Route path="/quiz/add" exact component={Add} />
             <Route path="/quiz/play/:number" exact component={Play} />
-            <Route path="/quiz/edit/:number" exact component={Edit} />
             <Route path="/about" exact component={About} />
           </Switch>
         </Router>
