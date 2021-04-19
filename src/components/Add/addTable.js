@@ -10,7 +10,7 @@ function AddTable({questionNumber}) {
                 <div className="table-row-key">{questionNumber + 1}.</div> 
                 <div className="fill">
                     <input type="text" className="fill large-text"
-                    id={`${questionNumber}question`} name={`${questionNumber}question`} 
+                    id={`question${questionNumber}`} name={`question${questionNumber}`} 
                     placeholder="Question" required />
                 </div>
             </div>
@@ -18,14 +18,15 @@ function AddTable({questionNumber}) {
     </tr>
 
     // Questions
-    const questions = ["a", "b", "c", "d"].map((key) => 
+    const choices = ["a", "b", "c", "d"].map((key) => 
         <tr key={key}>
             <td>
                 <div className="fill">
                     <div className="table-row-key">{`${key}.`}</div> 
                     <div className="fill">
                         <input type="text" className="fill"
-                        id={`question${questionNumber}${key}`} name={`question${questionNumber}${key}`} 
+                        id={`question${questionNumber}${key}`}
+                        name={`question${questionNumber}${key}`} 
                         required />
                     </div>
                 </div>
@@ -34,13 +35,13 @@ function AddTable({questionNumber}) {
     );
 
     // Choices
-    const choices = 
+    const answers = 
     <tr>
         <td>
             <div className="fill">
                 <div className="float-left">Answer</div> 
                 <div className="middle">
-                    <select id={`${questionNumber}answer`} name={`${questionNumber}answer`} >
+                    <select id={`answer${questionNumber}`} name={`answer${questionNumber}`} >
                         <option value="a">a</option>
                         <option value="b">b</option>
                         <option value="c">c</option>
@@ -54,8 +55,8 @@ function AddTable({questionNumber}) {
     return (
         <table key={questionNumber} className="quiz-table middle">
             <thead className="thead-light">{title}</thead>
-            <tbody>{questions}</tbody>
             <tbody>{choices}</tbody>
+            <tbody>{answers}</tbody>
         </table>
     )
 }

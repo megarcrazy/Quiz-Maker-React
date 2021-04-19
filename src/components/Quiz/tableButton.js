@@ -2,8 +2,10 @@ import React from 'react';
 
 function TableButton({tableButtonType, questionNumber}) {
     const currentUrl = "quiz";
-    let urlPointer = (tableButtonType === "Play") ? `${currentUrl}/play/${questionNumber + 1}` : 
-    (tableButtonType === `Edit` ? `${currentUrl}/edit/${questionNumber + 1}` : "#");
+    let urlPointer = 
+    (tableButtonType === "Play") ? `${currentUrl}/play/${questionNumber + 1}` : 
+    (tableButtonType === `Edit` ? `${currentUrl}/edit/${questionNumber + 1}` :
+    currentUrl);
     const buttonText = tableButtonType;
 
     return (

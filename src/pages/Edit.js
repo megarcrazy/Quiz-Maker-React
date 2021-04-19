@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
 // Components
 import EditTable from '../components/Edit/editTable.js';
@@ -15,11 +16,47 @@ function Edit() {
     const { number } = useParams();
     const currentQuizData = data[number - 1];
     const quizLength = currentQuizData["Questions"].length;
+    const history = useHistory();
 
     const [currentQuizTitle, setCurrentQuizTitle] = useState(currentQuizData["Title"]);
 
     const handleTitleChange = (e) => {
         setCurrentQuizTitle(e.target.value );
+    }
+
+    const storeData = (e) => {
+        
+        const formData = new FormData(e.target);
+        let storedFormData = {};
+        for (let [key, value] of formData.entries()) {
+            storedFormData[key] = value;
+        }
+        let jsonData = {
+            "Title": storedFormData["title"],
+            "Questions": [],
+            "Choices": {a: [], b: [], c: [], d: []},
+            "Answers": []
+        };
+        for (let i = 0; i < quizLength; i++) {
+            jsonData["Questions"].push(storedFormData[`question${i}`]);
+            jsonData["Choices"]["a"].push(storedFormData[`question${i}a`]);
+            jsonData["Choices"]["b"].push(storedFormData[`question${i}b`]);
+            jsonData["Choices"]["c"].push(storedFormData[`question${i}c`]);
+            jsonData["Choices"]["d"].push(storedFormData[`question${i}d`]);
+            jsonData["Answers"].push(storedFormData[`answer${i}`]);
+        }
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
+        console.log(JSON.stringify(jsonData));
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        storeData(e);
+        history.push({
+            pathname: "/quiz"
+        })
     }
 
     // Title 
@@ -46,18 +83,16 @@ function Edit() {
     );
 
     // Confirm button
-    const confirmButton =
-    <a className="no-underline" href="/quiz">
-        <button className="btn btn-secondary my-button-style middle">
-            Confirm
-        </button>
-    </a>
+    const confirmButton = 
+    <button className="btn btn-secondary my-button-style middle">
+        Confirm
+    </button>
     
     return (
         <div className="content">
             <h1>{title}</h1>
             <p>{message}</p>
-            <form className="add-input">
+            <form className="add-input" onSubmit={onSubmit}>
                 <table className="quiz-table middle">
                     <thead className="thead-light">{newTitle}</thead>
                 </table>
