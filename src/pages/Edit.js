@@ -19,7 +19,7 @@ function Edit() {
     const history = useHistory();
 
     const [currentQuizTitle, setCurrentQuizTitle] = useState(currentQuizData["Title"]);
-
+    
     const handleTitleChange = (e) => {
         setCurrentQuizTitle(e.target.value );
     }
@@ -48,7 +48,6 @@ function Edit() {
         for (let [key, value] of formData.entries()) {
             console.log(key, value);
         }
-        console.log(JSON.stringify(jsonData));
     }
 
     const onSubmit = (e) => {
