@@ -8,7 +8,7 @@ import data from '../local/quizData.json';
 
 function Quiz() {
     const title = "Your Quizzes";
-    const message = "Edit or add a new quiz.";
+    const message = "";
     const tables = Array.from(Array(data.length).keys()).map((questionNumber) =>
         <DisplayTable key={questionNumber} questionNumber={questionNumber} 
         data={data[questionNumber]}/>

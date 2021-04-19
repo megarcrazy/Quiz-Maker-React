@@ -22,18 +22,13 @@ function Play() {
     const title = currentQuizData["Title"];
     const message = "Please answer all the questions and submit."
 
-    // Helpers
-    const isSubmitted = () => {
-        return submitted;
-    }
-
     // Tables
     let tables = 
     [...Array(quizLength).keys()].map
     (
         (questionNumber) =>
         <QuizTable key={questionNumber} questionNumber={questionNumber} 
-        data={currentQuizData} isSubmitted={isSubmitted}
+        data={currentQuizData} submitted={submitted}
         changeUserSelection={
             (index, choice) => 
             setUserSelection(

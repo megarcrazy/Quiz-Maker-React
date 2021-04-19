@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 // Styles
 import '../css/play.css';
 
-function QuizTable({questionNumber, data, changeUserSelection, isSubmitted}) {
+function QuizTable({questionNumber, data, changeUserSelection, submitted}) {
     const initialButtonState = new Array(4).fill(0);
-    const [buttonState, SetButtonState] = useState(initialButtonState);
+    let [buttonState, SetButtonState] = useState(initialButtonState);
 
     // Question
     const question = 
@@ -18,14 +18,17 @@ function QuizTable({questionNumber, data, changeUserSelection, isSubmitted}) {
     // Table Rows
     
     // Styles depending on button state
-    let buttonStyles = [
-        { backgroundColor: null },
-        { backgroundColor: "rgb(155, 155, 105)" },
-        { backgroundColor: "rgb(155, 155, 105)" },
-        { backgroundColor: "rgb(155, 155, 105)" }
+    let buttonStyles =
+    [
+        { backgroundColor: null }, // Default
+        { backgroundColor: "rgb(155, 155, 100)" }, // Select
+        { backgroundColor: "rgb(155, 100, 100)" }, // Incorrect
+        { backgroundColor: "rgb(100, 155, 100)" } // Correct
     ]
+
+
     const changeSelection = (choiceIndex) => {
-        if (!isSubmitted()) {
+        if (!submitted) {
             // Convert user choice index to characters a, b, c, d
             changeUserSelection(questionNumber, String.fromCharCode(choiceIndex + 'a'.charCodeAt(0)));
             SetButtonState(
@@ -35,7 +38,7 @@ function QuizTable({questionNumber, data, changeUserSelection, isSubmitted}) {
                     ...initialButtonState.slice(choiceIndex + 1)
                 ]
             );
-        }
+        } 
     }
     const choices = data["Choices"];
     const tableChoices = Object.keys(choices).map((key, index) => 
