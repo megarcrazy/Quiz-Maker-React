@@ -43,16 +43,14 @@ function Play() {
     )
 
     // Submit Button
-    const submitQuiz = (e) => {
-        e.preventDefault();
-        (submitted) && window.location.reload();
-        setSubmitted(!submitted);
+    const submitQuiz = () => {
+        setSubmitted(true);
+        (submitted) && window.location.reload();   
         setButtonText((submitted) ? "Submit" : "Try Again");
     }
-    const submitButton = <button 
-    className="btn btn-secondary my-button-style middle" 
-    id="submit-button"
-    onClick={submitQuiz}>
+    const submitButton = 
+    <button className="btn btn-secondary my-button-style middle" 
+    id="submit-button" onClick={submitQuiz}>
         {buttonText}
     </button>
 

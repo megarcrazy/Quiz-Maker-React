@@ -4,9 +4,12 @@ import React, { useState } from 'react';
 import '../css/play.css';
 
 function QuizTable({questionNumber, data, changeUserSelection, submitted}) {
-    const initialButtonState = new Array(4).fill(0);
-    let [buttonState, SetButtonState] = useState(initialButtonState);
-
+    const emptyArray = new Array(4).fill(0);
+    const answerIndex = data["Answers"][questionNumber].charCodeAt(0) -
+    'a'.charCodeAt(0);
+    // const solution = Object.values({...emptyArray, [answerIndex]: 1})
+    const [buttonState, SetButtonState] = useState(emptyArray);
+    
     // Question
     const question = 
     <tr>
@@ -18,26 +21,26 @@ function QuizTable({questionNumber, data, changeUserSelection, submitted}) {
     // Table Rows
     
     // Styles depending on button state
-    let buttonStyles =
+    const noColour = { backgroundColor: null };
+    const yellowColour = { backgroundColor: "rgb(155, 155, 100)" };
+    const redColour = { backgroundColor: "rgb(155, 100, 100)" };
+    const greenColour = { backgroundColor: "rgb(100, 155, 100)" };
+    const buttonStyles =
     [
-        { backgroundColor: null }, // Default
-        { backgroundColor: "rgb(155, 155, 100)" }, // Select
-        { backgroundColor: "rgb(155, 100, 100)" }, // Incorrect
-        { backgroundColor: "rgb(100, 155, 100)" } // Correct
+        noColour, // Default
+        (!submitted) ? yellowColour : redColour, // Select
+        (!submitted) ? yellowColour : greenColour // Correct
     ]
-
 
     const changeSelection = (choiceIndex) => {
         if (!submitted) {
             // Convert user choice index to characters a, b, c, d
-            changeUserSelection(questionNumber, String.fromCharCode(choiceIndex + 'a'.charCodeAt(0)));
-            SetButtonState(
-                [
-                    ...initialButtonState.slice(0, choiceIndex), 
-                    1,
-                    ...initialButtonState.slice(choiceIndex + 1)
-                ]
-            );
+            changeUserSelection(questionNumber, 
+            String.fromCharCode(choiceIndex + 'a'.charCodeAt(0)));
+            SetButtonState({
+                ...emptyArray,
+                [choiceIndex]: (choiceIndex === answerIndex) ? 2 : 1,
+            });
         } 
     }
     const choices = data["Choices"];
