@@ -7,9 +7,10 @@ import '../components/css/quiz.css';
 import data from '../local/quizData.json';
 
 function Quiz() {
+
     const title = "Your Quizzes";
     const message = "";
-    const tables = Array.from(Array(data.length).keys()).map((questionNumber) =>
+    const tables = Array(data.length).fill(0).map((questionNumber) =>
         <DisplayTable key={questionNumber} questionNumber={questionNumber} 
         data={data[questionNumber]}/>
     );

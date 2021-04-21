@@ -5,9 +5,8 @@ import '../css/play.css';
 
 function QuizTable({questionNumber, data, changeUserSelection, submitted}) {
     const emptyArray = new Array(4).fill(0);
-    const answerIndex = data["Answers"][questionNumber].charCodeAt(0) -
-    'a'.charCodeAt(0);
-    // const solution = Object.values({...emptyArray, [answerIndex]: 1})
+    const answerIndex = 
+    data["Answers"][questionNumber].charCodeAt() - 'a'.charCodeAt();
     const [buttonState, SetButtonState] = useState(emptyArray);
     
     // Question
@@ -19,7 +18,7 @@ function QuizTable({questionNumber, data, changeUserSelection, submitted}) {
     </tr>
 
     // Table Rows
-    
+
     // Styles depending on button state
     const noColour = { backgroundColor: null };
     const yellowColour = { backgroundColor: "rgb(155, 155, 100)" };
@@ -28,21 +27,25 @@ function QuizTable({questionNumber, data, changeUserSelection, submitted}) {
     const buttonStyles =
     [
         noColour, // Default
-        (!submitted) ? yellowColour : redColour, // Select
+        (!submitted) ? yellowColour : redColour, // Select, red if wrong
         (!submitted) ? yellowColour : greenColour // Correct
     ]
 
+    const incorrectKey = 1;
+    const correctKey = 2; 
     const changeSelection = (choiceIndex) => {
         if (!submitted) {
             // Convert user choice index to characters a, b, c, d
             changeUserSelection(questionNumber, 
-            String.fromCharCode(choiceIndex + 'a'.charCodeAt(0)));
+            String.fromCharCode(choiceIndex + 'a'.charCodeAt()));
             SetButtonState({
                 ...emptyArray,
-                [choiceIndex]: (choiceIndex === answerIndex) ? 2 : 1,
+                [choiceIndex]: (choiceIndex === answerIndex) ? 
+                correctKey : incorrectKey,
             });
         } 
     }
+    
     const choices = data["Choices"];
     const tableChoices = Object.keys(choices).map((key, index) => 
         <tr key={key}>

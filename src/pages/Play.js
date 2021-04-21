@@ -8,6 +8,7 @@ import '../components/css/quiz.css';
 import data from '../local/quizData.json';
 
 function Play() {
+    
     const { number } = useParams();
     
     const currentQuizData = data[number - 1];
