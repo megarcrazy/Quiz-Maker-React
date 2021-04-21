@@ -10,7 +10,7 @@ function Quiz() {
 
     const title = "Your Quizzes";
     const message = "";
-    const tables = Array(data.length).fill(0).map((questionNumber) =>
+    const tables = [...Array(data.length).keys()].map((questionNumber) =>
         <DisplayTable key={questionNumber} questionNumber={questionNumber} 
         data={data[questionNumber]}/>
     );
