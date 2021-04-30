@@ -7,7 +7,7 @@ function QuizTable({questionNumber, data, changeUserSelection, submitted}) {
     const emptyArray = new Array(4).fill(0);
     const answerIndex = 
     data["Answers"][questionNumber].charCodeAt() - 'a'.charCodeAt();
-    const [buttonState, SetButtonState] = useState(emptyArray);
+    const [buttonState, setButtonState] = useState(emptyArray);
     
     // Question
     const question = 
@@ -38,7 +38,7 @@ function QuizTable({questionNumber, data, changeUserSelection, submitted}) {
             // Convert user choice index to characters a, b, c, d
             changeUserSelection(questionNumber, 
             String.fromCharCode(choiceIndex + 'a'.charCodeAt()));
-            SetButtonState({
+            setButtonState({
                 ...emptyArray,
                 [choiceIndex]: (choiceIndex === answerIndex) ? 
                 correctKey : incorrectKey,

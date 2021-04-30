@@ -5,6 +5,7 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import Home from './pages/Home';
 import Quiz from './pages/Quiz';
 import Play from './pages/Play';
+import Random from './pages/Random';
 import About from './pages/About';
 // Components
 import NavigationBar from './components/navigationBar';
@@ -24,6 +25,7 @@ function App() {
             <Route path={["/", "/home"]} exact component={Home} />
             <Route path="/quiz" exact component={Quiz} />
             <Route path="/quiz/play/:number" exact component={Play} />
+            <Route path="/quiz/random" exact component={Random} />
             <Route path="/about" exact component={About} />
           </Switch>
         </Router>

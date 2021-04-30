@@ -9,6 +9,7 @@ function NavigationBar() {
             <a className="navbar-brand navigationLogo" href="/home">Quiz Maker</a>
             <a className="navbar-brand navLink" href="/home">Home</a>
             <a className="navbar-brand navLink" href="/quiz">Quiz</a>
+            <a className="navbar-brand navLink" href="/quiz/random">Random</a>
             <a className="navbar-brand navLink" href="/about">About</a>
         </nav>
     )
