@@ -14,9 +14,9 @@ function Play() {
     const currentQuizData = data[number - 1];
     const quizLength = currentQuizData["Questions"].length;
 
-    let [submitted, setSubmitted] = useState(false); 
-    let [buttonText, setButtonText] = useState("Submit");
-    let [userSelection, setUserSelection] = useState(
+    const [submitted, setSubmitted] = useState(false); 
+    const [buttonText, setButtonText] = useState("Submit");
+    const [userSelection, setUserSelection] = useState(
         new Array(currentQuizData["Questions"].length).fill(null)
     );
 

@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // Components
 // Styles
 import '../css/play.css';
 
-function RandomTable({ questionNumber, question, correctAnswer, incorrectAnswer }) {
-    const submitted = false;
+function RandomTable({ questionNumber, question, correctAnswer, incorrectAnswer, 
+    submitted, changeUserSelection}) {
     const emptyArray = new Array(4).fill(0);
     const [buttonState, setButtonState] = useState(emptyArray);
+    const [choices, setChoices] = useState([]);
 
-    // Styles depending on button state
+    useEffect(() =>{
+        setChoices(shuffleArray([correctAnswer, ...incorrectAnswer]));
+    }, [correctAnswer, incorrectAnswer]);
+
+
+    const tableQuestion = 
+    <tr>
+        <td>
+            {questionNumber + 1}. {HTMLDecode(question)}
+        </td>
+    </tr>
+
     const noColour = { backgroundColor: null };
     const yellowColour = { backgroundColor: "rgb(155, 155, 100)" };
     const redColour = { backgroundColor: "rgb(155, 100, 100)" };
@@ -20,20 +32,21 @@ function RandomTable({ questionNumber, question, correctAnswer, incorrectAnswer 
         (!submitted) ? yellowColour : greenColour // Correct
     ]
 
+    const incorrectKey = 1;
+    const correctKey = 2; 
+    const answerIndex = choices.indexOf(correctAnswer);
     const changeSelection = (choiceIndex) => {
         if (!submitted) {
-            console.log(choiceIndex);
+            // Convert user choice index to characters a, b, c, d
+            changeUserSelection(questionNumber, 
+            String.fromCharCode(choiceIndex + 'a'.charCodeAt()));
+            setButtonState({
+                ...emptyArray,
+                [choiceIndex]: (choiceIndex === answerIndex) ? 
+                correctKey : incorrectKey,
+            });
         } 
     }
-
-    const tableQuestion = 
-    <tr>
-        <td>
-            {questionNumber + 1}. {HTMLDecode(question)}
-        </td>
-    </tr>
-
-    const choices = shuffleArray([correctAnswer, ...incorrectAnswer]);
 
     const tableChoices = choices.map((choice, index) => 
         <tr key={index}>
