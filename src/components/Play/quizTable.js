@@ -5,8 +5,7 @@ import '../css/play.css';
 
 function QuizTable({questionNumber, data, changeUserSelection, submitted}) {
     const emptyArray = new Array(4).fill(0);
-    const answerIndex = 
-    data["Answers"][questionNumber].charCodeAt() - 'a'.charCodeAt();
+    const answerIndex = data["Answers"][questionNumber].charCodeAt() - 'a'.charCodeAt();
     const [buttonState, setButtonState] = useState(emptyArray);
     
     // Question

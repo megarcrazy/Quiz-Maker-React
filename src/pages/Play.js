@@ -55,7 +55,7 @@ function Play() {
         {buttonText}
     </button>
 
-    const getScore = () => {
+    const score = (() => {
         let score = 0;
         for (let i = 0; i < quizLength; i++) {
             if (userSelection[i] === currentQuizData["Answers"][i]) {
@@ -63,8 +63,7 @@ function Play() {
             }
         }
         return score;
-    }
-    const score = getScore();
+    })();
 
     return (
         <div className="content">

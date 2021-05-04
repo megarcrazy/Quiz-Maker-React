@@ -7,9 +7,10 @@ import '../components/css/quiz.css';
 
 function Random() {
 
-    let [quizData, setQuizData] = useState([]);
-    let [buttonText, setButtonText] = useState("Submit");
-    let [submitted, setSubmitted] = useState(false); 
+    const [quizData, setQuizData] = useState([]);
+    const [buttonText, setButtonText] = useState("Submit");
+    const [submitted, setSubmitted] = useState(false); 
+    const [load, setLoad] = useState(false);
     const [userSelection, setUserSelection] = useState(
         new Array(quizData.length).fill(null)
     );
@@ -23,6 +24,7 @@ function Random() {
         .then(response => { 
             const quizData = response.data.results; 
             setQuizData(quizData) 
+            setLoad(true);
         })
         .catch(error => { console.error(error) });
     }, []);
@@ -32,11 +34,16 @@ function Random() {
         (submitted) && window.location.reload();   
         setButtonText((submitted) ? "Submit" : "Try Again");
     }
-    const getScore = () => {
+
+    const score = (() => {
         let score = 0;
+        for (let i = 0; i < quizData.length; i++) {
+            if (userSelection[i] === quizData[i]["correct_answer"]) {
+                score++;
+            }
+        }
         return score;
-    }
-    const score = getScore();
+    })();
 
     const tables = [...Array(quizData.length).keys()].map((questionNumber) => {
         const currentData = quizData[questionNumber];
@@ -48,14 +55,10 @@ function Random() {
         incorrectAnswer={currentData["incorrect_answers"]}
         submitted={submitted}
         changeUserSelection={
-            (index, choice) => 
-            setUserSelection(
-                [
-                    ...userSelection.slice(0, index), 
-                    choice,
-                    ...userSelection.slice(index + 1)
-                ]
-            )
+            (choice, questionNumber) => setUserSelection({
+                ...userSelection, 
+                [questionNumber]: choice
+            })
         } />
     });
 
@@ -72,7 +75,7 @@ function Random() {
                 {message} <a href="https://opentdb.com/api_config.php">Open Trivia Database</a>.
             </p>
             {tables}
-            {submitButton}
+            {load && submitButton}
             <br />
             <div className="middle">
                 {submitted ? 

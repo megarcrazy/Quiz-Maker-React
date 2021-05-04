@@ -37,9 +37,7 @@ function RandomTable({ questionNumber, question, correctAnswer, incorrectAnswer,
     const answerIndex = choices.indexOf(correctAnswer);
     const changeSelection = (choiceIndex) => {
         if (!submitted) {
-            // Convert user choice index to characters a, b, c, d
-            changeUserSelection(questionNumber, 
-            String.fromCharCode(choiceIndex + 'a'.charCodeAt()));
+            changeUserSelection(choices[choiceIndex], questionNumber);
             setButtonState({
                 ...emptyArray,
                 [choiceIndex]: (choiceIndex === answerIndex) ? 
