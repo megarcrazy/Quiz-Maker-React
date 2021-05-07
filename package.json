@@ -1,49 +1,23 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^12.8.3",
-    "axios": "^0.21.1",
-    "bootstrap": "^4.6.0",
-    "edit-json-file": "^1.6.0",
-    "express": "^4.17.1",
-    "nodemon": "^2.0.7",
-    "react": "^17.0.1",
-    "react-bootstrap": "^1.5.2",
-    "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.3",
-    "styled-components": "^5.2.3",
-    "web-vitals": "^1.1.1"
-  },
+  "name": "Quiz-Maker-React",
+  "version": "1.0.0",
+  "description": "React version of a quiz playing website with react implementation.\r You have the choice to play a quiz from a local JSON file or generate a random quiz from online.\r Project has no back-end.",
+  "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "cd client && npm start",
+    "server": "cd server && npm start",
+    "start": "concurrently - kill-others \"npm run server\" \"npm run client\""
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/megarcrazy/Quiz-Maker-React.git"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "keywords": [],
+  "author": "Vincent Tang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/megarcrazy/Quiz-Maker-React/issues"
   },
-  "devDependencies": {
-    "json-loader": "^0.5.7"
-  }
+  "homepage": "https://github.com/megarcrazy/Quiz-Maker-React#readme"
 }
