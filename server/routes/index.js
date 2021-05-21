@@ -11,10 +11,14 @@ router.get('/', function(req, res, next) {
 });
 
 /* Get data from data base */
+router.get('/data', function(req, res) {
+  const dataBase = JSON.parse(fs.readFileSync('./dataBase/quizData.json'));
+  res.send(dataBase);
+});
+
 router.get('/data/:quizNumber', function(req, res) {
   const dataBase = JSON.parse(fs.readFileSync('./dataBase/quizData.json'));
   const quizNumber = req.params.quizNumber;
-  console.log()
   if (quizNumber >= 1 && quizNumber <= dataBase.length) {
     const data = dataBase[quizNumber - 1];
     res.send(data);
