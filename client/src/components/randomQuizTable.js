@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-// Components
 // Styles
-import '../css/play.css';
+import './css/play.css';
 
-function RandomTable({ questionNumber, question, correctAnswer, incorrectAnswer, 
+function RandomQuizTable({ questionNumber, question, correctAnswer, incorrectAnswer, 
     submitted, changeUserSelection}) {
     const emptyArray = new Array(4).fill(0);
     const [buttonState, setButtonState] = useState(emptyArray);
@@ -12,7 +11,6 @@ function RandomTable({ questionNumber, question, correctAnswer, incorrectAnswer,
     useEffect(() =>{
         setChoices(shuffleArray([correctAnswer, ...incorrectAnswer]));
     }, [correctAnswer, incorrectAnswer]);
-
 
     const tableQuestion = 
     <tr>
@@ -81,4 +79,4 @@ const HTMLDecode = input => {
     return doc.documentElement.textContent;
 }
 
-export default RandomTable;
+export default RandomQuizTable;

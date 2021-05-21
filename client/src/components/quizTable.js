@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 // Components
 // Styles
-import '../css/play.css';
+import './css/play.css';
 
 function QuizTable({questionNumber, data, changeUserSelection, submitted}) {
     const emptyArray = new Array(4).fill(0);

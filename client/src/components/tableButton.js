@@ -1,7 +1,6 @@
 import React from 'react';
 
 function TableButton({tableButtonType, questionNumber}) {
-    
     const urlPointer = `quiz/play/${questionNumber + 1}`
     const buttonText = tableButtonType;
 

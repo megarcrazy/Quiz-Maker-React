@@ -6,14 +6,14 @@ function DisplayTable({questionNumber, data}) {
     const question = 
     <tr>
         <td>
-            {`${questionNumber + 1}. ${data["Title"]}`}
+            {`${questionNumber + 1}. ${data["title"]}`}
         </td>
     </tr>
 
     const questionNumberOfQuestions = 
     <tr>
         <td>
-            {`Number of questions: ${data["Questions"].length}`}
+            {`Number of questions: ${data["results"].length}`}
         </td>
     </tr>
 
