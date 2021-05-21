@@ -1,31 +1,35 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useParams } from "react-router-dom";
 // Components
 import PageQuiz from '../components/pageQuiz.js'
 // Styles
 import '../components/css/quiz.css';
-// Data
-import data from '../dataBase/quizData.json';
 
 function PlaySavedQuiz() {
     const { quizNumber } = useParams();
     const [loaded, setLoaded] = useState(false);
 
     const [title, setTitle] = useState("");
-    const [message, setMessage] = useState("Invalid url parameter. Please check if the url is valid.");
+    const [message, setMessage] = useState("");
     const [quizData, setQuizData] = useState("");
-    const [webQuiz, setWebQuiz] = useState("");
+    const webQuiz = <PageQuiz quizData={quizData}/>;
 
     useEffect(() => {
-        if (quizNumber >= 1 && quizNumber <=  data.length) {
-            setTitle(data[quizNumber - 1]["title"]);
-            setMessage("Please click submit after the completion of the quiz.");
-            setQuizData(data[quizNumber - 1]["results"]);
-            setWebQuiz(<PageQuiz quizData={quizData}/>);
+        async function fetchData() {
+            const response = await axios("http://localhost:3001/data/" + quizNumber);
+            const data = response.data;
+            if (data === "Not found") {
+                setMessage("Invalid url parameters.");
+            } else {
+                setTitle(data.title);
+                setMessage("Please click the submit button after completing the quiz.");
+                setQuizData(data.results);
+                setLoaded(true);
+            }
         }
-        
-        setLoaded(true);
-    }, [quizNumber, quizData]);
+        fetchData();
+    }, [quizNumber]);
 
     return (
         <div className="content">
