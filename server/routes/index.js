@@ -11,19 +11,17 @@ router.get('/', function(req, res, next) {
 });
 
 /* Get data from data base */
-router.get('/data', function(req, res) {
-  const dataBase = JSON.parse(fs.readFileSync('./dataBase/quizData.json'));
-  res.send(dataBase);
-});
-
 router.get('/data/:quizNumber', function(req, res) {
-  const dataBase = JSON.parse(fs.readFileSync('./dataBase/quizData.json'));
   const quizNumber = req.params.quizNumber;
-  if (quizNumber >= 1 && quizNumber <= dataBase.length) {
+  const dataBase = JSON.parse(fs.readFileSync('./dataBase/quizData.json'));
+  if (quizNumber === "0") {
+    res.send(dataBase);
+  } else if (quizNumber >= 1 && quizNumber <= dataBase.length) {
     const data = dataBase[quizNumber - 1];
     res.send(data);
+  } else {
+    res.send("Not found");
   }
-  res.send("Not found");
 });
 
 module.exports = router;
