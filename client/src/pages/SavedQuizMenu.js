@@ -12,7 +12,7 @@ function LocalQuizMenu() {
 
     useEffect(() => {
         async function fetchData() {
-            const response = await axios("http://localhost:3001/data/0");
+            const response = await axios("http://localhost:3001/data");
             setQuizData(response.data);
         }
         fetchData();

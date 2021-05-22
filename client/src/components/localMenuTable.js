@@ -23,6 +23,8 @@ function DisplayTable({questionNumber, data}) {
         <td>
             <div className="middle">
                 <TableButton tableButtonType={`Play`} questionNumber={questionNumber}/>
+                <TableButton tableButtonType={`Edit`} questionNumber={questionNumber}/>
+                <TableButton tableButtonType={`Delete`} questionNumber={questionNumber}/>
             </div>
         </td>
     </tr>

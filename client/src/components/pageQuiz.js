@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 // Components
 import RandomQuizTable from './randomQuizTable.js';
 
-function PageQuiz( {quizData} ) {
+function PageQuiz({ quizData }) {
     const [buttonText, setButtonText] = useState("Submit");
     const [submitted, setSubmitted] = useState(false); 
     const [userSelection, setUserSelection] = useState(

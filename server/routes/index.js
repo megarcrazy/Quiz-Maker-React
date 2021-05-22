@@ -11,6 +11,11 @@ router.get('/', function(req, res, next) {
 });
 
 /* Get data from data base */
+router.get('/data', function(req, res) {
+  const dataBase = JSON.parse(fs.readFileSync('./dataBase/quizData.json'));
+  res.send(dataBase);
+});
+
 router.get('/data/:quizNumber', function(req, res) {
   const quizNumber = req.params.quizNumber;
   const dataBase = JSON.parse(fs.readFileSync('./dataBase/quizData.json'));
