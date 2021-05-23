@@ -1,16 +1,25 @@
 import React from 'react';
-import { useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 
-function TableButton({tableButtonType, questionNumber}) {
+function TableButton({tableButtonType, quizNumber}) {
     let history = useHistory();
 
     const urlPointer = 
-    (tableButtonType === "Play") ? `quiz/play/${questionNumber + 1}` :
-    (tableButtonType === "Edit") ? `quiz/edit/${questionNumber + 1}` :
+    (tableButtonType === "Play") ? `quiz/play/${quizNumber}` :
+    (tableButtonType === "Edit") ? `quiz/edit/${quizNumber}` :
     (tableButtonType === "Delete") && `quiz`;
     const buttonText = tableButtonType;
 
     const handleClick = () => {
+        if (tableButtonType === "Delete") {
+            if (window.confirm("Are you sure?")) {
+                axios.post("http://localhost:3001/delete/" + quizNumber, {
+                    quizNumber: quizNumber
+                });
+                window.location.reload();
+            }
+        }
         history.push(urlPointer);
     }
 

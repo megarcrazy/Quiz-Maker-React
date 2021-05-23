@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 // Components
-import RandomQuizTable from './randomQuizTable.js';
+import QuizTable from './quizTable';
 
 function PageQuiz({ quizData }) {
     const [buttonText, setButtonText] = useState("Submit");
@@ -27,7 +27,7 @@ function PageQuiz({ quizData }) {
 
     const tables = [...Array(quizData.length).keys()].map((questionNumber) => {
         const currentData = quizData[questionNumber];
-        return <RandomQuizTable 
+        return <QuizTable 
         key={questionNumber}
         questionNumber={questionNumber}
         question={currentData["question"]}

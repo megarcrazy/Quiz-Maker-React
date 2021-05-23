@@ -18,10 +18,13 @@ function LocalQuizMenu() {
         fetchData();
     }, []);
 
-    const tables = [...Array(quizData.length).keys()].map((questionNumber) =>
-        <LocalMenuTable key={questionNumber} questionNumber={questionNumber} 
-        data={quizData[questionNumber]}/>
-    );
+    const tables = [...Array(quizData.length).keys()].map((index) => {
+        let quizNumber = index + 1;
+        return (
+            <LocalMenuTable key={quizNumber} quizNumber={quizNumber} 
+            data={quizData[quizNumber - 1]}/>
+        )
+    });
     
     return (
         <div className="content">

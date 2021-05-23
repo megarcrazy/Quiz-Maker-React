@@ -10,10 +10,9 @@ import '../components/css/edit.css';
 function EditSavedQuiz() {
     const { quizNumber } = useParams();
     const [loaded, setLoaded] = useState(false);
-    const [title, setTitle] = useState("");
-    const [message, setMessage] = useState("This page is WIP.");
+    const [message, setMessage] = useState("Press confirm after completing the edit.");
     const [quizData, setQuizData] = useState("");
-    const pageEdit = <PageEdit quizData={quizData}/>;
+    const pageEdit = <PageEdit quizData={quizData} quizNumber={quizNumber}/>;
 
     useEffect(() => {
         async function fetchData() {
@@ -22,8 +21,7 @@ function EditSavedQuiz() {
             if (data === "Not found") {
                 setMessage("Invalid url parameters.");
             } else {
-                setTitle(`Edit: ${data.title}`);
-                setQuizData(data.results);
+                setQuizData(data);
                 setLoaded(true);
             }
         }
@@ -32,7 +30,6 @@ function EditSavedQuiz() {
 
     return (
         <div className="content">
-            <h1>{title}</h1>
             <p>{message}</p>
             {loaded && pageEdit}
         </div>
