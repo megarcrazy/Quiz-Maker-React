@@ -16,10 +16,14 @@ router.get("/data", function(req, res) {
   res.send(dataBase);
 });
 
+/* Get quiz data base */
 router.get("/data/:quizNumber", function(req, res) {
   const quizNumber = req.params.quizNumber;
-  const dataBase = JSON.parse(fs.readFileSync("./dataBase/quizData.json"));
-  if (quizNumber >= 1 && quizNumber <= dataBase.length) {
+  const file = fs.readFileSync("./dataBase/quizData.json");
+  const dataBase = JSON.parse(file);
+  if (quizNumber == "length") {
+    res.send(JSON.stringify(dataBase.length));
+  } else if (quizNumber >= 1 && quizNumber <= dataBase.length) {
     const data = dataBase[quizNumber - 1];
     res.send(data);
   } else {
@@ -32,7 +36,11 @@ router.post("/edit/:quizNumber", function (req, res) {
   const quizNumber = req.params.quizNumber;
   const path = "./dataBase/quizData.json";
   let dataBase = JSON.parse(fs.readFileSync(path));
-  dataBase[quizNumber - 1] = req.body.quizData;
+  if (quizNumber == dataBase.length + 1) {
+    dataBase.push(req.body.quizData);
+  } else {
+    dataBase[quizNumber - 1] = req.body.quizData;
+  }
 
   fs.writeFileSync(path, JSON.stringify(dataBase, null, "\t"));
   res.send();

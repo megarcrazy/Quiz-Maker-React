@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import SavedQuizMenu from './pages/SavedQuizMenu';
 import PlaySavedQuiz from './pages/PlaySavedQuiz';
 import EditSavedQuiz from './pages/EditSavedQuiz';
+import AddNewQuiz from './pages/AddNewQuiz';
 import PlayRandomQuiz from './pages/PlayRandomQuiz';
 import About from './pages/About';
 // Components
@@ -27,6 +28,7 @@ function App() {
             <Route path="/quiz" exact component={SavedQuizMenu} />
             <Route path="/quiz/play/:quizNumber" exact component={PlaySavedQuiz} />
             <Route path="/quiz/edit/:quizNumber" exact component={EditSavedQuiz} />
+            <Route path="/quiz/add" exact component={AddNewQuiz} />
             <Route path="/quiz/online" exact component={PlayRandomQuiz} />
             <Route path="/about" exact component={About} />
           </Switch>
