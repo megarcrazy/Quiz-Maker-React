@@ -1,12 +1,37 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
+// Styles
+import '../components/css/edit.css';
 // Components
 import EditQuizTable from './editQuizTable.js';
 
 function PageEdit({ quizNumber, quizData }) {
     let history = useHistory();
     const [newQuizData, setNewQuizData] = useState(quizData);
+    const newQuestion = {question: "", correct_answer: "", incorrect_answers: ["", "", ""]};
+
+    const increaseSize = (index) => {
+        setNewQuizData({
+            ...newQuizData,
+            results: [
+                ...newQuizData.results.slice(0, index), 
+                newQuestion,
+                ...newQuizData.results.slice(index + 1, newQuizData.length)
+            ]
+        });
+    }
+
+    const decreaseSize = (index) => {
+        window.confirm(`Deleting question ${index}. Are you sure?`) &&
+        setNewQuizData({
+            ...newQuizData,
+            results: [
+                ...newQuizData.results.slice(0, index - 1), 
+                ...newQuizData.results.slice(index + 1, newQuizData.length)
+            ]
+        });
+    }
 
     const updateQuiz = (newData, questionNumber) => {
         setNewQuizData({
@@ -40,11 +65,11 @@ function PageEdit({ quizNumber, quizData }) {
         </td>
     </tr>;
 
-    const tables = [...Array(quizData.results.length).keys()].map((questionNumber) => {
+    const tables = [...Array(newQuizData.results.length).keys()].map((questionNumber) => {
         return <EditQuizTable 
         key={questionNumber}
         questionNumber={questionNumber}
-        questionData={quizData.results[questionNumber]}
+        questionData={newQuizData.results[questionNumber]}
         updateQuiz={updateQuiz}
         />
     });
@@ -59,8 +84,20 @@ function PageEdit({ quizNumber, quizData }) {
         }
     }
 
+    const changeSizeButtons = 
+    <div className="middle ">
+        <button type="button" className="btn change-size-button" 
+        onClick={() => increaseSize(newQuizData.results.length)}>
+            +
+        </button>
+        <button type="button" className="btn change-size-button" 
+        onClick={() => decreaseSize(newQuizData.results.length)}>
+            -
+        </button>
+    </div>
+
     const submitButton = 
-    <button className="btn btn-secondary my-button-style middle" 
+    <button className="btn btn-secondary middle submit-button" 
     id="submit-button">
         Confirm
     </button>
@@ -71,10 +108,8 @@ function PageEdit({ quizNumber, quizData }) {
                 <thead className="thead-light">{titleInput}</thead>
             </table>
             {tables}
-            <br />
+            {changeSizeButtons}
             {submitButton}
-            <br />
-            <br />
         </form>
     )
 };

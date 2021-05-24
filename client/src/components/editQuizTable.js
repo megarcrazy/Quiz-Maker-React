@@ -11,7 +11,6 @@ function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
 
     const handleQuestionChange = (event) => {
         setQuestion(event.target.value);
-        //updateQuiz(event.target.value, "question", questionNumber);
         updateQuiz({
             question: event.target.value,
             correct_answer: correctAnswer,

@@ -26,7 +26,6 @@ function AddNewQuiz() {
     
     return (
         <div className="content">
-            {quizNumber}
             <h1>{title}</h1>
             <p>{message}</p>
             {pageEdit}
