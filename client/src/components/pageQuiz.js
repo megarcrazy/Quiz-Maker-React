@@ -8,13 +8,14 @@ function PageQuiz({ quizData }) {
     const [userSelection, setUserSelection] = useState(
         new Array(quizData.length).fill(null)
     );
-
+    
     const submitQuiz = () => {
         setSubmitted(true);
-        (submitted) && window.location.reload();   
+        (submitted) && window.location.reload(); // Reload on clicking "Try Again"
         setButtonText((submitted) ? "Submit" : "Try Again");
     }
 
+    // Calculates the number of correct answers
     const score = (() => {
         let score = 0;
         for (let i = 0; i < quizData.length; i++) {

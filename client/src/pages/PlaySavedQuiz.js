@@ -15,6 +15,7 @@ function PlaySavedQuiz() {
     const [quizData, setQuizData] = useState("");
     const webQuiz = <PageQuiz quizData={quizData}/>;
 
+    // Grab data from relevant quiz and checks if it exists
     useEffect(() => {
         async function fetchData() {
             const response = await axios("http://localhost:3001/data/" + quizNumber);

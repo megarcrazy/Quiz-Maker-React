@@ -8,7 +8,6 @@ import '../components/css/quiz.css';
 
 function LocalQuizMenu() {
     const history = useHistory();
-
     const title = "Your Quizzes";
     const message = "";
     const [quizData, setQuizData] = useState("");

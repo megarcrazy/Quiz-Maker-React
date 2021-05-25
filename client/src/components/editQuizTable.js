@@ -3,6 +3,8 @@ import React from 'react';
 import './css/quiz.css';
 
 function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
+    // Table containing question, choices and correct answer index
+
     const correctAnswer = questionData.correct_answer
     const incorrectAnswers = questionData.incorrect_answers;
     const correctIndex = questionData.correct_index;
@@ -12,6 +14,8 @@ function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
         ...incorrectAnswers.slice(correctIndex, incorrectAnswers.length)
     ];
 
+    // Converts letter to their respective number index
+    // eg. a, b, c => 0, 1, 2
     const letterToIndex = (key, reveresed) => {
         if (reveresed) {
             return String.fromCharCode(key + "a".charCodeAt());
@@ -27,16 +31,16 @@ function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
     }
     
     const handleChoiceChange = (event, index) => {
-        const new_choices = Object.values({
-            ...choices,
-            [index]: event.target.value
-        })
         if (index === correctIndex) {
             updateQuiz({
                 ...questionData,
                 correct_answer: event.target.value,
             }, questionNumber);
         } else {
+            const new_choices = Object.values({
+                ...choices,
+                [index]: event.target.value
+            })
             const incorrect_answers = [
                 ...new_choices.slice(0, correctIndex),
                 ...new_choices.slice(correctIndex + 1, choices.length)
@@ -48,6 +52,7 @@ function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
         }
     }
 
+    // Change which question is the correct answer
     const handleAnswerChange = (event) => {
         const newIndex = letterToIndex(event.target.value.charCodeAt(), false);
         const correct_answer = choices[newIndex];
@@ -80,6 +85,7 @@ function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
         </td>
     </tr>
     
+    // Combines the correct and incorrect answers into table rows
     const tableChoices = choices.map((choice, index) => {
         const questionLabel = letterToIndex(index, true);
         return (
@@ -102,6 +108,7 @@ function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
         )
     });
 
+    // Select form for choosing correct answer
     const answer = 
     <tr>
         <td>
@@ -129,6 +136,7 @@ function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
     )
 }
 
+// Converts raw string into readable HTML text
 const HTMLDecode = input => {
     const doc = new DOMParser().parseFromString(input, "text/html");
     return doc.documentElement.textContent;

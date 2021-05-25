@@ -5,6 +5,7 @@ import axios from 'axios';
 import '../components/css/edit.css';
 // Components
 import EditQuizTable from './editQuizTable.js';
+import ChangeQuizSizeButtons from './changeQuizSizeButtons';
 
 function PageEdit({ quizNumber, quizData }) {
     const history = useHistory();
@@ -18,9 +19,9 @@ function PageEdit({ quizNumber, quizData }) {
 
     const increaseSize = (index) => {
         const newQuiz = [
-            ...newQuizData.results.slice(0, index), 
+            ...newQuizData.results.slice(0, index + 1), 
             newQuestion,
-            ...newQuizData.results.slice(index, newQuizData.results.length)
+            ...newQuizData.results.slice(index + 1, newQuizData.results.length)
         ]
         setNewQuizData({
             title: newQuizData.title,
@@ -31,10 +32,10 @@ function PageEdit({ quizNumber, quizData }) {
     const decreaseSize = (index) => {
         if (newQuizData.results.length === 1) {
             window.alert("Quiz cannot be empty.");
-        } else if (window.confirm(`Deleting question ${index}. Are you sure?`)) {
+        } else if (window.confirm(`Deleting question ${index + 1}. Are you sure?`)) {
             const newQuiz = [
-                ...newQuizData.results.slice(0, index - 1), 
-                ...newQuizData.results.slice(index, newQuizData.results.length)
+                ...newQuizData.results.slice(0, index), 
+                ...newQuizData.results.slice(index + 1, newQuizData.results.length)
             ]
             setNewQuizData({
                 title: newQuizData.title,
@@ -75,21 +76,6 @@ function PageEdit({ quizNumber, quizData }) {
         </td>
     </tr>;
 
-    const changeSizeButtons = (questionNumber) => {
-        return (
-            <div className="middle ">
-                <button type="button" className="btn change-size-button" 
-                onClick={() => increaseSize(questionNumber + 1)}>
-                    +
-                </button>
-                <button type="button" className="btn change-size-button" 
-                onClick={() => decreaseSize(questionNumber + 1)}>
-                    -
-                </button>
-            </div>
-        )
-    }
-
     const tables = [...Array(newQuizData.results.length).keys()].map((questionNumber) => {
         return (
             <div key={questionNumber}>
@@ -98,7 +84,11 @@ function PageEdit({ quizNumber, quizData }) {
                 questionData={newQuizData.results[questionNumber]}
                 updateQuiz={updateQuiz}
                 />
-                {changeSizeButtons(questionNumber)}
+                <ChangeQuizSizeButtons 
+                questionNumber={questionNumber}
+                increaseSize={increaseSize}
+                decreaseSize={decreaseSize}
+                />
             </div>
         )
     });

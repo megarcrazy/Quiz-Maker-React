@@ -12,21 +12,15 @@ function QuizTable({ questionNumber, question, correctAnswer, incorrectAnswer,
         setChoices(shuffleArray([correctAnswer, ...incorrectAnswer]));
     }, [correctAnswer, incorrectAnswer]);
 
-    const tableQuestion = 
-    <tr>
-        <td>
-            {questionNumber + 1}. {HTMLDecode(question)}
-        </td>
-    </tr>
-
     const yellowColour = { backgroundColor: "rgb(155, 155, 100)" };
     const redColour = { backgroundColor: "rgb(155, 100, 100)" };
     const greenColour = { backgroundColor: "rgb(100, 155, 100)" };
     const buttonStyles =
     [
+        // Selected choice is yellow before submission
         undefined, // Default
-        (!submitted) ? yellowColour : redColour, // Select, red if wrong
-        (!submitted) ? yellowColour : greenColour // Correct
+        (!submitted) ? yellowColour : redColour, // Red if Wrong
+        (!submitted) ? yellowColour : greenColour // Green if Correct
     ]
 
     const changeSelection = (choiceIndex) => {
@@ -55,13 +49,15 @@ function QuizTable({ questionNumber, question, correctAnswer, incorrectAnswer,
 
     return (
         <table className="quiz-table play-table middle">
-            <thead className="thead-light">{tableQuestion}</thead>
+            <thead className="thead-light">
+                <tr><td>{questionNumber + 1}. {HTMLDecode(question)}</td></tr>
+            </thead>
             <tbody className="quiz-question-body">{tableChoices}</tbody>
         </table>
     )
 }
 
-// Durstenfeld shuffle
+// Durstenfeld shuffle to shuffle quiz choices
 const shuffleArray = array => {
     for (let i = array.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
