@@ -29,7 +29,7 @@ function PageEdit({ quizNumber, quizData }) {
     }
 
     const decreaseSize = (index) => {
-        if (newQuizData.length === 1) {
+        if (newQuizData.results.length === 1) {
             window.alert("Quiz cannot be empty.");
         } else if (window.confirm(`Deleting question ${index}. Are you sure?`)) {
             const newQuiz = [
