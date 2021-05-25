@@ -19,7 +19,14 @@ function AddNewQuiz() {
 
     const newQuizData = {
         title: "",
-		results: [{question: "", correct_answer: "", incorrect_answers: ["", "", ""]}]
+		results: [
+            {
+                question: "",
+                correct_answer: "",
+                incorrect_answers: ["", "", ""],
+                correct_index: 0
+            }
+        ]
     }
     
     const pageEdit = <PageEdit quizData={newQuizData} quizNumber={quizNumber}/>;

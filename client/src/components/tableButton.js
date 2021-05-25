@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 function TableButton({tableButtonType, quizNumber}) {
-    let history = useHistory();
+    const history = useHistory();
 
     const urlPointer = 
     (tableButtonType === "Play") ? `quiz/play/${quizNumber}` :

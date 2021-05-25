@@ -19,27 +19,25 @@ function QuizTable({ questionNumber, question, correctAnswer, incorrectAnswer,
         </td>
     </tr>
 
-    const noColour = { backgroundColor: null };
     const yellowColour = { backgroundColor: "rgb(155, 155, 100)" };
     const redColour = { backgroundColor: "rgb(155, 100, 100)" };
     const greenColour = { backgroundColor: "rgb(100, 155, 100)" };
     const buttonStyles =
     [
-        noColour, // Default
+        undefined, // Default
         (!submitted) ? yellowColour : redColour, // Select, red if wrong
         (!submitted) ? yellowColour : greenColour // Correct
     ]
 
-    const incorrectKey = 1;
-    const correctKey = 2; 
-    const answerIndex = choices.indexOf(correctAnswer);
     const changeSelection = (choiceIndex) => {
         if (!submitted) {
+            const correct = 2;
+            const incorrect = 1;
             changeUserSelection(choices[choiceIndex], questionNumber);
             setButtonState({
                 ...emptyArray,
-                [choiceIndex]: (choiceIndex === answerIndex) ? 
-                correctKey : incorrectKey,
+                [choiceIndex]: (choices[choiceIndex] === correctAnswer) ? 
+                correct : incorrect,
             });
         } 
     }

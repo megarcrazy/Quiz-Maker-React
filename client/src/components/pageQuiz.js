@@ -18,7 +18,7 @@ function PageQuiz({ quizData }) {
     const score = (() => {
         let score = 0;
         for (let i = 0; i < quizData.length; i++) {
-            if (userSelection[i] === quizData[i]["correct_answer"]) {
+            if (userSelection[i] === quizData[i].correct_answer) {
                 score++;
             }
         }
@@ -30,9 +30,9 @@ function PageQuiz({ quizData }) {
         return <QuizTable 
         key={questionNumber}
         questionNumber={questionNumber}
-        question={currentData["question"]}
-        correctAnswer={currentData["correct_answer"]}
-        incorrectAnswer={currentData["incorrect_answers"]}
+        question={currentData.question}
+        correctAnswer={currentData.correct_answer}
+        incorrectAnswer={currentData.incorrect_answers}
         submitted={submitted}
         changeUserSelection={
             (choice, questionNumber) => setUserSelection({

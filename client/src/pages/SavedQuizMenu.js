@@ -7,7 +7,7 @@ import LocalMenuTable from '../components/localMenuTable.js';
 import '../components/css/quiz.css';
 
 function LocalQuizMenu() {
-    let history = useHistory();
+    const history = useHistory();
 
     const title = "Your Quizzes";
     const message = "";

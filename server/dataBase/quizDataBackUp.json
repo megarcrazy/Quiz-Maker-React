@@ -9,7 +9,8 @@
 					"What?",
 					"Wat",
 					"Nani"
-				]
+				],
+				"correct_index": 0
 			},
 			{
 				"question": "What is the unit of force?",
@@ -18,7 +19,8 @@
 					"Oldton",
 					"The Dark Side",
 					"kg"
-				]
+				],
+				"correct_index": 0
 			}
 		]
 	},
@@ -32,7 +34,8 @@
 					"1and1",
 					"Window",
 					"11"
-				]
+				],
+				"correct_index": 0
 			},
 			{
 				"question": "What is the sum of all positive single digit numbers?",
@@ -41,7 +44,8 @@
 					"123456789",
 					"9!",
 					"huh"
-				]
+				],
+				"correct_index": 0
 			}
 		]
 	}

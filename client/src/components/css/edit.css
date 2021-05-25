@@ -37,7 +37,8 @@
     height: 50px;
     color: white;
     background-color: rgb(146, 146, 146) !important;
-    margin: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
     font-size: 1.4em !important;
 }
 

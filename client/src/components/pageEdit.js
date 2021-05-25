@@ -7,30 +7,40 @@ import '../components/css/edit.css';
 import EditQuizTable from './editQuizTable.js';
 
 function PageEdit({ quizNumber, quizData }) {
-    let history = useHistory();
+    const history = useHistory();
     const [newQuizData, setNewQuizData] = useState(quizData);
-    const newQuestion = {question: "", correct_answer: "", incorrect_answers: ["", "", ""]};
+    const newQuestion = {
+        question: "",
+        correct_answer: "",
+        incorrect_answers: ["", "", ""],
+        correct_index: 0
+    };
 
     const increaseSize = (index) => {
+        const newQuiz = [
+            ...newQuizData.results.slice(0, index), 
+            newQuestion,
+            ...newQuizData.results.slice(index, newQuizData.results.length)
+        ]
         setNewQuizData({
-            ...newQuizData,
-            results: [
-                ...newQuizData.results.slice(0, index), 
-                newQuestion,
-                ...newQuizData.results.slice(index + 1, newQuizData.length)
-            ]
+            title: newQuizData.title,
+            results: newQuiz
         });
     }
 
     const decreaseSize = (index) => {
-        window.confirm(`Deleting question ${index}. Are you sure?`) &&
-        setNewQuizData({
-            ...newQuizData,
-            results: [
+        if (newQuizData.length === 1) {
+            window.alert("Quiz cannot be empty.");
+        } else if (window.confirm(`Deleting question ${index}. Are you sure?`)) {
+            const newQuiz = [
                 ...newQuizData.results.slice(0, index - 1), 
-                ...newQuizData.results.slice(index + 1, newQuizData.length)
+                ...newQuizData.results.slice(index, newQuizData.results.length)
             ]
-        });
+            setNewQuizData({
+                title: newQuizData.title,
+                results: newQuiz
+            });
+        }
     }
 
     const updateQuiz = (newData, questionNumber) => {
@@ -65,14 +75,39 @@ function PageEdit({ quizNumber, quizData }) {
         </td>
     </tr>;
 
+    const changeSizeButtons = (questionNumber) => {
+        return (
+            <div className="middle ">
+                <button type="button" className="btn change-size-button" 
+                onClick={() => increaseSize(questionNumber + 1)}>
+                    +
+                </button>
+                <button type="button" className="btn change-size-button" 
+                onClick={() => decreaseSize(questionNumber + 1)}>
+                    -
+                </button>
+            </div>
+        )
+    }
+
     const tables = [...Array(newQuizData.results.length).keys()].map((questionNumber) => {
-        return <EditQuizTable 
-        key={questionNumber}
-        questionNumber={questionNumber}
-        questionData={newQuizData.results[questionNumber]}
-        updateQuiz={updateQuiz}
-        />
+        return (
+            <div key={questionNumber}>
+                <EditQuizTable 
+                questionNumber={questionNumber}
+                questionData={newQuizData.results[questionNumber]}
+                updateQuiz={updateQuiz}
+                />
+                {changeSizeButtons(questionNumber)}
+            </div>
+        )
     });
+
+    const submitButton = 
+    <button className="btn btn-secondary middle submit-button" 
+    id="submit-button">
+        Confirm
+    </button>
 
     const submitQuiz = (event) => {
         event.preventDefault();
@@ -84,31 +119,13 @@ function PageEdit({ quizNumber, quizData }) {
         }
     }
 
-    const changeSizeButtons = 
-    <div className="middle ">
-        <button type="button" className="btn change-size-button" 
-        onClick={() => increaseSize(newQuizData.results.length)}>
-            +
-        </button>
-        <button type="button" className="btn change-size-button" 
-        onClick={() => decreaseSize(newQuizData.results.length)}>
-            -
-        </button>
-    </div>
-
-    const submitButton = 
-    <button className="btn btn-secondary middle submit-button" 
-    id="submit-button">
-        Confirm
-    </button>
-
     return (
         <form className="add-input" onSubmit={submitQuiz}>
             <table className="quiz-table middle">
                 <thead className="thead-light">{titleInput}</thead>
             </table>
             {tables}
-            {changeSizeButtons}
+            <br />
             {submitButton}
         </form>
     )
