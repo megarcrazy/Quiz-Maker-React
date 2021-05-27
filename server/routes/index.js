@@ -4,6 +4,8 @@ var router = express.Router();
 router.use(cors())
 
 const fs = require("fs");
+const databasePath = "./database/quizData.json";
+const backupDatabasePath = "./database/quizDataBackUp.json";
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
@@ -12,19 +14,19 @@ router.get("/", function(req, res, next) {
 
 /* Get data from data base */
 router.get("/data", function(req, res) {
-  const dataBase = JSON.parse(fs.readFileSync("./dataBase/quizData.json"));
-  res.send(dataBase);
+  const database = JSON.parse(fs.readFileSync(databasePath));
+  res.send(database);
 });
 
 /* Get quiz data base */
 router.get("/data/:quizNumber", function(req, res) {
   const quizNumber = req.params.quizNumber;
-  const file = fs.readFileSync("./dataBase/quizData.json");
-  const dataBase = JSON.parse(file);
+  const file = fs.readFileSync("./database/quizData.json");
+  const database = JSON.parse(file);
   if (quizNumber == "length") {
-    res.send(JSON.stringify(dataBase.length));
-  } else if (quizNumber >= 1 && quizNumber <= dataBase.length) {
-    const data = dataBase[quizNumber - 1];
+    res.send(JSON.stringify(database.length));
+  } else if (quizNumber >= 1 && quizNumber <= database.length) {
+    const data = database[quizNumber - 1];
     res.send(data);
   } else {
     res.send("Not found");
@@ -34,25 +36,30 @@ router.get("/data/:quizNumber", function(req, res) {
 /* Edit Quiz */
 router.post("/edit/:quizNumber", function (req, res) {
   const quizNumber = req.params.quizNumber;
-  const path = "./dataBase/quizData.json";
-  let dataBase = JSON.parse(fs.readFileSync(path));
-  if (quizNumber == dataBase.length + 1) {
-    dataBase.push(req.body.quizData);
+  let database = JSON.parse(fs.readFileSync(databasePath));
+  if (quizNumber == database.length + 1) {
+    database.push(req.body.quizData);
   } else {
-    dataBase[quizNumber - 1] = req.body.quizData;
+    database[quizNumber - 1] = req.body.quizData;
   }
 
-  fs.writeFileSync(path, JSON.stringify(dataBase, null, "\t"));
+  fs.writeFileSync(databasePath, JSON.stringify(database, null, "\t"));
   res.send();
 })
 
 /* Delete Quiz */
 router.post("/delete/:quizNumber", function (req, res) {
   const quizNumber = req.params.quizNumber;
-  const path = "./dataBase/quizData.json";
-  const dataBase = JSON.parse(fs.readFileSync(path));
-  dataBase.splice(quizNumber - 1, 1);
-  fs.writeFileSync(path, JSON.stringify(dataBase, null, "\t"));
+  const database = JSON.parse(fs.readFileSync(databasePath));
+  database.splice(quizNumber - 1, 1);
+  fs.writeFileSync(databasePath, JSON.stringify(database, null, "\t"));
+  res.send();
+});
+
+/* Restart Database */
+router.post("/restart", function (req, res) {
+  const database = JSON.parse(fs.readFileSync(backupDatabasePath));
+  fs.writeFileSync(databasePath, JSON.stringify(database, null, "\t"));
   res.send();
 });
 

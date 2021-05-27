@@ -43,19 +43,15 @@ function PageQuiz({ quizData }) {
         } />
     });
 
-    const submitButton = 
-    <button className="btn btn-secondary middle submit-button" 
-    id="submit-button" onClick={submitQuiz}>
-        {buttonText}
-    </button>
-
     return (
         <>
             {tables}
-            {submitButton}
+            <button className="btn btn-secondary middle submit-button" onClick={submitQuiz}>
+                {buttonText}
+            </button>
             <div className="middle">
                 {submitted ? 
-                <div>Your Score is {score} / {quizData.length}</div> :
+                <p>Your Score is {score} / {quizData.length}</p> :
                 <br />}
             </div>
             <br />

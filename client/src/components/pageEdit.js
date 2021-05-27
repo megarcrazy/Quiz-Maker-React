@@ -93,12 +93,6 @@ function PageEdit({ quizNumber, quizData }) {
         )
     });
 
-    const submitButton = 
-    <button className="btn btn-secondary middle submit-button" 
-    id="submit-button">
-        Confirm
-    </button>
-
     const submitQuiz = (event) => {
         event.preventDefault();
         if (window.confirm("Are you sure?")) {
@@ -116,7 +110,9 @@ function PageEdit({ quizNumber, quizData }) {
             </table>
             {tables}
             <br />
-            {submitButton}
+            <button className="btn btn-secondary middle submit-button">
+                Confirm
+            </button>
         </form>
     )
 };

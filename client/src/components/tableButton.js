@@ -14,7 +14,7 @@ function TableButton({tableButtonType, quizNumber}) {
     const handleClick = () => {
         if (tableButtonType === "Delete") {
             // Windows alert confirmation
-            if (window.confirm("Are you sure?")) {
+            if (window.confirm(`Are you sure you want to delete quiz number ${quizNumber}?`)) {
                 // Get quiz data for the current quiz number
                 axios.post("http://localhost:3001/delete/" + quizNumber, {
                     quizNumber: quizNumber
