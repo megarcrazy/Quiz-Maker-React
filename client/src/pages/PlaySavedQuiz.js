@@ -13,7 +13,7 @@ function PlaySavedQuiz() {
     const [title, setTitle] = useState("");
     const [message, setMessage] = useState("");
     const [quizData, setQuizData] = useState("");
-    const webQuiz = <PageQuiz quizData={quizData}/>;
+    const pageQuiz = <PageQuiz quizData={quizData}/>;
 
     // Grab data from relevant quiz and checks if it exists
     useEffect(() => {
@@ -36,7 +36,7 @@ function PlaySavedQuiz() {
         <div className="content">
             <h1>{title}</h1>
             <p>{message}</p>
-            {loaded && webQuiz}
+            {loaded && pageQuiz}
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import axios from 'axios';
 
-function RestartButton() {
+function RestartDatabaseButton() {
     const handleClick = () => {
         if (window.confirm("Restart Database?")) {
             axios.post("http://localhost:3001/restart", {});
@@ -10,10 +10,10 @@ function RestartButton() {
     }
 
     return (
-        <button className="btn btn-secondary" onClick={handleClick}>
+        <button className="btn btn-secondary middle" onClick={handleClick}>
             Restart Database
         </button>
     )
 }
 
-export default RestartButton;
+export default RestartDatabaseButton;

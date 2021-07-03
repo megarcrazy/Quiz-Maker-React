@@ -1,7 +1,7 @@
 .App {
   background-color: rgb(34, 34, 34);
   min-height: 100vh;
-  min-width: 1024px !important;
+  min-width: 100% !important;
 }
 
 .App-logo {

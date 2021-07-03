@@ -1,15 +1,3 @@
-.add-button {
-    font-size: 1.4em;
-    color: white;
-    background-color: rgb(82, 81, 81);
-    padding: 10px 50px 10px 50px;
-}
-
-.add-button:hover {
-    background-color: rgb(53, 53, 53);
-    text-decoration: none;
-}
-
 .submit-button {
     background-color: rgb(53, 53, 53);
     width: 100px;
@@ -28,6 +16,12 @@
     background-color: rgb(66, 66, 66);
 }
 
+@media screen and (max-width: 600px) {
+    .quiz-table {
+        width: 400px;
+    }
+}
+
 .quiz-table thead {
     font-weight: bold;
     font-size: 1.2em;
@@ -43,6 +37,3 @@
     padding: 20px;
 }
 
-.quiz-table button {
-    width: 70px;
-}

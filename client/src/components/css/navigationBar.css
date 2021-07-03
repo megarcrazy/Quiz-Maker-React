@@ -1,6 +1,7 @@
 .navbar {
     display: block;
-    min-width: 1024px;
+    overflow: hidden; 
+    white-space: nowrap;
 }
 
 .navigationLogo {
@@ -9,9 +10,17 @@
 }
 
 .navLink {
-    margin: 0 40px 0 0;
+    margin-left: 40px;
 }
 
+@media screen and (max-width: 700px) {
+    .navLink {
+        margin-left: 5px;
+    }
+    .navigationLogo {
+        margin: 0 10px 0 10px;
+    }
+}
 .navLink:hover {
     text-decoration: underline !important;
 }
