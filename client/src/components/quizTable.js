@@ -18,7 +18,7 @@ function QuizTable({ questionNumber, question, correctAnswer, incorrectAnswer,
     const buttonStyles =
     [
         // Selected choice is yellow before submission
-        undefined, // Default
+        null, // Default
         (!submitted) ? yellowColour : redColour, // Red if Wrong
         (!submitted) ? yellowColour : greenColour // Green if Correct
     ]

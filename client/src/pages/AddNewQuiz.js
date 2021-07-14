@@ -29,13 +29,11 @@ function AddNewQuiz() {
         ]
     }
     
-    const pageEdit = <PageEdit quizData={newQuizData} quizNumber={quizNumber}/>;
-    
     return (
         <div className="content">
             <h1>{title}</h1>
             <p>{message}</p>
-            {pageEdit}
+            <PageEdit quizData={newQuizData} quizNumber={quizNumber}/>
         </div>
     )
 }

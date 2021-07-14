@@ -2,12 +2,12 @@ import React from 'react';
 // Styles
 import './css/quiz.css';
 
+// Table containing question, choices and correct answer index
 function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
-    // Table containing question, choices and correct answer index
-
     const correctAnswer = questionData.correct_answer
     const incorrectAnswers = questionData.incorrect_answers;
     const correctIndex = questionData.correct_index;
+    // Initialise choice array and insert the correct answer in the correct 
     const choices = [
         ...incorrectAnswers.slice(0, correctIndex),
         correctAnswer,

@@ -1,6 +1,7 @@
 import React from "react";
 import axios from 'axios';
 
+// Button that restores the database to the default sample
 function RestartDatabaseButton() {
     const handleClick = () => {
         if (window.confirm("Restart Database?")) {

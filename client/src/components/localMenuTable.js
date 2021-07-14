@@ -2,6 +2,7 @@ import React from 'react';
 // Components
 import TableButton from './tableButton.js';
 
+// Table with action buttons to play, edit or delete a saved quiz
 function LocalMenuTable({data, quizNumber}) {
     const tableButtons = 
     <tr>

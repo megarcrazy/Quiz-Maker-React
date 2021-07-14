@@ -2,17 +2,17 @@ import React from 'react';
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
+// Action buttons for the localMenuTable for "Play", "Edit" and "Delete"
 function TableButton({tableButtonType, quizNumber}) {
     const history = useHistory();
-
-    const urlPointer = 
-    (tableButtonType === "Play") ? `quiz/play/${quizNumber}` :
-    (tableButtonType === "Edit") ? `quiz/edit/${quizNumber}` :
-    (tableButtonType === "Delete") && `quiz`;
     const buttonText = tableButtonType;
 
     const handleClick = () => {
-        if (tableButtonType === "Delete") {
+        if (tableButtonType === "Play") {
+            history.push(`quiz/play/${quizNumber}`);
+        } else if (tableButtonType === "Edit") {
+            history.push(`quiz/edit/${quizNumber}`);
+        } else if(tableButtonType === "Delete") {
             // Windows alert confirmation
             if (window.confirm(`Are you sure you want to delete quiz number ${quizNumber}?`)) {
                 // Get quiz data for the current quiz number
@@ -21,8 +21,8 @@ function TableButton({tableButtonType, quizNumber}) {
                 });
                 window.location.reload();
             }
+            history.push("quiz");
         }
-        history.push(urlPointer);
     }
 
     return (

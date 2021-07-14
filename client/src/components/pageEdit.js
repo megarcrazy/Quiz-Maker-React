@@ -10,13 +10,16 @@ import ChangeQuizSizeButtons from './changeQuizSizeButtons';
 function PageEdit({ quizNumber, quizData }) {
     const history = useHistory();
     const [newQuizData, setNewQuizData] = useState(quizData);
+
+    // Dictionary template for question in the database
     const newQuestion = {
         question: "",
         correct_answer: "",
         incorrect_answers: ["", "", ""],
         correct_index: 0
-    };
+    }; 
 
+    // Add new question at the location of the button
     const increaseSize = (index) => {
         const newQuiz = [
             ...newQuizData.results.slice(0, index + 1), 
@@ -29,6 +32,7 @@ function PageEdit({ quizNumber, quizData }) {
         });
     }
 
+    // Remove question above the button
     const decreaseSize = (index) => {
         if (newQuizData.results.length === 1) {
             window.alert("Quiz cannot be empty.");
@@ -44,6 +48,7 @@ function PageEdit({ quizNumber, quizData }) {
         }
     }
 
+    // Update the quiz after changing a state in the child component
     const updateQuiz = (newData, questionNumber) => {
         setNewQuizData({
             ...newQuizData,
@@ -53,7 +58,7 @@ function PageEdit({ quizNumber, quizData }) {
             })
         });
     }
-
+    
     const handleTitleChange = (event) => {
         setNewQuizData({
             ...newQuizData,
@@ -93,6 +98,7 @@ function PageEdit({ quizNumber, quizData }) {
         )
     });
 
+    // Request user confirmation and upload the editted quiz dictionary to the server
     const submitQuiz = (event) => {
         event.preventDefault();
         if (window.confirm("Are you sure?")) {

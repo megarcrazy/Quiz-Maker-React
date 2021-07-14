@@ -1,9 +1,8 @@
 import React from 'react';
 
+// "+": adds a new question below
+// "-": deletes current question
 function ChangeQuizSizeButtons({ questionNumber, increaseSize, decreaseSize }) {
-    // "+": adds a new question below
-    // "-": deletes current question
-    
     return (
         <div className="middle ">
             <button type="button" className="btn change-size-button" 
