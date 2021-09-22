@@ -16,6 +16,7 @@ router.get("/", function(req, res, next) {
 router.get("/data", function(req, res) {
   const database = JSON.parse(fs.readFileSync(databasePath));
   res.send(database);
+  console.log("hey");
 });
 
 /* Get quiz data base */
