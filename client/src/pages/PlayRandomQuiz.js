@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 // Components
 import PageQuiz from '../components/pageQuiz.js'
-// Styles
-import '../components/css/quiz.css';
+
 
 function PlayRandomQuiz() {
     const [quizData, setQuizData] = useState([]);

@@ -3,8 +3,7 @@ import axios from 'axios';
 import { useParams } from "react-router-dom";
 // Components
 import PageQuiz from '../components/pageQuiz.js'
-// Styles
-import '../components/css/quiz.css';
+
 
 function PlaySavedQuiz() {
     const { quizNumber } = useParams();

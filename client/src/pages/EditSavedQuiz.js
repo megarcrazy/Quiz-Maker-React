@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 // Components
 import PageEdit from '../components/pageEdit.js'
-// Styles
-import '../components/css/quiz.css';
-import '../components/css/edit.css';
+
 
 function EditSavedQuiz() {
     const { quizNumber } = useParams();

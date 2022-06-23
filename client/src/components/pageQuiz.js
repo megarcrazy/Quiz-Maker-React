@@ -1,9 +1,32 @@
 import React, {useState} from 'react';
+import styled from 'styled-components';
 // Components
 import QuizTable from './quizTable';
 
+
+const SubmitButton = styled.button`
+    background-color: rgb(53, 53, 53);
+    width: 100px;
+    padding: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    &:hover {
+        background-color: rgb(97, 97, 97);
+    }
+`;
+
+const ScoreDisplay = styled.div`
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+`;
+
+
 function PageQuiz({ quizData }) {
-    const [buttonText, setButtonText] = useState("Submit");
     const [submitted, setSubmitted] = useState(false); 
     const [userSelection, setUserSelection] = useState(
         new Array(quizData.length).fill(null)
@@ -12,7 +35,6 @@ function PageQuiz({ quizData }) {
     const submitQuiz = () => {
         setSubmitted(true);
         (submitted) && window.location.reload(); // Reload on clicking "Try Again"
-        setButtonText((submitted) ? "Submit" : "Try Again");
     }
 
     // Calculates the number of correct answers
@@ -44,18 +66,18 @@ function PageQuiz({ quizData }) {
     });
 
     return (
-        <>
+        <div>
             {tables}
-            <button className="btn btn-secondary middle submit-button" onClick={submitQuiz}>
-                {buttonText}
-            </button>
-            <div className="middle">
+            <SubmitButton onClick={submitQuiz}>
+                {(submitted) ? "Try Again" : "Submit"}
+            </SubmitButton>
+            <ScoreDisplay>
                 {submitted ? 
                 <p>Your Score is {score} / {quizData.length}</p> :
                 <br />}
-            </div>
+            </ScoreDisplay>
             <br />
-        </>
+        </div>
     )
 };
 

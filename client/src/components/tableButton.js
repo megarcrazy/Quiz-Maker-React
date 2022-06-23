@@ -1,6 +1,13 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import styled from 'styled-components';
+
+
+const TableButtonWrapper = styled.button`
+    margin: 0 10px 0 10px;
+`;
+
 
 // Action buttons for the localMenuTable for "Play", "Edit" and "Delete"
 function TableButton({tableButtonType, quizNumber}) {
@@ -26,10 +33,9 @@ function TableButton({tableButtonType, quizNumber}) {
     }
 
     return (
-        <button className="btn btn-secondary my-button-style"
-        onClick={handleClick}>
+        <TableButtonWrapper onClick={handleClick}>
             {buttonText}
-        </button>
+        </TableButtonWrapper>
     )
 }
 

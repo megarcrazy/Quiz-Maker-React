@@ -1,11 +1,90 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
-// Styles
-import '../components/css/edit.css';
+import styled from 'styled-components';
 // Components
 import EditQuizTable from './editQuizTable.js';
 import ChangeQuizSizeButtons from './changeQuizSizeButtons';
+
+
+const QuizTable = styled.table`
+    margin: 30px 0 20px 0px; 
+    width: 512px;
+    background-color: rgb(66, 66, 66);
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    thead {
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+    tr {
+        width: 100%;
+        border: 1px solid rgb(255, 255, 255);
+    }
+    td {
+        width: 100%;
+        padding: 20px;
+    }
+`;
+
+const TableRowKey = styled.div`
+    top: 50%;
+    width: 15px;
+    display: inline-block;
+    vertical-align: middle;
+`;
+
+const QuizEditorForm = styled.form`
+    input {
+        background-color: rgb(71, 71, 71);
+        color: white;
+        margin-left: 10px;
+        display: inline-block;
+    }
+    table tr td {
+        padding: 10px;
+    }
+    select {
+        width: 80px;
+        text-align: center;
+        text-align-last: center;
+        background-color: rgb(185, 185, 185);
+    }
+    option {
+        text-align: center;
+    }
+`;
+
+const TitleInput = styled.input`
+    font-size: 1.4em;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+`;
+
+const SubmitButton = styled.button`
+    background-color: rgb(53, 53, 53);
+    width: 100px;
+    padding: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    &:hover {
+        background-color: rgb(97, 97, 97);
+    }
+`;
+
+const FillWrapper = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+`;
 
 function PageEdit({ quizNumber, quizData }) {
     const history = useHistory();
@@ -69,15 +148,15 @@ function PageEdit({ quizNumber, quizData }) {
     const titleInput = 
     <tr>
         <td>
-            <div className="fill">
-                <div className="table-row-key"></div> 
-                <div className="fill">
-                    <input type="text" className="fill large-text"
+            <FillWrapper>
+                <TableRowKey></TableRowKey> 
+                <FillWrapper>
+                    <TitleInput type="text"
                     value={newQuizData.title}
                     onChange={(event) => {handleTitleChange(event)}}
                     required/>
-                </div>
-            </div>
+                </FillWrapper>
+            </FillWrapper>
         </td>
     </tr>;
 
@@ -110,16 +189,14 @@ function PageEdit({ quizNumber, quizData }) {
     }
 
     return (
-        <form className="add-input" onSubmit={submitQuiz}>
-            <table className="quiz-table middle">
-                <thead className="thead-light">{titleInput}</thead>
-            </table>
+        <QuizEditorForm onSubmit={submitQuiz}>
+            <QuizTable>
+                <thead>{titleInput}</thead>
+            </QuizTable>
             {tables}
             <br />
-            <button className="btn btn-secondary middle submit-button">
-                Confirm
-            </button>
-        </form>
+            <SubmitButton>Confirm</SubmitButton>
+        </QuizEditorForm>
     )
 };
 

@@ -11,8 +11,7 @@ import PlayRandomQuiz from './pages/PlayRandomQuiz';
 import About from './pages/About';
 // Components
 import NavigationBar from './components/navigationBar';
-// Styles
-import './components/css/styles.css';
+
 
 function App() {
   return (

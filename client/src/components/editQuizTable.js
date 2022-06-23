@@ -1,6 +1,68 @@
 import React from 'react';
-// Styles
-import './css/quiz.css';
+import styled from 'styled-components';
+
+
+const QuizTable = styled.table`
+    margin: 30px 0 20px 0px; 
+    width: 512px;
+    background-color: rgb(66, 66, 66);
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    thead {
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+    tr {
+        width: 100%;
+        border: 1px solid rgb(255, 255, 255);
+    }
+    td {
+        width: 100%;
+        padding: 20px;
+    }
+`;
+
+const QuestionCellFillWrapper = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    input {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+`;
+
+const TableRowKey = styled.div`
+    top: 50%;
+    width: 15px;
+    display: inline-block;
+    vertical-align: middle;
+`;
+
+const AnswerRow = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    > * {
+        &:first-child {
+            color: white;
+        }
+        &:nth-child(2) {
+            display: table;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+`;
+
 
 // Table containing question, choices and correct answer index
 function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
@@ -71,17 +133,17 @@ function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
     const tableQuestion = 
     <tr>
         <td>
-            <div className="fill">
-                <div className="table-row-key">
+            <QuestionCellFillWrapper>
+                <TableRowKey>
                     {questionNumber + 1}.
-                </div> 
-                <div className="fill">
-                    <input type="text" className="inline fill"
+                </TableRowKey> 
+                <QuestionCellFillWrapper>
+                    <input type="text"
                     value={HTMLDecode(questionData.question)}
                     onChange={(event) => {handleQuestionChange(event)}} 
                     required/>
-                </div>
-            </div>
+                </QuestionCellFillWrapper>
+            </QuestionCellFillWrapper>
         </td>
     </tr>
     
@@ -91,18 +153,18 @@ function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
         return (
             <tr key={index}>
                 <td>
-                    <div className="fill">
-                        <div className="table-row-key">
+                    <QuestionCellFillWrapper>
+                        <TableRowKey>
                             {questionLabel}.
-                        </div> 
-                        <div className="fill">
-                            <input type="text" className="inline fill"
+                        </TableRowKey> 
+                        <QuestionCellFillWrapper>
+                            <input type="text"
                             value={HTMLDecode(choice)}
                             name={index}
                             onChange={(event) => {handleChoiceChange(event, index)}} 
                             required/>
-                        </div>
-                    </div>
+                        </QuestionCellFillWrapper >
+                    </QuestionCellFillWrapper >
                 </td>
             </tr>
         )
@@ -112,9 +174,9 @@ function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
     const answer = 
     <tr>
         <td>
-            <div className="fill">
-                <div className="float-left">Answer</div> 
-                <div className="middle">
+            <AnswerRow>
+                <div>Answer</div> 
+                <div>
                     <select onChange={(event) => {handleAnswerChange(event)}} 
                     value={letterToIndex(correctIndex, true)}>
                         <option value="a">a</option>
@@ -123,16 +185,16 @@ function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
                         <option value="d">d</option>
                     </select>
                 </div>
-            </div>
+            </AnswerRow>
         </td>
     </tr>
 
     return (
-        <table className="quiz-table play-table middle">
-            <thead className="thead-light">{tableQuestion}</thead>
-            <tbody className="quiz-question-body">{tableChoices}</tbody>
+        <QuizTable>
+            <thead>{tableQuestion}</thead>
+            <tbody>{tableChoices}</tbody>
             <tbody>{answer}</tbody>
-        </table>
+        </QuizTable>
     )
 }
 

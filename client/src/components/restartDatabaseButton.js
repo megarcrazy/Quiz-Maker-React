@@ -1,5 +1,14 @@
 import React from "react";
 import axios from 'axios';
+import styled from 'styled-components';
+
+
+const Button = styled.button`
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+`;
+
 
 // Button that restores the database to the default sample
 function RestartDatabaseButton() {
@@ -11,9 +20,9 @@ function RestartDatabaseButton() {
     }
 
     return (
-        <button className="btn btn-secondary middle" onClick={handleClick}>
+        <Button onClick={handleClick}>
             Restart Database
-        </button>
+        </Button>
     )
 }
 

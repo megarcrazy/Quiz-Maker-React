@@ -1,6 +1,37 @@
 import React, { useState, useEffect } from 'react';
-// Styles
-import './css/play.css';
+import styled from 'styled-components';
+
+
+const QuizTableWrapper = styled.table`
+    margin: 30px 0 20px 0px; 
+    width: 512px;
+    background-color: rgb(66, 66, 66);
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    thead {
+        font-weight: bold;
+        font-size: 1.2em;
+        padding: 20px;
+    }
+    tbody {
+        td {
+            padding: 0;
+        }
+    }
+    button {
+        background-color: white;
+        color: black;
+        text-align: left;
+        padding: 10px;
+        width: 100%;
+        border: none;
+    }
+    @media (max-width: 600px) {
+        width: 400px;
+    }
+`;
+
 
 function QuizTable({ questionNumber, question, correctAnswer, incorrectAnswer, 
     submitted, changeUserSelection}) {
@@ -48,12 +79,12 @@ function QuizTable({ questionNumber, question, correctAnswer, incorrectAnswer,
     );
 
     return (
-        <table className="quiz-table play-table middle">
-            <thead className="thead-light">
+        <QuizTableWrapper>
+            <thead>
                 <tr><td>{questionNumber + 1}. {HTMLDecode(question)}</td></tr>
             </thead>
-            <tbody className="quiz-question-body">{tableChoices}</tbody>
-        </table>
+            <tbody>{tableChoices}</tbody>
+        </QuizTableWrapper>
     )
 }
 
