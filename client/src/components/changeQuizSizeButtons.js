@@ -5,10 +5,12 @@ const ChangeQuizSizeButtonWrapper = styled.div`
     display: table;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 50px;
     button {
         width: 50px;
         height: 50px;
-        color: white;
+        color: black;
         background-color: rgb(146, 146, 146);
         margin-left: 10px;
         margin-right: 10px;

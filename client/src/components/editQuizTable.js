@@ -5,7 +5,8 @@ import styled from 'styled-components';
 const QuizTable = styled.table`
     margin: 30px 0 20px 0px; 
     width: 512px;
-    background-color: rgb(66, 66, 66);
+    background-color: rgb(150, 150, 150);
+    border-radius: 5px;
     display: table;
     margin-left: auto;
     margin-right: auto;
@@ -28,7 +29,6 @@ const QuestionCellFillWrapper = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
-
     input {
         width: 100%;
         height: 100%;
@@ -49,10 +49,14 @@ const AnswerRow = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
-
     > * {
         &:first-child {
-            color: white;
+            color: black;
+            font-size: 1.2em;
+            font-weight: 600;
+            display: table;
+            margin-left: auto;
+            margin-right: auto;
         }
         &:nth-child(2) {
             display: table;

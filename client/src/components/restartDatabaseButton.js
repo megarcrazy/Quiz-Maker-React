@@ -7,6 +7,14 @@ const Button = styled.button`
     display: table;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 200px;
+    height: 50px;
+    font-size: 1em;
+    &:hover {
+        border: 3px solid black;
+    }
 `;
 
 

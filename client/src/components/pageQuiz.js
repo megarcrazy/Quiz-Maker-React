@@ -6,9 +6,11 @@ import QuizTable from './quizTable';
 
 const SubmitButton = styled.button`
     background-color: rgb(53, 53, 53);
-    width: 100px;
+    width: 200px;
+    height: 50px;
+    font-size: 1.2em;
     padding: 5px;
-    margin-top: 20px;
+    margin-top: 40px;
     margin-bottom: 20px;
     display: table;
     margin-left: auto;
@@ -67,6 +69,9 @@ function PageQuiz({ quizData }) {
 
     return (
         <div>
+            <SubmitButton onClick={submitQuiz}>
+                {(submitted) ? "Try Again" : "Submit"}
+            </SubmitButton>
             {tables}
             <SubmitButton onClick={submitQuiz}>
                 {(submitted) ? "Try Again" : "Submit"}

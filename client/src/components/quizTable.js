@@ -5,8 +5,9 @@ import styled from 'styled-components';
 const QuizTableWrapper = styled.table`
     margin: 30px 0 20px 0px; 
     width: 512px;
-    background-color: rgb(66, 66, 66);
-    display: table;
+    background-color: rgb(200, 200, 200);
+    border: 2px solid black;
+    display: ta ble;
     margin-left: auto;
     margin-right: auto;
     thead {
@@ -26,6 +27,10 @@ const QuizTableWrapper = styled.table`
         padding: 10px;
         width: 100%;
         border: none;
+        border: 1px solid white;
+        &:hover {
+            border: 1px solid black;
+        }
     }
     @media (max-width: 600px) {
         width: 400px;
@@ -43,9 +48,9 @@ function QuizTable({ questionNumber, question, correctAnswer, incorrectAnswer,
         setChoices(shuffleArray([correctAnswer, ...incorrectAnswer]));
     }, [correctAnswer, incorrectAnswer]);
 
-    const yellowColour = { backgroundColor: "rgb(155, 155, 100)" };
-    const redColour = { backgroundColor: "rgb(155, 100, 100)" };
-    const greenColour = { backgroundColor: "rgb(100, 155, 100)" };
+    const yellowColour = { backgroundColor: "rgb(255, 255, 100)" };
+    const redColour = { backgroundColor: "rgb(255, 120, 120)" };
+    const greenColour = { backgroundColor: "rgb(120, 255, 120)" };
     const buttonStyles =
     [
         // Selected choice is yellow before submission

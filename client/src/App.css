@@ -17,14 +17,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(30, 30, 30);
+  background: rgba(200, 200, 200);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(150, 150, 150);
+  background: rgb(50, 50, 50);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(250, 250, 250); 
+  background: rgb(20, 20, 20); 
 }

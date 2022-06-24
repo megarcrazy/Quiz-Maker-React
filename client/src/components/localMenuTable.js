@@ -7,10 +7,11 @@ import TableButton from './tableButton.js';
 const QuizTable = styled.table`
     margin: 30px 0 20px 0px; 
     width: 512px;
-    background-color: rgb(100, 100, 100);
+    background-color: rgb(150, 150, 150);
     display: table;
     margin-left: auto;
     margin-right: auto;
+    border-radius: 10px;
     thead {
         font-weight: bold;
         font-size: 1.2em;
@@ -29,6 +30,15 @@ const ActionButtonsRow = styled.div`
     display: table;
     margin-left: auto;
     margin-right: auto;
+    button {
+        width: 80px;
+        height: 50px;
+        border-radius: 20px 5px 20px 5px;
+        border: 0;
+        &:hover {
+            border: 2px solid black;
+        }
+    }
 `;
 
 

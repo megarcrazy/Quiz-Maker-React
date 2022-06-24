@@ -10,7 +10,7 @@ import LocalMenuTable from '../components/localMenuTable.js';
 const AddNewQuizButton = styled.button`
     font-size: 1.4em;
     color: white;
-    background-color: rgb(82, 81, 81);
+    background-color: rgb(100, 100, 100);
     padding: 10px 50px 10px 50px;
     display: table;
     margin-left: auto;

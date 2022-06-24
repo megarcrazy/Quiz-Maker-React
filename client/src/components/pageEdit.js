@@ -10,10 +10,11 @@ import ChangeQuizSizeButtons from './changeQuizSizeButtons';
 const QuizTable = styled.table`
     margin: 30px 0 20px 0px; 
     width: 512px;
-    background-color: rgb(66, 66, 66);
+    background-color: rgb(150, 150, 150);
     display: table;
     margin-left: auto;
     margin-right: auto;
+    border-radius: 10px;
     thead {
         font-weight: bold;
         font-size: 1.2em;
@@ -37,8 +38,8 @@ const TableRowKey = styled.div`
 
 const QuizEditorForm = styled.form`
     input {
-        background-color: rgb(71, 71, 71);
-        color: white;
+        background-color: rgb(250, 250, 250);
+        color: black;
         margin-left: 10px;
         display: inline-block;
     }
@@ -49,7 +50,7 @@ const QuizEditorForm = styled.form`
         width: 80px;
         text-align: center;
         text-align-last: center;
-        background-color: rgb(185, 185, 185);
+        background-color: rgb(230, 230, 230);
     }
     option {
         text-align: center;
@@ -66,7 +67,9 @@ const TitleInput = styled.input`
 
 const SubmitButton = styled.button`
     background-color: rgb(53, 53, 53);
-    width: 100px;
+    width: 200px;
+    height: 50px;
+    font-size: 1.2em;
     padding: 5px;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -194,7 +197,6 @@ function PageEdit({ quizNumber, quizData }) {
                 <thead>{titleInput}</thead>
             </QuizTable>
             {tables}
-            <br />
             <SubmitButton>Confirm</SubmitButton>
         </QuizEditorForm>
     )
