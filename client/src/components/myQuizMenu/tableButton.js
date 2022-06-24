@@ -4,13 +4,13 @@ import axios from "axios";
 import styled from 'styled-components';
 
 
-const TableButtonWrapper = styled.button`
+const Button = styled.button`
     margin: 0 10px 0 10px;
 `;
 
 
 // Action buttons for the localMenuTable for "Play", "Edit" and "Delete"
-function TableButton({tableButtonType, quizNumber}) {
+export default function TableButton({tableButtonType, quizNumber}) {
     const history = useHistory();
     const buttonText = tableButtonType;
 
@@ -33,10 +33,8 @@ function TableButton({tableButtonType, quizNumber}) {
     }
 
     return (
-        <TableButtonWrapper onClick={handleClick}>
+        <Button onClick={handleClick}>
             {buttonText}
-        </TableButtonWrapper>
+        </Button>
     )
 }
-
-export default TableButton;

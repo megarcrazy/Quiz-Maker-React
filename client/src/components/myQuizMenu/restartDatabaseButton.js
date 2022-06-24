@@ -19,7 +19,7 @@ const Button = styled.button`
 
 
 // Button that restores the database to the default sample
-function RestartDatabaseButton() {
+export default function RestartDatabaseButton() {
     const handleClick = () => {
         if (window.confirm("Restart Database?")) {
             axios.post("http://localhost:3001/restart", {});
@@ -33,5 +33,3 @@ function RestartDatabaseButton() {
         </Button>
     )
 }
-
-export default RestartDatabaseButton;

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-const QuizTable = styled.table`
+const Table = styled.table`
     margin: 30px 0 20px 0px; 
     width: 512px;
     background-color: rgb(150, 150, 150);
@@ -14,41 +14,47 @@ const QuizTable = styled.table`
         font-weight: bold;
         font-size: 1.2em;
     }
-    tr {
-        width: 100%;
-        border: 1px solid rgb(255, 255, 255);
-    }
-    td {
-        width: 100%;
-        padding: 20px;
+`;
+
+const QuestionRow = styled.div`
+    height: 2em;
+    > * {
+        &:first-child {
+            width: 10%;
+            float: left;
+        }
+        &:nth-child(2) {  
+            width: 100%;
+            input {
+                font-size: 1.2em;
+                width: 85%;
+            }
+        }
     }
 `;
 
-const QuestionCellFillWrapper = styled.div`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    input {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
+const ChoiceRow = styled.div`
+    height: 2em;
+    > * {
+        &:first-child {
+            width: 10%;
+            float: left;
+            height: 100%;
+        }
+        &:nth-child(2) {
+            width: 100%;
+            input {
+                width: 85%;
+                height: 2em;
+            }
+        }
     }
-`;
-
-const TableRowKey = styled.div`
-    top: 50%;
-    width: 15px;
-    display: inline-block;
-    vertical-align: middle;
 `;
 
 const AnswerRow = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
-    align-items: center;
     > * {
         &:first-child {
             color: black;
@@ -62,14 +68,17 @@ const AnswerRow = styled.div`
             display: table;
             margin-left: auto;
             margin-right: auto;
+            select {
+                height: 2em;
+                width: 100px;
+            }
         }
     }
-
 `;
 
 
 // Table containing question, choices and correct answer index
-function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
+export default function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
     const correctAnswer = questionData.correct_answer
     const incorrectAnswers = questionData.incorrect_answers;
     const correctIndex = questionData.correct_index;
@@ -137,17 +146,15 @@ function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
     const tableQuestion = 
     <tr>
         <td>
-            <QuestionCellFillWrapper>
-                <TableRowKey>
-                    {questionNumber + 1}.
-                </TableRowKey> 
-                <QuestionCellFillWrapper>
+            <QuestionRow>
+                <div>{questionNumber + 1}. </div>
+                <div>
                     <input type="text"
                     value={HTMLDecode(questionData.question)}
                     onChange={(event) => {handleQuestionChange(event)}} 
-                    required/>
-                </QuestionCellFillWrapper>
-            </QuestionCellFillWrapper>
+                    equired/>
+                </div>
+            </QuestionRow>
         </td>
     </tr>
     
@@ -157,18 +164,18 @@ function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
         return (
             <tr key={index}>
                 <td>
-                    <QuestionCellFillWrapper>
-                        <TableRowKey>
-                            {questionLabel}.
-                        </TableRowKey> 
-                        <QuestionCellFillWrapper>
+                    <ChoiceRow>
+                        <div>
+                            {questionLabel}. 
+                        </div>
+                        <div>
                             <input type="text"
                             value={HTMLDecode(choice)}
                             name={index}
                             onChange={(event) => {handleChoiceChange(event, index)}} 
                             required/>
-                        </QuestionCellFillWrapper >
-                    </QuestionCellFillWrapper >
+                        </div>
+                    </ChoiceRow>
                 </td>
             </tr>
         )
@@ -179,7 +186,9 @@ function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
     <tr>
         <td>
             <AnswerRow>
-                <div>Answer</div> 
+                <div>
+                    Answer
+                </div> 
                 <div>
                     <select onChange={(event) => {handleAnswerChange(event)}} 
                     value={letterToIndex(correctIndex, true)}>
@@ -194,11 +203,11 @@ function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
     </tr>
 
     return (
-        <QuizTable>
+        <Table cellpadding="0">
             <thead>{tableQuestion}</thead>
             <tbody>{tableChoices}</tbody>
             <tbody>{answer}</tbody>
-        </QuizTable>
+        </Table>
     )
 }
 
@@ -207,5 +216,3 @@ const HTMLDecode = input => {
     const doc = new DOMParser().parseFromString(input, "text/html");
     return doc.documentElement.textContent;
 }
-
-export default EditQuizTable;

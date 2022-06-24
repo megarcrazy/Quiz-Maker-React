@@ -3,7 +3,7 @@ import './App.css';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 // Pages
 import Home from './pages/Home';
-import SavedQuizMenu from './pages/SavedQuizMenu';
+import MyQuizMenu from './pages/MyQuizMenu';
 import PlaySavedQuiz from './pages/PlaySavedQuiz';
 import EditSavedQuiz from './pages/EditSavedQuiz';
 import AddNewQuiz from './pages/AddNewQuiz';
@@ -24,7 +24,7 @@ function App() {
           {/** Routes of the app */}
           <Switch>
             <Route path={["/", "/home"]} exact component={Home} />
-            <Route path="/quiz" exact component={SavedQuizMenu} />
+            <Route path="/quiz" exact component={MyQuizMenu} />
             <Route path="/quiz/play/:quizNumber" exact component={PlaySavedQuiz} />
             <Route path="/quiz/edit/:quizNumber" exact component={EditSavedQuiz} />
             <Route path="/quiz/add" exact component={AddNewQuiz} />

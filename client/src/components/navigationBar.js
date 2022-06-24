@@ -48,7 +48,7 @@ const NavigationLinksCell = styled.td`
 `;
 
 
-function NavigationBar() {
+export default function NavigationBar() {
     return (
         <NavigationBarTable>
             <tr>
@@ -58,8 +58,8 @@ function NavigationBar() {
                 <NavigationLinksCell>
                     <ul>
                         <li><a href="/home">Home</a></li>
-                        <li><a href="/quiz">Local</a></li>
-                        <li><a href="/quiz/online">Online</a></li>
+                        <li><a href="/quiz">My Quizzes</a></li>
+                        <li><a href="/quiz/online">Random Quiz</a></li>
                         <li><a href="/about">About</a></li>
                     </ul>
                 </NavigationLinksCell>
@@ -68,5 +68,3 @@ function NavigationBar() {
         
     )
 };
-
-export default NavigationBar;

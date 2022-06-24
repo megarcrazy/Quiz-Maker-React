@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 // Components
-import PageEdit from '../components/pageEdit.js'
+import EditQuizForm from '../components/editQuiz/editQuizForm.js'
 
 
-function EditSavedQuiz() {
+export default function EditSavedQuiz() {
     const { quizNumber } = useParams();
     const [loaded, setLoaded] = useState(false);
     const [message, setMessage] = useState("Press confirm after completing the edit.");
     const [quizData, setQuizData] = useState("");
-    const pageEdit = <PageEdit quizData={quizData} quizNumber={quizNumber}/>;
 
     useEffect(() => {
         async function fetchData() {
@@ -29,9 +28,7 @@ function EditSavedQuiz() {
     return (
         <div className="content">
             <p>{message}</p>
-            {loaded && pageEdit}
+            {loaded && <EditQuizForm quizData={quizData} quizNumber={quizNumber}/>}
         </div>
     )
 }
-
-export default EditSavedQuiz;

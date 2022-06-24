@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 
-const QuizTableWrapper = styled.table`
+const Table = styled.table`
     margin: 30px 0 20px 0px; 
     width: 512px;
     background-color: rgb(200, 200, 200);
@@ -38,7 +38,7 @@ const QuizTableWrapper = styled.table`
 `;
 
 
-function QuizTable({ questionNumber, question, correctAnswer, incorrectAnswer, 
+export default function QuizQuestionTable({ questionNumber, question, correctAnswer, incorrectAnswer, 
     submitted, changeUserSelection}) {
     const emptyArray = new Array(4).fill(0);
     const [buttonState, setButtonState] = useState(emptyArray);
@@ -75,7 +75,7 @@ function QuizTable({ questionNumber, question, correctAnswer, incorrectAnswer,
     const tableChoices = choices.map((choice, index) => 
         <tr key={index}>
             <td>
-                <button style={buttonStyles[buttonState[index]]}
+                <button type="button" style={buttonStyles[buttonState[index]]}
                 onClick={() => changeSelection(index)}>
                     {String.fromCharCode(index + "a".charCodeAt())}. {HTMLDecode(choice)} 
                 </button>
@@ -84,12 +84,12 @@ function QuizTable({ questionNumber, question, correctAnswer, incorrectAnswer,
     );
 
     return (
-        <QuizTableWrapper>
+        <Table>
             <thead>
                 <tr><td>{questionNumber + 1}. {HTMLDecode(question)}</td></tr>
             </thead>
             <tbody>{tableChoices}</tbody>
-        </QuizTableWrapper>
+        </Table>
     )
 }
 
@@ -108,5 +108,3 @@ const HTMLDecode = input => {
     let doc = new DOMParser().parseFromString(input, "text/html");
     return doc.documentElement.textContent;
 }
-
-export default QuizTable;

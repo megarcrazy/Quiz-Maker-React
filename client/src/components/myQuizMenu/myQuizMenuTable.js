@@ -43,7 +43,7 @@ const ActionButtonsRow = styled.div`
 
 
 // Table with action buttons to play, edit or delete a saved quiz
-function LocalMenuTable({data, quizNumber}) {
+export default function MyQuizMenuTable({data, quizNumber}) {
     const tableButtons = 
     <tr>
         <td>
@@ -67,5 +67,3 @@ function LocalMenuTable({data, quizNumber}) {
         </QuizTable >
     )
 }
-
-export default LocalMenuTable;

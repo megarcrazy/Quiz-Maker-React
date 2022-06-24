@@ -2,17 +2,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from "react-router-dom";
 // Components
-import PageQuiz from '../components/pageQuiz.js'
+import PlayQuizForm from '../components/playQuiz/playQuizForm.js'
 
 
-function PlaySavedQuiz() {
+export default function PlaySavedQuiz() {
     const { quizNumber } = useParams();
     const [loaded, setLoaded] = useState(false);
 
     const [title, setTitle] = useState("");
     const [message, setMessage] = useState("");
     const [quizData, setQuizData] = useState("");
-    const pageQuiz = <PageQuiz quizData={quizData}/>;
 
     // Grab data from relevant quiz and checks if it exists
     useEffect(() => {
@@ -35,9 +34,7 @@ function PlaySavedQuiz() {
         <div className="content">
             <h1>{title}</h1>
             <p>{message}</p>
-            {loaded && pageQuiz}
+            {loaded && <PlayQuizForm quizData={quizData}/>}
         </div>
     )
 }
-
-export default PlaySavedQuiz;

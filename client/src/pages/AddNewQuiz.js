@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 // Components
-import PageEdit from '../components/pageEdit.js'
+import EditQuizForm from '../components/editQuiz/editQuizForm';
 
-function AddNewQuiz() {
+
+export default function AddNewQuiz() {
     const title = "Add New Quiz";
     const message = "Click confirm when you are done.";
     const [quizNumber, setQuizNumber] = useState(0);
@@ -33,9 +34,7 @@ function AddNewQuiz() {
         <div className="content">
             <h1>{title}</h1>
             <p>{message}</p>
-            <PageEdit quizData={newQuizData} quizNumber={quizNumber}/>
+            <EditQuizForm quizData={newQuizData} quizNumber={quizNumber}/>
         </div>
     )
 }
-
-export default AddNewQuiz;

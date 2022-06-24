@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ChangeQuizSizeButtonWrapper = styled.div`
+const Wrapper = styled.div`
     display: table;
     margin-left: auto;
     margin-right: auto;
@@ -33,17 +33,15 @@ const ChangeQuizSizeButtonWrapper = styled.div`
 
 // The add button "+": adds a new question below
 // The subtract button "-": deletes the question above
-function ChangeQuizSizeButtons({ questionNumber, increaseSize, decreaseSize }) {
+export default function ChangeQuizSizeButtons({ questionNumber, increaseSize, decreaseSize }) {
     return (
-        <ChangeQuizSizeButtonWrapper>
+        <Wrapper>
             <button type="button" onClick={() => increaseSize(questionNumber)}>
                 +
             </button>
             <button type="button" onClick={() => decreaseSize(questionNumber)}>
                 -
             </button>
-        </ChangeQuizSizeButtonWrapper>
+        </Wrapper>
     )
 }
-
-export default ChangeQuizSizeButtons;

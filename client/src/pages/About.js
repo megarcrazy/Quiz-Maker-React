@@ -1,6 +1,6 @@
 import React from 'react';
 
-function About() {
+export default function About() {
     const title = "About";
     const message = "This website was made by Vincent Tang in 2021-2022."
     
@@ -11,5 +11,3 @@ function About() {
         </div>
     )
 }
-
-export default About;

@@ -1,34 +1,19 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 // Components
-import QuizTable from './quizTable';
+import QuizQuestionTable from './quizQuestionTable';
+import ScoreDisplay from './scoreDisplay';
+import SubmitQuizButton from './submitQuizButton';
 
 
-const SubmitButton = styled.button`
-    background-color: rgb(53, 53, 53);
-    width: 200px;
-    height: 50px;
-    font-size: 1.2em;
-    padding: 5px;
-    margin-top: 40px;
-    margin-bottom: 20px;
-    display: table;
-    margin-left: auto;
-    margin-right: auto;
-    color: white;
-    &:hover {
-        background-color: rgb(97, 97, 97);
-    }
-`;
-
-const ScoreDisplay = styled.div`
+const Wrapper = styled.form`
     display: table;
     margin-left: auto;
     margin-right: auto;
 `;
 
 
-function PageQuiz({ quizData }) {
+export default function PlayQuizForm({ quizData }) {
     const [submitted, setSubmitted] = useState(false); 
     const [userSelection, setUserSelection] = useState(
         new Array(quizData.length).fill(null)
@@ -36,7 +21,7 @@ function PageQuiz({ quizData }) {
     
     const submitQuiz = () => {
         setSubmitted(true);
-        (submitted) && window.location.reload(); // Reload on clicking "Try Again"
+        (submitted) && window.location.reload(); // Reload on clicking "New Quiz"
     }
 
     // Calculates the number of correct answers
@@ -52,7 +37,7 @@ function PageQuiz({ quizData }) {
 
     const tables = [...Array(quizData.length).keys()].map((questionNumber) => {
         const currentData = quizData[questionNumber];
-        return <QuizTable 
+        return <QuizQuestionTable
         key={questionNumber}
         questionNumber={questionNumber}
         question={currentData.question}
@@ -68,22 +53,11 @@ function PageQuiz({ quizData }) {
     });
 
     return (
-        <div>
-            <SubmitButton onClick={submitQuiz}>
-                {(submitted) ? "Try Again" : "Submit"}
-            </SubmitButton>
+        <Wrapper>
+            <SubmitQuizButton submitted={submitted} onClick={submitQuiz} />
             {tables}
-            <SubmitButton onClick={submitQuiz}>
-                {(submitted) ? "Try Again" : "Submit"}
-            </SubmitButton>
-            <ScoreDisplay>
-                {submitted ? 
-                <p>Your Score is {score} / {quizData.length}</p> :
-                <br />}
-            </ScoreDisplay>
-            <br />
-        </div>
+            <SubmitQuizButton submitted={submitted} onClick={submitQuiz} />
+            <ScoreDisplay submitted={submitted} score={score} quizLength={quizData.length}/>
+        </Wrapper>
     )
 };
-
-export default PageQuiz;
