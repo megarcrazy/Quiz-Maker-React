@@ -5,15 +5,23 @@ import styled from 'styled-components';
 const Table = styled.table`
     margin: 30px 0 20px 0px; 
     width: 512px;
-    background-color: rgb(150, 150, 150);
-    border-radius: 5px;
     display: table;
     margin-left: auto;
     margin-right: auto;
+    border-collapse: collapse;
     thead {
         font-weight: bold;
         font-size: 1.2em;
+        td {
+            background-color: rgb(200, 180, 255);
+            border: none;
+            border-radius: 10px 10px 0 0;
+        }
     }
+    tbody {
+        border: 1px solid gray;
+    }
+    
     @media (max-width: 768px) {
         width: 470px;
     }
@@ -152,7 +160,7 @@ export default function EditQuizTable({ questionNumber, questionData, updateQuiz
             <QuestionRow>
                 <div>{questionNumber + 1}. </div>
                 <div>
-                    <input type="text"
+                    <input type="text" placeholder="Question"
                     value={HTMLDecode(questionData.question)}
                     onChange={(event) => {handleQuestionChange(event)}} 
                     equired/>
@@ -172,7 +180,7 @@ export default function EditQuizTable({ questionNumber, questionData, updateQuiz
                             {questionLabel}. 
                         </div>
                         <div>
-                            <input type="text"
+                            <input type="text" placeholder="Choice"
                             value={HTMLDecode(choice)}
                             name={index}
                             onChange={(event) => {handleChoiceChange(event, index)}} 

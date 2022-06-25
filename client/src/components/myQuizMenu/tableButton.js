@@ -6,6 +6,14 @@ import styled from 'styled-components';
 
 const Button = styled.button`
     margin: 0 10px 0 10px;
+    font-size: 1em;
+    background-color: rgb(200, 200, 200);
+    border-color: rgb(200, 200, 200) !important;
+    transition: border-color 1s ease;
+    &:hover {
+        border-color: black !important;
+        cursor: pointer;
+    }
 `;
 
 

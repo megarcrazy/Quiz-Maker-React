@@ -20,7 +20,7 @@ const TitleInput = styled.input`
 export default function EditTitle({ title, onClick }) {
     return (
         <Wrapper>
-            <TitleInput type="text"
+            <TitleInput type="text" placeholder="Title"
             value={title}
             onChange={(event) => {onClick(event)}}
             required/>

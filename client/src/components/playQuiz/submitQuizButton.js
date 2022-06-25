@@ -2,8 +2,7 @@ import styled from 'styled-components';
 
 
 const Button = styled.button`
-    background-color: rgb(53, 53, 53);
-    border-radius: 10px;
+    background-color: rgb(40, 100, 40);
     width: 200px;
     height: 50px;
     font-size: 1.2em;
@@ -14,8 +13,12 @@ const Button = styled.button`
     margin-left: auto;
     margin-right: auto;
     color: white;
+    border-radius: 10px;
+    border: none;
+    transition: background-color 0.2s ease;
     &:hover {
-        background-color: rgb(97, 97, 97);
+        background-color: rgb(50, 120, 50);
+        cursor: pointer;
     }
 `;
 

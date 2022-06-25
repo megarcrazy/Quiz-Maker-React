@@ -28,8 +28,10 @@ const Table = styled.table`
         width: 100%;
         border: none;
         border: 1px solid white;
+        transition: background-color 0.4s ease;
         &:hover {
             border: 1px solid black;
+            cursor: pointer;
         }
     }
     @media (max-width: 600px) {

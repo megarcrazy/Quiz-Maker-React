@@ -12,8 +12,13 @@ const Button = styled.button`
     width: 200px;
     height: 50px;
     font-size: 1em;
+    border: 1px solid white;
+    border-color: white !important;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
     &:hover {
-        border: 3px solid black;
+        cursor: pointer;
+        background-color: rgb(255, 220, 220);
     }
 `;
 

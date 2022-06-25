@@ -54,7 +54,6 @@ export default function PlayQuizForm({ quizData }) {
 
     return (
         <Wrapper>
-            <SubmitQuizButton submitted={submitted} onClick={submitQuiz} />
             {tables}
             <SubmitQuizButton submitted={submitted} onClick={submitQuiz} />
             <ScoreDisplay submitted={submitted} score={score} quizLength={quizData.length}/>

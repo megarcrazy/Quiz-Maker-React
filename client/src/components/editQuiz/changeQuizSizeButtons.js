@@ -11,21 +11,16 @@ const Wrapper = styled.div`
         width: 50px;
         height: 50px;
         color: black;
-        background-color: rgb(146, 146, 146);
+        background-color: rgb(255, 255, 255);
         margin-left: 10px;
         margin-right: 10px;
-        font-size: 1.4em;
-        &:active, &:focus {
+        font-size: 1.6em;
+        border: 1px solid black;
+        transition: background-color 0.2s ease;
+        &:hover {
             outline: none;
-            border-color: white;
-            box-shadow: none;
             background-color: rgb(185, 185, 185);
-        }
-        &:hover, &:focus {
-            outline: none;
-            border-color: white;
-            box-shadow: none;
-            background-color: rgb(185, 185, 185);
+            cursor: pointer;
         }
     }
 `;

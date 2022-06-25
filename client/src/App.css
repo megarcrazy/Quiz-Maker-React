@@ -1,11 +1,15 @@
+html {
+  overflow-y: overlay;
+}
+
 .App {
   background-color: white;
   min-height: 100vh;
   min-width: 100%;
 }
 
-.content {
-  padding: 65px 65px 5px 65px;
+.content {  
+  padding: 5px 65px 5px 65px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -20,7 +24,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
