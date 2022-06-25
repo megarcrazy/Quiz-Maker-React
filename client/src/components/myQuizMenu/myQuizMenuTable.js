@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import TableButton from './tableButton.js';
 
 
-const QuizTable = styled.table`
+const Table = styled.table`
     margin: 30px 0 20px 0px; 
     width: 512px;
     background-color: rgb(150, 150, 150);
@@ -23,6 +23,9 @@ const QuizTable = styled.table`
     td {
         width: 100%;
         padding: 20px;
+    }
+    @media (max-width: 768px) {
+        width: 470px;
     }
 `;
 
@@ -56,7 +59,7 @@ export default function MyQuizMenuTable({data, quizNumber}) {
     </tr>
 
     return (
-        <QuizTable key={quizNumber}>
+        <Table key={quizNumber}>
             <thead>
                 <tr><td>{`${quizNumber}. ${data.title}`}</td></tr>
             </thead>
@@ -64,6 +67,6 @@ export default function MyQuizMenuTable({data, quizNumber}) {
                 <tr><td>{`Number of questions: ${data.results.length}`}</td></tr>
             </tbody>
             <tbody>{tableButtons}</tbody>
-        </QuizTable >
+        </Table >
     )
 }

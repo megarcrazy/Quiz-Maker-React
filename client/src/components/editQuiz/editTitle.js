@@ -6,6 +6,9 @@ const Wrapper = styled.div`
     display: table;
     margin-left: auto;
     margin-right: auto;
+    @media (max-width: 768px) {
+        width: 450px;
+    }
 `;
 
 const TitleInput = styled.input`

@@ -14,6 +14,9 @@ const Table = styled.table`
         font-weight: bold;
         font-size: 1.2em;
     }
+    @media (max-width: 768px) {
+        width: 470px;
+    }
 `;
 
 const QuestionRow = styled.div`

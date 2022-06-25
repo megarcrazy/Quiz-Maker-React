@@ -6,6 +6,10 @@ const NavigationBarTable = styled.table`
     height: 60px;
     width: 100%;
     background-color: rgb(200, 200, 200);
+    box-shadow: 0px 2px rgba(0, 0, 0, 0.3);
+    td {
+        height: 60px;
+    }
     a {
         text-decoration: none;
     }
@@ -21,6 +25,9 @@ const NavigationLogoCell = styled.td`
         font-weight: 600;
         font-family: "Arial";
     }
+    @media (max-width: 768px) {
+        width: 20%;
+    }
 `;
 
 const NavigationLinksCell = styled.td`
@@ -29,13 +36,16 @@ const NavigationLinksCell = styled.td`
     }
     li {
         display: inline;
+        white-space: nowrap;
     }
     a {
-        font-size: 1.2em;
-        padding: 1em 2em 1em 2em;
+        height: 100%;
+        font-size: 1em;
+        padding: 1.4em 1em 1.4em 1em;
+        font-family: "Arial";
         color: black;
         @media (max-width: 768px) {
-            padding: 1em 1em 1em 1em;
+            padding: 1.4em 0.5em 1.4em 0.2em;
         }
     }
     a:hover {
