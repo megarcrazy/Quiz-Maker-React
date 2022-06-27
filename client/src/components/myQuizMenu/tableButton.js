@@ -24,9 +24,9 @@ export default function TableButton({tableButtonType, quizNumber}) {
 
     const handleClick = () => {
         if (tableButtonType === "Play") {
-            history.push(`quiz/play/${quizNumber}`);
+            history.push(`my-quizzes/play/${quizNumber}`);
         } else if (tableButtonType === "Edit") {
-            history.push(`quiz/edit/${quizNumber}`);
+            history.push(`my-quizzes/edit/${quizNumber}`);
         } else if(tableButtonType === "Delete") {
             // Windows alert confirmation
             if (window.confirm(`Are you sure you want to delete quiz number ${quizNumber}?`)) {
