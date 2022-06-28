@@ -12,15 +12,14 @@ export default function MyQuizMenu() {
     const [quizData, setQuizData] = useState([]);
 
     useEffect(() => {
-        async function fetchData() {
+        (async function fetchData() {
             const response = await axios("http://localhost:3001/data");
             setQuizData(response.data);
-        }
-        fetchData();
+        })();
     }, []);
 
     const addQuiz = () => {
-        history.push("quiz/add");
+        history.push("my-quizzes/add");
     }
 
     const tables = quizData.map((quiz, index) => {

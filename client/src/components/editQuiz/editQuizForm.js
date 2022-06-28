@@ -114,7 +114,7 @@ export default function EditQuizForm({ quizNumber, quizData }) {
             axios.post("http://localhost:3001/edit/" + quizNumber, {
                 quizData: newQuizData
             });
-            history.push("/quiz");
+            history.push("/my-quizzes");
         }
     }
 

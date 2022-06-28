@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 // Components
-import EditQuizForm from '../components/editQuiz/editQuizForm.js'
+import EditQuizForm from '../components/editQuiz/editQuizForm.js';
 
 
 export default function EditSavedQuiz() {

@@ -10,26 +10,25 @@ export default function AddNewQuiz() {
     const [quizNumber, setQuizNumber] = useState(0);
 
     useEffect(() => {
-        async function fetchData() {
-            const response = await axios("http://localhost:3001/data/length");
-            const length = response.data;
+        (async function () {
+            const responseLength = await axios("http://localhost:3001/databaseLength");
+            const length = responseLength.data;
             setQuizNumber(length + 1);
-        }
-        fetchData();
-    }, [quizNumber]);
+        })();
+    }, []);
 
     const newQuizData = {
         title: "",
-		results: [
+        results: [
             {
-                question: "",
-                correct_answer: "",
-                incorrect_answers: ["", "", ""],
-                correct_index: 0
+            question: "",
+            correct_answer: "",
+            incorrect_answers: ["", "", ""],
+            correct_index: 0
             }
         ]
-    }
-    
+    };
+
     return (
         <div className="content">
             <h1>{title}</h1>

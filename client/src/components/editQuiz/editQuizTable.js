@@ -163,7 +163,7 @@ export default function EditQuizTable({ questionNumber, questionData, updateQuiz
                     <input type="text" placeholder="Question"
                     value={HTMLDecode(questionData.question)}
                     onChange={(event) => {handleQuestionChange(event)}} 
-                    equired/>
+                    required />
                 </div>
             </QuestionRow>
         </td>
