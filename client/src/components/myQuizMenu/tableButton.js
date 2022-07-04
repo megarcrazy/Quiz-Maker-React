@@ -39,7 +39,7 @@ export default function TableButton({tableButtonType, quizNumber}) {
                 });
                 window.location.reload();
             }
-            history.push("quiz");
+            history.push("my-quizzes");
         }
     }
 
