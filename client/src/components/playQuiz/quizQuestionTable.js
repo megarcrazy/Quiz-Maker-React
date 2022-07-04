@@ -7,9 +7,10 @@ const Table = styled.table`
     width: 512px;
     background-color: rgb(200, 200, 200);
     border: 2px solid black;
-    display: ta ble;
+    display: table;
     margin-left: auto;
     margin-right: auto;
+    font-family: "Gloria Hallelujah";
     thead {
         font-weight: bold;
         font-size: 1.2em;
@@ -21,6 +22,7 @@ const Table = styled.table`
         }
     }
     button {
+        font-family: "Gloria Hallelujah";
         background-color: white;
         color: black;
         text-align: left;

@@ -12,7 +12,8 @@ const Wrapper = styled.div`
 `;
 
 const TitleInput = styled.input`
-    font-size: 2em;
+    font-family: "Gloria Hallelujah";
+    font-size: 1.6em;
     width: 100%;
 `;
 

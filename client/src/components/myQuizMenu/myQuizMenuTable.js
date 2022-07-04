@@ -11,24 +11,17 @@ const Table = styled.table`
     margin-left: auto;
     margin-right: auto;
     border-collapse: collapse;
+    font-family: "Gloria Hallelujah";
+    background-color: rgb(255, 255, 140);
+    box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
     thead {
         font-weight: bold;
         font-size: 1.2em;
-        tr { 
-            td {
-                border: none;
-                background-color: rgb(200, 180, 255);
-                border-radius: 20px 20px 0 0;
-            }   
-        }
     }
     tr {
         width: 100%;
     }
     td {
-        border-left: 1px solid gray;
-        border-right: 1px solid gray;
-        border-bottom: 1px solid gray;
         width: 100%;
         padding: 20px;
     }
@@ -39,17 +32,7 @@ const Table = styled.table`
 
 const ActionButtonsRow = styled.div`
     display: table;
-    margin-left: auto;
-    margin-right: auto;
-    button {
-        width: 80px;
-        height: 50px;
-        border-radius: 20px 5px 20px 5px;
-        border: 0;
-        &:hover {
-            border: 2px solid black;
-        }
-    }
+    margin: auto;
 `;
 
 

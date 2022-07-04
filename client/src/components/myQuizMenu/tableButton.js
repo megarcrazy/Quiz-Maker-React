@@ -7,11 +7,14 @@ import styled from 'styled-components';
 const Button = styled.button`
     margin: 0 10px 0 10px;
     font-size: 1em;
-    background-color: rgb(200, 200, 200);
-    border-color: rgb(200, 200, 200) !important;
-    transition: border-color 1s ease;
+    background-color: rgb(0, 0, 0, 0);
+    border: none;
+    transition: transform 0.1s ease;
+    width: 100px;
+    height: 50px;
+    font-family: "Gloria Hallelujah";
     &:hover {
-        border-color: black !important;
+        transform: rotate(-15deg);
         cursor: pointer;
     }
 `;
@@ -27,7 +30,7 @@ export default function TableButton({tableButtonType, quizNumber}) {
             history.push(`my-quizzes/play/${quizNumber}`);
         } else if (tableButtonType === "Edit") {
             history.push(`my-quizzes/edit/${quizNumber}`);
-        } else if(tableButtonType === "Delete") {
+        } else if (tableButtonType === "Delete") {
             // Windows alert confirmation
             if (window.confirm(`Are you sure you want to delete quiz number ${quizNumber}?`)) {
                 // Get quiz data for the current quiz number

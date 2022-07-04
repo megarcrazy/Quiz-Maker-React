@@ -13,7 +13,6 @@ const Wrapper = styled.form`
     input {
         background-color: rgb(250, 250, 250);
         color: black;
-
         display: inline-block;
     }
     table tr td {

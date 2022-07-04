@@ -8,7 +8,7 @@ const Wrapper = styled.div`
     margin-top: 20px;
     margin-bottom: 50px;
     button {
-        width: 50px;
+        width: 100px;
         height: 50px;
         color: black;
         background-color: rgb(255, 255, 255);

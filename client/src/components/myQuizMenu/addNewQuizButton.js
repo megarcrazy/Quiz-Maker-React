@@ -11,6 +11,7 @@ const Button = styled.button`
     margin-right: auto;
     border: none;
     border-radius: 5px;
+    height: 50px;
     transition: background-color 0.2s ease;
     &:hover {    
         background-color: rgb(100, 180, 100);

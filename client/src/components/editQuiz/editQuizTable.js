@@ -9,34 +9,30 @@ const Table = styled.table`
     margin-left: auto;
     margin-right: auto;
     border-collapse: collapse;
+    font-family: "Gloria Hallelujah";
+    background-color: rgb(255, 255, 140);
+    box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
     thead {
         font-weight: bold;
         font-size: 1.2em;
-        td {
-            background-color: rgb(200, 180, 255);
-            border: none;
-            border-radius: 10px 10px 0 0;
-        }
     }
-    tbody {
-        border: 1px solid gray;
-    }
-    
     @media (max-width: 768px) {
         width: 470px;
     }
 `;
 
 const QuestionRow = styled.div`
-    height: 2em;
+    height: 3em;
+    padding-top: 10px;
     > * {
         &:first-child {
             width: 10%;
             float: left;
         }
-        &:nth-child(2) {  
+        &:nth-child(2) {
             width: 100%;
             input {
+                font-family: "Gloria Hallelujah";
                 font-size: 1.2em;
                 width: 85%;
             }
@@ -55,6 +51,7 @@ const ChoiceRow = styled.div`
         &:nth-child(2) {
             width: 100%;
             input {
+                font-family: "Gloria Hallelujah";
                 width: 85%;
                 height: 2em;
             }
@@ -80,8 +77,12 @@ const AnswerRow = styled.div`
             margin-left: auto;
             margin-right: auto;
             select {
-                height: 2em;
+                font-family: "Gloria Hallelujah";
+                height: 3em;
                 width: 100px;
+                &:hover {
+                    cursor: pointer;
+                }
             }
         }
     }
