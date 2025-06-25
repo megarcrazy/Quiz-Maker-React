@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-
+// TODO: Refactor this mess
 
 const Table = styled.table`
-    margin: 30px 0 20px 0px; 
+    margin: 30px 0 20px 0px;
     width: 512px;
     display: table;
     margin-left: auto;
@@ -19,6 +19,22 @@ const Table = styled.table`
     @media (max-width: 768px) {
         width: 470px;
     }
+    input {
+        background-color: rgb(250, 250, 250);
+        color: black;
+        display: inline-block;
+    }
+    tr td {
+        padding: 2px;
+    }
+    select {
+        width: 80px;
+        text-align: center;
+        text-align-last: center;
+    }
+    option {
+        text-align: center;
+    }
 `;
 
 const QuestionRow = styled.div`
@@ -28,6 +44,7 @@ const QuestionRow = styled.div`
         &:first-child {
             width: 10%;
             float: left;
+            margin-left: 10px;
         }
         &:nth-child(2) {
             width: 100%;
@@ -47,6 +64,7 @@ const ChoiceRow = styled.div`
             width: 10%;
             float: left;
             height: 100%;
+            margin-left: 10px;
         }
         &:nth-child(2) {
             width: 100%;
@@ -59,31 +77,36 @@ const ChoiceRow = styled.div`
     }
 `;
 
+
 const AnswerRow = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
-    > * {
-        &:first-child {
-            color: black;
-            font-size: 1.2em;
-            font-weight: 600;
-            display: table;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        &:nth-child(2) {
-            display: table;
-            margin-left: auto;
-            margin-right: auto;
-            select {
-                font-family: "Gloria Hallelujah";
-                height: 3em;
-                width: 100px;
-                &:hover {
-                    cursor: pointer;
-                }
-            }
+    padding-top: 5px;
+    padding-bottom: 5px;
+`;
+
+const AnswerLabel = styled.label`
+    color: black;
+    font-size: 1.2em;
+    font-weight: 600;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+`;
+
+
+const AnswerSelect = styled.select`
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    select {
+        font-family: "Gloria Hallelujah";
+        height: 3em;
+        width: 100px;
+        &:hover {
+            cursor: pointer;
         }
     }
 `;
@@ -94,21 +117,12 @@ export default function EditQuizTable({ questionNumber, questionData, updateQuiz
     const correctAnswer = questionData.correct_answer
     const incorrectAnswers = questionData.incorrect_answers;
     const correctIndex = questionData.correct_index;
-    // Initialise choice array and insert the correct answer in the correct 
+    // Initialise choice array and insert the correct answer in the correct
     const choices = [
         ...incorrectAnswers.slice(0, correctIndex),
         correctAnswer,
         ...incorrectAnswers.slice(correctIndex, incorrectAnswers.length)
     ];
-
-    // Converts letter to their respective number index
-    // eg. a, b, c => 0, 1, 2
-    const letterToIndex = (key, reveresed) => {
-        if (reveresed) {
-            return String.fromCharCode(key + "a".charCodeAt());
-        }
-        return key - "a".charCodeAt();
-    }
 
     const handleQuestionChange = (event) => {
         updateQuiz({
@@ -116,7 +130,7 @@ export default function EditQuizTable({ questionNumber, questionData, updateQuiz
             question: event.target.value
         }, questionNumber);
     }
-    
+
     const handleChoiceChange = (event, index) => {
         if (index === correctIndex) {
             updateQuiz({
@@ -141,7 +155,8 @@ export default function EditQuizTable({ questionNumber, questionData, updateQuiz
 
     // Change which question is the correct answer
     const handleAnswerChange = (event) => {
-        const newIndex = letterToIndex(event.target.value.charCodeAt(), false);
+        const index = event.target.value.charCodeAt()
+        const newIndex = letterToIndex(index);
         const correct_answer = choices[newIndex];
         const incorrect_answer = [
             ...choices.slice(0, newIndex),
@@ -155,37 +170,37 @@ export default function EditQuizTable({ questionNumber, questionData, updateQuiz
         }, questionNumber);
     }
 
-    const tableQuestion = 
-    <tr>
-        <td>
-            <QuestionRow>
-                <div>{questionNumber + 1}. </div>
-                <div>
-                    <input type="text" placeholder="Question"
-                    value={HTMLDecode(questionData.question)}
-                    onChange={(event) => {handleQuestionChange(event)}} 
-                    required />
-                </div>
-            </QuestionRow>
-        </td>
-    </tr>
-    
+    const tableQuestion =
+        <tr>
+            <td>
+                <QuestionRow>
+                    <div>{questionNumber + 1}. </div>
+                    <div>
+                        <input type="text" placeholder="Question"
+                            value={HTMLDecode(questionData.question)}
+                            onChange={(event) => { handleQuestionChange(event) }}
+                            required />
+                    </div>
+                </QuestionRow>
+            </td>
+        </tr>
+
     // Combines the correct and incorrect answers into table rows
     const tableChoices = choices.map((choice, index) => {
-        const questionLabel = letterToIndex(index, true);
+        const questionLabel = letterIndexToLetter(index);
         return (
             <tr key={index}>
                 <td>
                     <ChoiceRow>
                         <div>
-                            {questionLabel}. 
+                            {questionLabel}.
                         </div>
                         <div>
                             <input type="text" placeholder="Choice"
-                            value={HTMLDecode(choice)}
-                            name={index}
-                            onChange={(event) => {handleChoiceChange(event, index)}} 
-                            required/>
+                                value={HTMLDecode(choice)}
+                                name={index}
+                                onChange={(event) => { handleChoiceChange(event, index) }}
+                                required />
                         </div>
                     </ChoiceRow>
                 </td>
@@ -194,28 +209,21 @@ export default function EditQuizTable({ questionNumber, questionData, updateQuiz
     });
 
     // Select form for choosing correct answer
-    const answer = 
-    <tr>
-        <td>
-            <AnswerRow>
-                <div>
-                    Answer
-                </div> 
-                <div>
-                    <select onChange={(event) => {handleAnswerChange(event)}} 
-                    value={letterToIndex(correctIndex, true)}>
-                        <option value="a">a</option>
-                        <option value="b">b</option>
-                        <option value="c">c</option>
-                        <option value="d">d</option>
-                    </select>
-                </div>
-            </AnswerRow>
-        </td>
-    </tr>
+    const answer =
+        <AnswerRow>
+            <AnswerLabel>Answer</AnswerLabel>
+            <AnswerSelect onChange={(event) => { handleAnswerChange(event) }}
+                value={letterIndexToLetter(correctIndex)}>
+                <option value="a">a</option>
+                <option value="b">b</option>
+                <option value="c">c</option>
+                <option value="d">d</option>
+            </AnswerSelect>
+        </AnswerRow>
+
 
     return (
-        <Table cellpadding="0">
+        <Table>
             <thead>{tableQuestion}</thead>
             <tbody>{tableChoices}</tbody>
             <tbody>{answer}</tbody>
@@ -228,3 +236,17 @@ const HTMLDecode = input => {
     const doc = new DOMParser().parseFromString(input, "text/html");
     return doc.documentElement.textContent;
 }
+
+// Converts letter to their respective number index
+// eg. a, b, c => 0, 1, 2
+const letterToIndex = (key) => {
+    const index = key - "a".charCodeAt();
+    return index
+};
+
+// Reverse of letter to index
+// eg. 0, 1, 2 => a, b, c
+const letterIndexToLetter = (index) => {
+    const letter = String.fromCharCode(index + "a".charCodeAt());
+    return letter
+};

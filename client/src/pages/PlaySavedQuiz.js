@@ -34,7 +34,7 @@ export default function PlaySavedQuiz() {
         <div className="content">
             <h1>{title}</h1>
             <p>{message}</p>
-            {loaded && <PlayQuizForm quizData={quizData}/>}
+            {loaded && <PlayQuizForm quizData={quizData} />}
         </div>
     )
 }

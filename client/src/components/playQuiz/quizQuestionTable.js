@@ -42,13 +42,13 @@ const Table = styled.table`
 `;
 
 
-export default function QuizQuestionTable({ questionNumber, question, correctAnswer, incorrectAnswer, 
-    submitted, changeUserSelection}) {
+export default function QuizQuestionTable({ questionNumber, question, correctAnswer, incorrectAnswer,
+    submitted, changeUserSelection }) {
     const emptyArray = new Array(4).fill(0);
     const [buttonState, setButtonState] = useState(emptyArray);
     const [choices, setChoices] = useState([]);
 
-    useEffect(() =>{
+    useEffect(() => {
         setChoices(shuffleArray([correctAnswer, ...incorrectAnswer]));
     }, [correctAnswer, incorrectAnswer]);
 
@@ -56,12 +56,12 @@ export default function QuizQuestionTable({ questionNumber, question, correctAns
     const redColour = { backgroundColor: "rgb(255, 120, 120)" };
     const greenColour = { backgroundColor: "rgb(120, 255, 120)" };
     const buttonStyles =
-    [
-        // Selected choice is yellow before submission
-        null, // Default
-        (!submitted) ? yellowColour : redColour, // Red if Wrong
-        (!submitted) ? yellowColour : greenColour // Green if Correct
-    ]
+        [
+            // Selected choice is yellow before submission
+            null, // Default
+            (!submitted) ? yellowColour : redColour, // Red if Wrong
+            (!submitted) ? yellowColour : greenColour // Green if Correct
+        ]
 
     const changeSelection = (choiceIndex) => {
         if (!submitted) {
@@ -70,18 +70,18 @@ export default function QuizQuestionTable({ questionNumber, question, correctAns
             changeUserSelection(choices[choiceIndex], questionNumber);
             setButtonState({
                 ...emptyArray,
-                [choiceIndex]: (choices[choiceIndex] === correctAnswer) ? 
-                correct : incorrect,
+                [choiceIndex]: (choices[choiceIndex] === correctAnswer) ?
+                    correct : incorrect,
             });
-        } 
+        }
     }
 
-    const tableChoices = choices.map((choice, index) => 
+    const tableChoices = choices.map((choice, index) =>
         <tr key={index}>
             <td>
                 <button type="button" style={buttonStyles[buttonState[index]]}
-                onClick={() => changeSelection(index)}>
-                    {String.fromCharCode(index + "a".charCodeAt())}. {HTMLDecode(choice)} 
+                    onClick={() => changeSelection(index)}>
+                    {String.fromCharCode(index + "a".charCodeAt())}. {HTMLDecode(choice)}
                 </button>
             </td>
         </tr>
