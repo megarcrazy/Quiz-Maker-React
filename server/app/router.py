@@ -190,7 +190,7 @@ def create_random_quiz(db: Session=Depends(get_db)):
         )
 
     try:
-        new_quiz = Quiz(title_text="Random Quiz")
+        new_quiz = Quiz(title_text="Random Quiz", hidden=True)
         for item in data["results"]:
             question_text = html.unescape(item["question"])
             question = Question(question_text=question_text)

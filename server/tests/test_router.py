@@ -453,6 +453,11 @@ def test_add_random_quiz_successful(client_session: TestClient, db_session: Sess
             {"question_id": 2, "question_text": "The Earth is flat."}
         ]
 
+        # Check if hidden value is True
+        quiz = db_session.query(Quiz).filter(Quiz.quiz_id == 1).first()
+        assert quiz is not None
+        assert quiz.hidden == True
+
 
 def test_add_random_quiz_unsuccessful(client_session: TestClient, db_session: Session):
     # Arrange
