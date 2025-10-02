@@ -23,6 +23,7 @@ class PlayQuizQuestionsSchema(BaseModel):
     title_text: str
     question_list: list["QuestionSchema"]
 
+
 class QuestionSchema(BaseModel):
     question_id: int
     question_text: str

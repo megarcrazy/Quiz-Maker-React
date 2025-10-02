@@ -44,4 +44,3 @@ class Answer(Base):
 
     # Relationships
     question: Mapped["Question"] = relationship("Question", back_populates="answer_list")
-
