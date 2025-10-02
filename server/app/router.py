@@ -5,7 +5,8 @@ import requests
 from sqlalchemy.orm import Session, joinedload
 from .schemas import (
     PlayQuizQuestionsSchema, QuestionSchema, FullQuizSchema,
-    QuizResultSchema, SubmittedQuizSchema, QuestionResult
+    QuizResultSchema, SubmittedQuizSchema, QuestionResult,
+    QuizListSchema, QuizListItem
 )
 from .database import get_db
 from .models import Quiz, Question, Answer
@@ -50,6 +51,21 @@ def add_quiz(quiz_data: FullQuizSchema, db: Session=Depends(get_db)):
         )
 
     result = {"message": f"Added quiz {new_quiz.quiz_id} successfully"}
+    return result
+
+
+@backend_router.get("/get-quiz-list", response_model=QuizListSchema)
+def get_quiz_list(db: Session = Depends(get_db)):
+    quizzes = db.query(Quiz).filter(Quiz.hidden == False).all()
+    result = QuizListSchema(
+        quiz_list=[
+            QuizListItem(
+                quiz_id=q.quiz_id,
+                title_text=q.title_text
+            )
+            for q in quizzes
+        ]
+    )
     return result
 
 

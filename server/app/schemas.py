@@ -53,3 +53,13 @@ class QuestionResult(BaseModel):
     selected_answer_id: int
     is_correct: bool
     correct_answer_list: list[int]
+
+
+# User requesting list of available quizzes to play
+class QuizListSchema(BaseModel):
+    quiz_list: list["QuizListItem"]
+
+
+class QuizListItem(BaseModel):
+    quiz_id: int
+    title_text: str

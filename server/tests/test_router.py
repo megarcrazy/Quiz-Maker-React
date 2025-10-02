@@ -445,10 +445,10 @@ def test_add_random_quiz_successful(client_session: TestClient, db_session: Sess
 
         # Assert
         assert response.status_code == 200
-        data = response.json()
-        assert data["quiz_id"] == 1
-        assert data["title_text"] == "Random Quiz"
-        assert data["question_list"] == [
+        response_data = response.json()
+        assert response_data["quiz_id"] == 1
+        assert response_data["title_text"] == "Random Quiz"
+        assert response_data["question_list"] == [
             {"question_id": 1, "question_text": "What is 2+2?"},
             {"question_id": 2, "question_text": "The Earth is flat."}
         ]
@@ -476,5 +476,41 @@ def test_add_random_quiz_unsuccessful(client_session: TestClient, db_session: Se
 
         # Assert
         assert response.status_code == 400
-        data = response.json()
-        assert data["detail"] == "Trivia API returned invalid data"
+        response_data = response.json()
+        assert response_data["detail"] == "Trivia API returned invalid data"
+
+
+def test_get_quiz_list(client_session: TestClient, db_session: Session):
+    # Arrange
+    quiz1 = Quiz(title_text="Math Quiz", hidden=False)
+    quiz2 = Quiz(title_text="Science Quiz", hidden=False)
+    quiz3 = Quiz(title_text="Hidden Quiz", hidden=True)
+    db_session.add_all([quiz1, quiz2, quiz3])
+    db_session.commit()
+
+    # Act
+    response = client_session.get("/get-quiz-list")
+
+    # Assert
+    assert response.status_code == 200
+    response_data = response.json()
+    assert response_data["quiz_list"] == [
+        {"quiz_id": 1, "title_text": "Math Quiz"},
+        {"quiz_id": 2, "title_text": "Science Quiz"}
+    ]
+
+
+def test_get_empty_quiz_list(client_session: TestClient, db_session: Session):
+    # Arrange
+    quiz1 = Quiz(title_text="Science Quiz", hidden=True)
+    quiz2 = Quiz(title_text="Hidden Quiz", hidden=True)
+    db_session.add_all([quiz1, quiz2])
+    db_session.commit()
+
+    # Act
+    response = client_session.get("/get-quiz-list")
+
+    # Assert
+    assert response.status_code == 200
+    response_data = response.json()
+    assert response_data["quiz_list"] == []
