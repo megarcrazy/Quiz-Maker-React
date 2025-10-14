@@ -27,6 +27,12 @@ class PlayQuizQuestionsSchema(BaseModel):
 class QuestionSchema(BaseModel):
     question_id: int
     question_text: str
+    choices: list["AnswerSchema"]
+
+
+class AnswerSchema(BaseModel):
+    answer_id: int
+    answer_text: str
 
 
 # User submitting their quiz answers and marking the quiz

@@ -148,12 +148,18 @@ def test_get_quiz_successfully(client_session: TestClient, db_session: Session):
     response_data = response.json()
     assert response_data["quiz_id"] == 2
     assert response_data["title_text"] == "myQuiz"
-    assert response_data["question_list"] == [
-        {
-            "question_id": 1,
-            "question_text": "What is the capital of France?"
-        }
+    assert len(response_data["question_list"]) == 1
+    assert response_data["question_list"][0]["question_id"] == 1
+    assert response_data["question_list"][0]["question_text"] == "What is the capital of France?"
+    expected_choices = [
+        {"answer_id": 3, "answer_text": "Berlin"},
+        {"answer_id": 2, "answer_text": "London"},
+        {"answer_id": 4, "answer_text": "Madrid"},
+        {"answer_id": 1, "answer_text": "Paris"},
     ]
+    response_choices = response_data["question_list"][0]["choices"]
+    assert sorted(response_choices, key=lambda d: d["answer_id"]) \
+        == sorted(expected_choices, key=lambda d: d["answer_id"])
 
 
 def test_get_quiz_unsuccessfully(client_session: TestClient, db_session: Session):
@@ -448,10 +454,19 @@ def test_add_random_quiz_successful(client_session: TestClient, db_session: Sess
         response_data = response.json()
         assert response_data["quiz_id"] == 1
         assert response_data["title_text"] == "Random Quiz"
-        assert response_data["question_list"] == [
-            {"question_id": 1, "question_text": "What is 2+2?"},
-            {"question_id": 2, "question_text": "The Earth is flat."}
-        ]
+        assert len(response_data["question_list"]) == 2
+        assert response_data["question_list"][0]["question_id"] == 1
+        assert response_data["question_list"][0]["question_text"] == "What is 2+2?"
+        assert response_data["question_list"][1]["question_id"] == 2
+        assert response_data["question_list"][1]["question_text"] == "The Earth is flat."
+        expected_choices_q1 = ["3", "4", "5", "6"]
+        response_choices_q1 = [choice["answer_text"] for choice in response_data["question_list"][0]["choices"]]
+        assert sorted(response_choices_q1) == sorted(expected_choices_q1)
+
+        # Choices for second question
+        expected_choices_q2 = ["False", "True"]
+        response_choices_q2 = [choice["answer_text"] for choice in response_data["question_list"][1]["choices"]]
+        assert sorted(response_choices_q2) == sorted(expected_choices_q2)
 
         # Check if hidden value is True
         quiz = db_session.query(Quiz).filter(Quiz.quiz_id == 1).first()

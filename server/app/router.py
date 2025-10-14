@@ -4,9 +4,9 @@ from fastapi import APIRouter, Depends, HTTPException, status
 import requests
 from sqlalchemy.orm import Session, joinedload
 from .schemas import (
-    PlayQuizQuestionsSchema, QuestionSchema, FullQuizSchema,
-    QuizResultSchema, SubmittedQuizSchema, QuestionResult,
-    QuizListSchema, QuizListItem
+    PlayQuizQuestionsSchema, QuestionSchema, AnswerSchema,
+    FullQuizSchema, QuizResultSchema, SubmittedQuizSchema,
+    QuestionResult, QuizListSchema, QuizListItem
 )
 from .database import get_db
 from .models import Quiz, Question, Answer
@@ -93,7 +93,14 @@ def get_quiz_questions(quiz_id: int, db: Session=Depends(get_db)):
         question_list=[
             QuestionSchema(
                 question_id=q.question_id,
-                question_text=q.question_text
+                question_text=q.question_text,
+                choices=[
+                    AnswerSchema(
+                        answer_id=a.answer_id,
+                        answer_text=a.answer_text
+                    )
+                    for a in q.answer_list
+                ]
             )
             for q in quiz.question_list
         ]
@@ -237,10 +244,17 @@ def create_random_quiz(db: Session=Depends(get_db)):
         title_text=new_quiz.title_text,
         question_list=[
             QuestionSchema(
-                question_id=question.question_id,
-                question_text=question.question_text,
+                question_id=q.question_id,
+                question_text=q.question_text,
+                choices=[
+                    AnswerSchema(
+                        answer_id=a.answer_id,
+                        answer_text=a.answer_text
+                    )
+                    for a in q.answer_list
+                ]
             )
-            for question in new_quiz.question_list
+            for q in new_quiz.question_list
         ]
     )
     return quiz_response
