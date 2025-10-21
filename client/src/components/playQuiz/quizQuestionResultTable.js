@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const Table = styled.table`
     margin: 30px 0 20px 0px; 
@@ -46,38 +46,46 @@ const Table = styled.table`
     }
 `;
 
-export default function QuizQuestionTable({
+export default function QuizQuestionResultTable({
     questionIndex,
     questionID,
     questionText,
     choicesData,
-    handleSelect
+    selectedAnswerID,
+    correctAnswerID,
 }) {
-    const [selectedAnswer, setSelectedAnswer] = useState(null);
-
     const HTMLDecode = (input) => {
         const doc = new DOMParser().parseFromString(input, "text/html");
         return doc.documentElement.textContent;
     };
 
-    const handleSelection = (answer_id) => {
-        setSelectedAnswer(answer_id);
-        handleSelect(questionID, answer_id);
-    };
+    const tableChoices = choicesData.map((choice, idx) => {
+        const isSelected = choice.answer_id === selectedAnswerID;
+        const isCorrect = choice.answer_id === correctAnswerID;
 
-    const tableChoices = choicesData.map((choice, index) => {
-        const isSelected = selectedAnswer === choice.answer_id;
+        let backgroundColor = "white"; // default
+        if (!selectedAnswerID && isCorrect) {
+            // User did not select an answer
+            backgroundColor = "lightgray";
+        } else if (isCorrect) {
+            // Correct answer
+            backgroundColor = "lightgreen";
+        } else if (isSelected && !isCorrect) {
+            // Wrong answer
+            backgroundColor = "salmon";
+        }
+
         return (
-            <tr key={index}>
+            <tr key={idx}>
                 <td>
                     <button
-                        type="button"
                         style={{
-                            backgroundColor: isSelected ? "rgb(255, 255, 150)" : "white",
+                            backgroundColor,
+                            cursor: "default",
                         }}
-                        onClick={() => handleSelection(choice.answer_id)}
                     >
-                        {String.fromCharCode(index + "a".charCodeAt())}. {HTMLDecode(choice.answer_text)}
+                        {String.fromCharCode(idx + "a".charCodeAt())}.{" "}
+                        {HTMLDecode(choice.answer_text)}
                     </button>
                 </td>
             </tr>
@@ -88,7 +96,9 @@ export default function QuizQuestionTable({
         <Table>
             <thead>
                 <tr>
-                    <td>{questionIndex + 1}. {HTMLDecode(questionText)}</td>
+                    <th>
+                        {questionIndex + 1}. {HTMLDecode(questionText)}
+                    </th>
                 </tr>
             </thead>
             <tbody>{tableChoices}</tbody>

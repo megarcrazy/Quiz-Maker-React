@@ -24,10 +24,10 @@ const Button = styled.button`
 
 
 export default function SubmitQuizButton({ submitted, onClick }) {
-    const buttonText = (submitted) ? "New Quiz" : "Submit";
+    const buttonText = submitted ? "Retry" : "Submit";
     return (
         <Button type="button" onClick={onClick}>
             {buttonText}
         </Button>
-    )
+    );
 }

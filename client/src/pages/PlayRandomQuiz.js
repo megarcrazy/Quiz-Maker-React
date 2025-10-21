@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 // Components
-import PlayQuizForm from '../components/playQuiz/playQuizForm.js'
+import PlayQuizForm from '../components/playQuiz/playQuizForm'
 
 
 const GetNewQuizButton = styled.button`
@@ -28,8 +28,6 @@ export default function PlayRandomQuiz() {
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(false);
     const hasFetched = useRef(false);
-    const title = "Random Quiz";
-    const message = "The random quiz API was extracted from";
 
     const fetchRandomQuiz = async () => {
         try {
@@ -57,9 +55,9 @@ export default function PlayRandomQuiz() {
 
     return (
         <div className="content">
-            <h1>{title}</h1>
+            <h1>Random Quiz</h1>
             <p>
-                {message} <a href="https://opentdb.com/api_config.php">Open Trivia Database</a>.
+                The random quiz API was extracted from <a href="https://opentdb.com/api_config.php">Open Trivia Database</a>.
             </p>
             <GetNewQuizButton onClick={fetchRandomQuiz}>Give me a new one</GetNewQuizButton>
             {error && <p style={{ color: "red", marginTop: "1em" }}>Failed to load, please try again.</p>}
