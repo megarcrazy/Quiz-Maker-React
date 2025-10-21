@@ -29,20 +29,6 @@ const AddNewQuizButton = styled.button`
     }
 `;
 
-const ResetQuizDataButton = styled.button`
-    width: 200px;
-    height: 50px;
-    font-size: 1em;
-    background-color: rgb(255, 159, 159);
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.2s ease;
-    &:hover,
-    &:focus-visible {
-        cursor: pointer;
-        background-color: rgb(255, 93, 93);
-    }
-`;
 
 const WarningMessage = styled.p`
     color: red;
@@ -55,24 +41,24 @@ export default function MyQuizMenu() {
     const [quizData, setQuizData] = useState([]);
     const [warningMessage, setWarningMessage] = useState("");
 
-    const fetchQuizTitleData = async () => {
-        const data = {};
-        const url = "http://localhost:3001/data";
-        try {
-            document.body.style.cursor = "wait";
-            const { data } = await axios.get(url);
-            setQuizData(data);
-        } catch (err) {
-            console.error("Failed to fetch quiz data:", err);
-        } finally {
-            document.body.style.cursor = "default";
-        }
-        if (Object.keys(data).length === 0) {
-            setWarningMessage("Warning: No quizzes found.")
-        }
-    };
-
     useEffect(() => {
+        const fetchQuizTitleData = async () => {
+            document.body.style.cursor = "wait";
+            try {
+                const { data } = await axios.get("http://localhost:8000/get-quiz-list");
+                const quizList = data.quiz_list ?? [];
+                setQuizData(quizList);
+                setWarningMessage(
+                    quizList.length === 0 ? "Warning: No quizzes found." : ""
+                );
+            } catch (error) {
+                console.error("Failed to fetch quiz data:", error);
+                setWarningMessage("Error: Failed to load quizzes.");
+            } finally {
+                document.body.style.cursor = "default";
+            }
+        };
+
         fetchQuizTitleData();
     }, []);
 
@@ -80,19 +66,9 @@ export default function MyQuizMenu() {
         navigate("/my-quizzes/add");
     }
 
-    const resetQuiz = async () => {
-        const confirm = window.confirm("Resetting the database. Are you sure?");
-        if (confirm) {
-            //TODO: await axios.post("http://localhost:3001/restart", {});
-            await fetchQuizTitleData();
-        }
-    }
-
-    const tables = quizData.map((quiz, index) => {
-        return (
-            <MyQuizMenuTable key={index} quizNumber={index + 1} data={quiz} />
-        )
-    });
+    const tables = quizData.map(({ quiz_id, title_text }, index) => (
+        <MyQuizMenuTable key={index} quizID={quiz_id} title={title_text} />
+    ));
 
     return (
         <div className="content">
@@ -101,9 +77,6 @@ export default function MyQuizMenu() {
                 <AddNewQuizButton onClick={addQuiz}>
                     Add new quiz
                 </AddNewQuizButton>
-                <ResetQuizDataButton onClick={resetQuiz}>
-                    Reset all quizzes
-                </ResetQuizDataButton>
             </ButtonsWrapper>
             {tables}
             <WarningMessage>

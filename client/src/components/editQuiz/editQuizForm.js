@@ -92,7 +92,7 @@ export default function EditQuizForm({ quizNumber, quizData }) {
             // Quiz number 0 to append new quiz to existing list of quizzes
             try {
                 document.body.style.cursor = "wait";
-                const url = "http://localhost:3001/edit/" + quizNumber
+                const url = "http://localhost:8000/edit/" + quizNumber
                 axios.post(url, { quizData: newQuizData });
             } catch {
                 window.alert("Failed to save quiz because of unknown error.");

@@ -43,7 +43,6 @@ const NavLinks = styled.div`
         height: 100%;
         font-size: 1em;
         padding: 1.4em 1em 1.4em 1em;
-        font-family: "Arial";
         color: white;
         transition: background-color 0.1s ease;
         font-family: "Gloria Hallelujah";

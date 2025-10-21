@@ -10,7 +10,7 @@ export default function EditSavedQuiz() {
     const [quizData, setQuizData] = useState("");
 
     const fetchQuizData = async (quizNumber) => {
-        const url = "http://localhost:3001/data/" + quizNumber;
+        const url = "http://localhost:8000/data/" + quizNumber;
         try {
             document.body.style.cursor = "wait";
             const { data } = await axios.get(url);

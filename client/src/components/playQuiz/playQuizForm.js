@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 // Components
 import QuizQuestionTable from './quizQuestionTable';
-import ScoreDisplay from './scoreDisplay';
 import SubmitQuizButton from './submitQuizButton';
 
 
@@ -15,48 +14,41 @@ const QuizForm = styled.form`
 
 export default function PlayQuizForm({ quizData }) {
     const [submitted, setSubmitted] = useState(false);
-    const [userSelection, setUserSelection] = useState(
-        new Array(quizData.length).fill(null)
-    );
+    const [userAnswers, setUserAnswers] = useState([]);  // Use answer ID for multiple choice
 
-    const submitQuiz = () => {
-        setSubmitted(true);
-        (submitted) && window.location.reload(); // Reload on clicking "New Quiz"
-    }
-
-    // Calculates the number of correct answers
-    const score = (() => {
-        let score = 0;
-        for (let i = 0; i < quizData.length; i++) {
-            if (userSelection[i] === quizData[i].correct_answer) {
-                score++;
-            }
+    useEffect(() => {
+        if (quizData?.question_list) {
+            setUserAnswers(new Array(quizData.question_list.length).fill(null));
         }
-        return score;
-    })();
+    }, [quizData]);
 
-    const tables = [...Array(quizData.length).keys()].map((questionNumber) => {
-        const currentData = quizData[questionNumber];
-        return <QuizQuestionTable
-            key={questionNumber}
-            questionNumber={questionNumber}
-            question={currentData.question}
-            correctAnswer={currentData.correct_answer}
-            incorrectAnswer={currentData.incorrect_answers}
-            submitted={submitted}
-            changeUserSelection={
-                (choice, questionNumber) => setUserSelection({
-                    ...userSelection,
-                    [questionNumber]: choice
-                })
-            } />
-    });
+    const submitQuiz = (e) => {
+        e.preventDefault();
+        setSubmitted(true);
+    };
+
+    const handleSelect = (questionID, choice) => {
+        setUserAnswers(prev => ({
+            ...prev,
+            [questionID]: choice
+        }));
+    };
+
+    const tables = (quizData?.question_list ?? []).map((question, idx) => (
+        <QuizQuestionTable
+            key={question.question_id ?? idx}
+            questionIndex={idx}
+            questionID={question.question_id}
+            questionText={question.question_text}
+            choicesData={question.choices}
+            handleSelect={handleSelect}
+        />
+    ));
 
     return (
-        <QuizForm>
+        <QuizForm onSubmit={submitQuiz}>
             {tables}
-            <SubmitQuizButton submitted={submitted} onClick={submitQuiz} />
-            <ScoreDisplay submitted={submitted} score={score} quizLength={quizData.length} />
+            <SubmitQuizButton submitted={submitted} />
         </QuizForm>
-    )
-};
+    );
+}

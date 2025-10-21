@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 // Components
@@ -26,25 +26,32 @@ const GetNewQuizButton = styled.button`
 export default function PlayRandomQuiz() {
     const [quizData, setQuizData] = useState([]);
     const [loaded, setLoaded] = useState(false);
+    const [error, setError] = useState(false);
+    const hasFetched = useRef(false);
     const title = "Random Quiz";
     const message = "The random quiz API was extracted from";
 
     const fetchRandomQuiz = async () => {
         try {
             document.body.style.cursor = "wait";
-            const url = "https://opentdb.com/api.php?amount=10&difficulty=easy";
-            const response = await axios.get(url);
-            const data = response.data.results;
+            const api = "http://localhost:8000/create-random-quiz";
+            const response = await axios.post(api);
+            const data = response.data;
             setQuizData(data);
+            setError(false);
             setLoaded(true);
         } catch (err) {
-            console.error("Failed to fetch quiz data:", err);
+            console.log(err);
+            setError(true);
+            setLoaded(false);
         } finally {
             document.body.style.cursor = "default";
         }
     };
 
     useEffect(() => {
+        if (hasFetched.current) return;
+        hasFetched.current = true;
         fetchRandomQuiz();
     }, []);
 
@@ -55,7 +62,8 @@ export default function PlayRandomQuiz() {
                 {message} <a href="https://opentdb.com/api_config.php">Open Trivia Database</a>.
             </p>
             <GetNewQuizButton onClick={fetchRandomQuiz}>Give me a new one</GetNewQuizButton>
-            {loaded && <PlayQuizForm quizData={quizData} />}
+            {error && <p style={{ color: "red", marginTop: "1em" }}>Failed to load, please try again.</p>}
+            {loaded && !error && <PlayQuizForm quizData={quizData} />}
         </div>
     )
 };
