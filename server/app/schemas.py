@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel
 
 
@@ -38,12 +39,7 @@ class AnswerSchema(BaseModel):
 # User submitting their quiz answers and marking the quiz
 class SubmittedQuizSchema(BaseModel):
     quiz_id: int
-    question_list: list["SubmittedQuizQuestion"]
-
-
-class SubmittedQuizQuestion(BaseModel):
-    question_id: int
-    answer_id: int
+    user_answers: dict[int, int]
 
 
 # User receiving the marked quiz
@@ -56,9 +52,9 @@ class QuizResultSchema(BaseModel):
 
 class QuestionResult(BaseModel):
     question_id: int
-    selected_answer_id: int
+    selected_answer_id: Optional[int]
     is_correct: bool
-    correct_answer_list: list[int]
+    correct_answer: int
 
 
 # User requesting list of available quizzes to play

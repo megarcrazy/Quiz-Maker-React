@@ -111,43 +111,52 @@ def get_quiz_questions(quiz_id: int, db: Session=Depends(get_db)):
 
 @backend_router.post("/mark-quiz", response_model=QuizResultSchema)
 def mark_quiz(submit_quiz: SubmittedQuizSchema, db: Session=Depends(get_db)):
-    questions = (
+    # Load all questions for the quiz with their correct answers
+    question_list = (
         db.query(Question)
         .filter(Question.quiz_id == submit_quiz.quiz_id)
         .options(joinedload(Question.answer_list.and_(Answer.is_correct == True)))
         .all()
     )
-    if not questions:
+    if not question_list:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Quiz with ID {submit_quiz.quiz_id} not found"
         )
 
-    answer_mapping: dict[int, list[int]] = {
-        q.question_id: [a.answer_id for a in q.answer_list]
-        for q in questions
-    }
     score = 0
     results = []
-    for submitted_question in submit_quiz.question_list:
-        question_id = submitted_question.question_id
-        correct_answer_list = answer_mapping.get(question_id, [])
+    for question in question_list:
+        # Get data base correct answer
+        question_id = question.question_id
+        answer_list = question.answer_list
+        correct_answer_id = None
+        if answer_list:
+            correct_answer_id = answer_list[0].answer_id
+
+        # Get user-selected answer if provided
+        selected_answer_id = submit_quiz.user_answers.get(question_id)
+
+        # Check if the user is correct
         is_correct = False
-        if submitted_question.answer_id in correct_answer_list:
-            score += 1
+        if correct_answer_id is not None \
+                and selected_answer_id is not None \
+                and selected_answer_id == correct_answer_id:
             is_correct = True
+            score += 1
+
         question_result = QuestionResult(
-            question_id=submitted_question.question_id,
-            selected_answer_id=submitted_question.answer_id,
+            question_id=question_id,
+            selected_answer_id=selected_answer_id,
             is_correct=is_correct,
-            correct_answer_list=correct_answer_list
+            correct_answer=correct_answer_id
         )
         results.append(question_result)
 
     quiz_result = QuizResultSchema(
         quiz_id=submit_quiz.quiz_id,
         score=score,
-        total=len(questions),
+        total=len(question_list),
         results=results
     )
     return quiz_result

@@ -276,10 +276,10 @@ def test_mark_quiz_success(client_session: TestClient, db_session: Session):
 
     submitted_quiz = {
         "quiz_id": 1,
-        "question_list": [
-            {"question_id": 101, "answer_id": 1001},
-            {"question_id": 102, "answer_id": 1004},
-        ]
+        "user_answers": {
+            101: 1001,
+            102: 1004
+        }
     }
 
     # Act
@@ -295,11 +295,59 @@ def test_mark_quiz_success(client_session: TestClient, db_session: Session):
     assert response_data["results"][1]["is_correct"] is False
 
 
-def test_mark_quiz_quiz_not_found(client_session: TestClient, db_session: Session):
+def test_mark_quiz_partially_answered(client_session: TestClient, db_session: Session):
+    # Arrange
+    quiz = Quiz(
+        quiz_id=1,
+        title_text="Sample Quiz",
+        question_list=[
+            Question(
+                question_id=101,
+                question_text="What is the capital of France?",
+                answer_list=[
+                    Answer(answer_id=1001, answer_text="Paris", is_correct=True),
+                    Answer(answer_id=1002, answer_text="Berlin", is_correct=False),
+                ]
+            ),
+            Question(
+                question_id=102,
+                question_text="2+2?",
+                answer_list=[
+                    Answer(answer_id=1003, answer_text="4", is_correct=True),
+                    Answer(answer_id=1004, answer_text="5", is_correct=False),
+                ]
+            ),
+        ]
+    )
+    db_session.add(quiz)
+    db_session.commit()
+    db_session.refresh(quiz)
+
+    submitted_quiz = {
+        "quiz_id": 1,
+        "user_answers": {
+            102: 1004
+        }
+    }
+
+    # Act
+    response = client_session.post("/mark-quiz", json=submitted_quiz)
+
+    # Assert
+    assert response.status_code == 200
+    response_data = response.json()
+    assert response_data["quiz_id"] == 1
+    assert response_data["score"] == 0
+    assert response_data["total"] == 2
+    assert response_data["results"][0]["is_correct"] is False
+    assert response_data["results"][1]["is_correct"] is False
+
+
+def test_mark_quiz_not_found(client_session: TestClient, db_session: Session):
     # Arrange
     submitted_quiz = {
         "quiz_id": 999,
-        "question_list": []
+        "user_answers": {}
     }
 
     # Act
