@@ -5,7 +5,8 @@ import requests
 from sqlalchemy.orm import Session, joinedload
 from .schemas import (
     PlayQuizQuestionsSchema, QuestionSchema, AnswerSchema,
-    FullQuizSchema, QuizResultSchema, SubmittedQuizSchema,
+    FullQuizSchema, FullQuizQuestion, FullQuizAnswer,
+    QuizResultSchema, SubmittedQuizSchema,
     QuestionResult, QuizListSchema, QuizListItem
 )
 from .database import get_db
@@ -282,3 +283,34 @@ def delete_quiz(quiz_id: int, db: Session=Depends(get_db)):
     db.commit()
     result = {"message": f"Quiz {quiz_id} deleted successfully"}
     return result
+
+
+@backend_router.get("/get-full-quiz/{quiz_id}", response_model=FullQuizSchema)
+def get_full_quiz(quiz_id: int, db: Session=Depends(get_db)):
+    # Get the full quiz including questions and answers
+    quiz = db.query(Quiz).filter(Quiz.quiz_id == quiz_id).first()
+    if not quiz:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Quiz with id {quiz_id} not found"
+        )
+
+    # Build questions and answers
+    questions_list = [
+        FullQuizQuestion(
+            question_text=question.question_text,
+            answer_list=[
+                FullQuizAnswer(
+                    answer_text=answer.answer_text,
+                    is_correct=answer.is_correct
+                )
+                for answer in question.answer_list
+            ]
+        )
+        for question in quiz.question_list
+    ]
+    full_quiz = FullQuizSchema(
+        title_text=quiz.title_text,
+        question_list=questions_list
+    )
+    return full_quiz

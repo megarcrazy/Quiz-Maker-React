@@ -577,3 +577,72 @@ def test_get_empty_quiz_list(client_session: TestClient, db_session: Session):
     assert response.status_code == 200
     response_data = response.json()
     assert response_data["quiz_list"] == []
+
+
+def test_get_full_quiz_successful(client_session: TestClient, db_session: Session):
+    # Arrange
+    quiz = Quiz(
+        quiz_id=2,
+        title_text="myQuiz",
+        question_list=[
+            Question(
+                question_text="What is the capital of France?",
+                answer_list=[
+                    Answer(answer_text="Paris", is_correct=True),
+                    Answer(answer_text="London", is_correct=False),
+                    Answer(answer_text="Berlin", is_correct=False),
+                    Answer(answer_text="Madrid", is_correct=False),
+                ]
+            ),
+        ]
+    )
+    db_session.add(quiz)
+    db_session.commit()
+    db_session.refresh(quiz)
+
+    # Act
+    response = client_session.get("/get-full-quiz/2")
+
+    # Assert
+    assert response.status_code == 200
+    response_data = response.json()
+    assert response_data["title_text"] == "myQuiz"
+    assert len(response_data["question_list"]) == 1
+    assert response_data["question_list"][0]["question_text"] == "What is the capital of France?"
+    expected_choices = [
+        {"answer_text": "Berlin", "is_correct": False},
+        {"answer_text": "London", "is_correct": False},
+        {"answer_text": "Madrid", "is_correct": False},
+        {"answer_text": "Paris", "is_correct": True},
+    ]
+    response_choices = response_data["question_list"][0]["answer_list"]
+    assert sorted(response_choices, key=lambda d: d["answer_text"]) \
+        == sorted(expected_choices, key=lambda d: d["answer_text"])
+
+
+def test_get_full_quiz_unsuccessfully(client_session: TestClient, db_session: Session):
+    # Arrange
+    quiz = Quiz(
+        quiz_id=2,
+        title_text="myQuiz",
+        question_list=[
+            Question(
+                question_text="What is the capital of France?",
+                answer_list=[
+                    Answer(answer_text="Paris", is_correct=True),
+                    Answer(answer_text="London", is_correct=False),
+                ]
+            ),
+        ]
+    )
+    db_session.add(quiz)
+    db_session.commit()
+    db_session.refresh(quiz)
+
+    # Act
+    response = client_session.get("/get-full-quiz/1")
+
+    # Assert
+    assert response.status_code == 404
+    response_data = response.json()
+    assert response_data["detail"] == "Quiz with id 1 not found"
