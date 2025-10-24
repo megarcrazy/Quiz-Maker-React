@@ -4,8 +4,6 @@ import EditQuizForm from '../components/editQuiz/editQuizForm';
 
 
 export default function AddNewQuiz() {
-    const quizNumber = 0;  // 0 for new quiz
-
     const newQuizDataTemplate = {
         title: "",
         results: [
@@ -22,7 +20,7 @@ export default function AddNewQuiz() {
         <div className="content">
             <h1>Add New Quiz</h1>
             <p>Click confirm when you are done.</p>
-            <EditQuizForm quizData={newQuizDataTemplate} quizNumber={quizNumber} />
+            <EditQuizForm quizID={-1} quizData={newQuizDataTemplate} />
         </div>
     )
 };

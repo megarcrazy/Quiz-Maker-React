@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 // Components
-import MyQuizMenuTable from '../components/myQuizMenu/myQuizMenuTable.js';
-
+import MyQuizMenuTable from '../components/myQuizMenu/myQuizMenuTable';
+import { API_URL } from '../apiConfig'
 
 const ButtonsWrapper = styled.div`
     display: flex;
@@ -45,7 +45,7 @@ export default function MyQuizMenu() {
         const fetchQuizTitleData = async () => {
             document.body.style.cursor = "wait";
             try {
-                const { data } = await axios.get("http://localhost:8000/get-quiz-list");
+                const { data } = await axios.get(`${API_URL}/get-quiz-list`);
                 const quizList = data.quiz_list ?? [];
                 setQuizData(quizList);
                 setWarningMessage(

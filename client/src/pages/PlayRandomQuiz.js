@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 // Components
 import PlayQuizForm from '../components/playQuiz/playQuizForm'
-
+import { API_URL } from '../apiConfig'
 
 const GetNewQuizButton = styled.button`
     font-size: 1.2em;
@@ -32,8 +32,8 @@ export default function PlayRandomQuiz() {
     const fetchRandomQuiz = async () => {
         try {
             document.body.style.cursor = "wait";
-            const api = "http://localhost:8000/create-random-quiz";
-            const response = await axios.post(api);
+            const url = `${API_URL}/create-random-quiz`;
+            const response = await axios.post(url);
             const data = response.data;
             setQuizData(data);
             setError(false);

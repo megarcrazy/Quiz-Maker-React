@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams } from "react-router-dom";
 // Components
 import PlayQuizForm from '../components/playQuiz/playQuizForm'
-
+import { API_URL } from '../apiConfig'
 
 export default function PlaySavedQuiz() {
     const { quizNumber } = useParams();
@@ -14,7 +14,7 @@ export default function PlaySavedQuiz() {
     // Grab data from relevant quiz and checks if it exists
     useEffect(() => {
         async function fetchData() {
-            const response = await axios("http://localhost:8000/get-quiz-questions/" + quizNumber);
+            const response = await axios(`${API_URL}/get-quiz-questions/${quizNumber}`);
             const data = response.data;
             if (data === "Not found") {
                 setMessage("Failed to find quiz.");

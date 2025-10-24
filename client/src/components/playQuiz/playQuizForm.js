@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import QuizQuestionTable from './quizQuestionTable';
 import QuizQuestionResultTable from './quizQuestionResultTable';
 import SubmitQuizButton from './submitQuizButton';
+import { API_URL } from '../../apiConfig'
 
 const QuizForm = styled.form`
     display: table;
@@ -36,7 +37,7 @@ export default function PlayQuizForm({ quizData }) {
                 user_answers: userAnswers,
             };
             console.log(payload)
-            const res = await axios.post("http://localhost:8000/mark-quiz", payload);
+            const res = await axios.post(`${API_URL}/mark-quiz`, payload);
             setQuizResult(res.data);
             setSubmitted(true);
         } catch (err) {

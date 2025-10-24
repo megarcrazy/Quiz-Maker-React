@@ -5,10 +5,10 @@ import axios from 'axios';
 import EditTitle from './editTitle.js';
 import EditQuizTable from './editQuizTable.js';
 import ChangeQuizSizeButtons from './changeQuizSizeButtons';
-import ConfirmEditButton from './confirmEditButton.js';
+import ConfirmEditButton from './confirmEditButton';
+import { API_URL } from '../../apiConfig'
 
-
-export default function EditQuizForm({ quizNumber, quizData }) {
+export default function EditQuizForm({ quizID, quizData }) {
     const navigate = useNavigate();
     const [newQuizData, setNewQuizData] = useState(quizData);
 
@@ -84,24 +84,26 @@ export default function EditQuizForm({ quizNumber, quizData }) {
         )
     });
 
-    // Request user confirmation and upload the editted quiz dictionary to the server
+    // Request user confirmation and upload the quiz dictionary to the server
     const submitQuiz = (event) => {
         event.preventDefault();
-        const confirm = window.confirm("Are you sure?");
-        if (confirm) {
-            // Quiz number 0 to append new quiz to existing list of quizzes
-            try {
-                document.body.style.cursor = "wait";
-                const url = "http://localhost:8000/edit/" + quizNumber
-                axios.post(url, { quizData: newQuizData });
-            } catch {
-                window.alert("Failed to save quiz because of unknown error.");
-            } finally {
-                document.body.style.cursor = "default";
-            }
+        if (!window.confirm("Are you sure?")) return;
+
+        document.body.style.cursor = "wait";
+
+        const url = quizID === -1
+            ? `${API_URL}/add_quiz`
+            : `${API_URL}/update-quiz/${quizID}`;
+
+        try {
+            axios.post(url, { quizData: newQuizData });
             navigate("/my-quizzes");
+        } catch {
+            window.alert("Failed to save quiz because of unknown error.");
+        } finally {
+            document.body.style.cursor = "default";
         }
-    }
+    };
 
     return (
         <form onSubmit={submitQuiz}>

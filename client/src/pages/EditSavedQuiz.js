@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 // Components
-import EditQuizForm from '../components/editQuiz/editQuizForm.js';
-
+import EditQuizForm from '../components/editQuiz/editQuizForm';
+import { API_URL } from '../apiConfig'
 
 export default function EditSavedQuiz() {
     const { quizNumber } = useParams();
     const [quizData, setQuizData] = useState("");
 
     const fetchQuizData = async (quizNumber) => {
-        const url = "http://localhost:8000/data/" + quizNumber;
+        const url = `${API_URL}/data/${quizNumber}`;
         try {
             document.body.style.cursor = "wait";
             const { data } = await axios.get(url);

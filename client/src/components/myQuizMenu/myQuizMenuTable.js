@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
+import { API_URL } from '../../apiConfig'
 
 const Table = styled.table`
   margin: 30px auto 20px;
@@ -104,7 +105,7 @@ const ActionButtonsRow = styled.div`
 
 
 
-export default function MyQuizMenuTable({ quizID, title, onDelete }) {
+export default function MyQuizMenuTable({ quizID, title }) {
     const [loading, setLoading] = useState(false);
     const playUrl = `/my-quizzes/play/${quizID}`;
     const editUrl = `/my-quizzes/edit/${quizID}`;
@@ -114,8 +115,8 @@ export default function MyQuizMenuTable({ quizID, title, onDelete }) {
 
         try {
             setLoading(true);
-            await axios.post(`http://localhost:8000/delete-quiz/${quizID}`);
-            onDelete?.(quizID);
+            await axios.post(`${API_URL}/delete-quiz/${quizID}`);
+            window.location.reload();
         } catch (error) {
             console.error("Error deleting quiz:", error);
             window.alert("Error deleting quiz.");
