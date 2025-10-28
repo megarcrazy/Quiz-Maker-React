@@ -163,7 +163,7 @@ def mark_quiz(submit_quiz: SubmittedQuizSchema, db: Session=Depends(get_db)):
     return quiz_result
 
 
-@backend_router.post("/update-quiz/{quiz_id}")
+@backend_router.put("/update-quiz/{quiz_id}")
 def update_quiz(quiz_id: int, quiz_data: FullQuizSchema, db: Session=Depends(get_db)):
     quiz = db.query(Quiz).filter(Quiz.quiz_id == quiz_id, Quiz.hidden == False).first()
     if not quiz:

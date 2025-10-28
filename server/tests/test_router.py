@@ -401,7 +401,7 @@ def test_update_quiz_successfully(client_session: TestClient, db_session: Sessio
     }
 
     # Act
-    response = client_session.post("/update-quiz/1", json=new_quiz_data)
+    response = client_session.put("/update-quiz/1", json=new_quiz_data)
 
     # Assert
     assert response.status_code == 200
@@ -457,7 +457,7 @@ def test_update_quiz_unsuccessfully(client_session: TestClient, db_session: Sess
     }
 
     # Act
-    response = client_session.post("/update-quiz/2", json=new_quiz_data)
+    response = client_session.put("/update-quiz/2", json=new_quiz_data)
 
     # Assert
     assert response.status_code == 404
