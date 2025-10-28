@@ -25,7 +25,7 @@ const Button = styled.button`
 export default function ConfirmEditButton() {
     return (
         <Button>
-            Save
+            Confirm
         </Button>
     )
 }

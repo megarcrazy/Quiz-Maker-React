@@ -115,7 +115,7 @@ export default function MyQuizMenuTable({ quizID, title }) {
 
         try {
             setLoading(true);
-            await axios.post(`${API_URL}/delete-quiz/${quizID}`);
+            await axios.delete(`${API_URL}/delete-quiz/${quizID}`);
             window.location.reload();
         } catch (error) {
             console.error("Error deleting quiz:", error);

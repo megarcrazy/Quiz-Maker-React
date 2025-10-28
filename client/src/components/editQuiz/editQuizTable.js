@@ -1,6 +1,5 @@
-import React from 'react';
+import { React } from 'react';
 import styled from 'styled-components';
-// TODO: Refactor this mess
 
 const Table = styled.table`
     margin: 30px 0 20px 0px;
@@ -9,7 +8,6 @@ const Table = styled.table`
     margin-left: auto;
     margin-right: auto;
     border-collapse: collapse;
-    font-family: "Gloria Hallelujah";
     background-color: rgb(255, 255, 140);
     box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
     thead {
@@ -38,22 +36,39 @@ const Table = styled.table`
 `;
 
 const QuestionRow = styled.div`
+    display: flex;
+    align-items: center;
     height: 3em;
-    padding-top: 10px;
-    > * {
-        &:first-child {
-            width: 10%;
-            float: left;
-            margin-left: 10px;
-        }
-        &:nth-child(2) {
+    padding: 10px 5px;
+    gap: 10px;
+
+    > *:first-child {
+        flex: 0 0 5%;
+    }
+
+    > *:nth-child(2) {
+        flex: 1;
+
+        input {
+            font-size: 1.2em;
             width: 100%;
-            input {
-                font-family: "Gloria Hallelujah";
-                font-size: 1.2em;
-                width: 85%;
-            }
+            box-sizing: border-box;
         }
+  }
+`;
+
+const QuestionInput = styled.input`
+    width: 100%;
+    padding: 0.5em;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    box-sizing: border-box;
+
+    &:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0,123,255,0.5);
     }
 `;
 
@@ -69,14 +84,12 @@ const ChoiceRow = styled.div`
         &:nth-child(2) {
             width: 100%;
             input {
-                font-family: "Gloria Hallelujah";
                 width: 85%;
                 height: 2em;
             }
         }
     }
 `;
-
 
 const AnswerRow = styled.div`
     width: 100%;
@@ -95,7 +108,6 @@ const AnswerLabel = styled.label`
     margin-right: auto;
 `;
 
-
 const AnswerSelect = styled.select`
     display: table;
     margin-left: auto;
@@ -111,63 +123,50 @@ const AnswerSelect = styled.select`
     }
 `;
 
-
 // Table containing question, choices and correct answer index
 export default function EditQuizTable({ questionNumber, questionData, updateQuiz }) {
-    const correctAnswer = questionData.correct_answer
-    const incorrectAnswers = questionData.incorrect_answers;
-    const correctIndex = questionData.correct_index;
-    // Initialise choice array and insert the correct answer in the correct
-    const choices = [
-        ...incorrectAnswers.slice(0, correctIndex),
-        correctAnswer,
-        ...incorrectAnswers.slice(correctIndex, incorrectAnswers.length)
-    ];
+    const correctIndex = questionData.answer_list.findIndex(answer => answer.is_correct);
 
-    const handleQuestionChange = (event) => {
-        updateQuiz({
-            ...questionData,
-            question: event.target.value
-        }, questionNumber);
-    }
+    const updateTitle = (event) => {
+        updateQuiz(questionNumber, { question_text: event.target.value });
+    };
 
-    const handleChoiceChange = (event, index) => {
-        if (index === correctIndex) {
-            updateQuiz({
-                ...questionData,
-                correct_answer: event.target.value,
-            }, questionNumber);
-        } else {
-            const new_choices = Object.values({
-                ...choices,
-                [index]: event.target.value
-            })
-            const incorrect_answers = [
-                ...new_choices.slice(0, correctIndex),
-                ...new_choices.slice(correctIndex + 1, choices.length)
-            ]
-            updateQuiz({
-                ...questionData,
-                incorrect_answers: incorrect_answers
-            }, questionNumber);
-        }
-    }
-
-    // Change which question is the correct answer
-    const handleAnswerChange = (event) => {
-        const index = event.target.value.charCodeAt()
-        const newIndex = letterToIndex(index);
-        const correct_answer = choices[newIndex];
-        const incorrect_answer = [
-            ...choices.slice(0, newIndex),
-            ...choices.slice(newIndex + 1, choices.length)
+    const addAnswer = (questionIndex) => {
+        const updatedAnswerList = [
+            ...questionData.answer_list,
+            { answer_text: "", is_correct: false }
         ];
-        updateQuiz({
-            ...questionData,
-            correct_answer: correct_answer,
-            incorrect_answers: incorrect_answer,
-            correct_index: newIndex
-        }, questionNumber);
+
+        updateQuiz(questionIndex, { answer_list: updatedAnswerList });
+    };
+
+    const deleteAnswer = (questionIndex) => {
+        if (questionData.answer_list.length <= 2) {
+            alert("Cannot delete the last answer.");
+            return;
+        }
+        const updatedAnswerList = questionData.answer_list.slice(0, -1);
+        updateQuiz(questionIndex, { answer_list: updatedAnswerList });
+    };
+
+    const updateChoice = (choiceIndex, event) => {
+        const updatedAnswerList = questionData.answer_list.map((answer, index) => {
+            if (index === choiceIndex) {
+                return { ...answer, answer_text: event.target.value };
+            }
+            return answer;
+        });
+        updateQuiz(questionNumber, { answer_list: updatedAnswerList });
+    };
+
+    const updateAnswer = (selectedIndex) => {
+        const updatedAnswerList = questionData.answer_list.map((answer, index) => {
+            return {
+                ...answer,
+                is_correct: index === selectedIndex,
+            };
+        });
+        updateQuiz(questionNumber, { answer_list: updatedAnswerList });
     }
 
     const tableQuestion =
@@ -175,18 +174,20 @@ export default function EditQuizTable({ questionNumber, questionData, updateQuiz
             <td>
                 <QuestionRow>
                     <div>{questionNumber + 1}. </div>
-                    <div>
-                        <input type="text" placeholder="Question"
-                            value={HTMLDecode(questionData.question)}
-                            onChange={(event) => { handleQuestionChange(event) }}
-                            required />
-                    </div>
+                    <QuestionInput
+                        id={`quiz_${questionNumber}`}
+                        type="text"
+                        value={questionData.question_text}
+                        onChange={(e) => updateTitle(e)}
+                        placeholder="Enter question here"
+                        required
+                    />
                 </QuestionRow>
             </td>
         </tr>
 
     // Combines the correct and incorrect answers into table rows
-    const tableChoices = choices.map((choice, index) => {
+    const tableChoices = questionData.answer_list.map((answer, index) => {
         const questionLabel = letterIndexToLetter(index);
         return (
             <tr key={index}>
@@ -197,9 +198,9 @@ export default function EditQuizTable({ questionNumber, questionData, updateQuiz
                         </div>
                         <div>
                             <input type="text" placeholder="Choice"
-                                value={HTMLDecode(choice)}
+                                value={HTMLDecode(answer.answer_text)}
                                 name={index}
-                                onChange={(event) => { handleChoiceChange(event, index) }}
+                                onChange={(e) => updateChoice(index, e)}
                                 required />
                         </div>
                     </ChoiceRow>
@@ -208,25 +209,55 @@ export default function EditQuizTable({ questionNumber, questionData, updateQuiz
         )
     });
 
+    // User can add more or delete question choices
+    const changeSizeButtons = <tr>
+        <td style={{ textAlign: "center", padding: "1em" }}>
+            <button
+                type="button"
+                onClick={() => addAnswer(questionNumber)}
+                style={{ marginRight: "10px" }}
+            >
+                Add Answer
+            </button>
+            <button
+                type="button"
+                onClick={() => deleteAnswer(questionNumber)}
+                disabled={questionData.answer_list.length <= 2}
+            >
+                Delete Answer
+            </button>
+        </td>
+    </tr>
+
     // Select form for choosing correct answer
     const answer =
-        <AnswerRow>
-            <AnswerLabel>Answer</AnswerLabel>
-            <AnswerSelect onChange={(event) => { handleAnswerChange(event) }}
-                value={letterIndexToLetter(correctIndex)}>
-                <option value="a">a</option>
-                <option value="b">b</option>
-                <option value="c">c</option>
-                <option value="d">d</option>
-            </AnswerSelect>
-        </AnswerRow>
+        <tr>
+            <td>
+                <AnswerRow>
+                    <AnswerLabel>Answer</AnswerLabel>
+                    <AnswerSelect
+                        value={letterIndexToLetter(correctIndex)}
+                        onChange={(e) => {
+                            updateAnswer(letterToIndex(e.target.value));
+                        }}
+                    >
+                        {questionData.answer_list.map((_, index) => (
+                            <option key={index} value={letterIndexToLetter(index)}>
+                                {letterIndexToLetter(index)}
+                            </option>
+                        ))}
+                    </AnswerSelect>
+                </AnswerRow>
+            </td>
+        </tr>
 
 
     return (
         <Table>
-            <thead>{tableQuestion}</thead>
+            <tbody>{tableQuestion}</tbody>
             <tbody>{tableChoices}</tbody>
             <tbody>{answer}</tbody>
+            <tbody>{changeSizeButtons}</tbody>
         </Table>
     )
 }
@@ -239,9 +270,9 @@ const HTMLDecode = input => {
 
 // Converts letter to their respective number index
 // eg. a, b, c => 0, 1, 2
-const letterToIndex = (key) => {
-    const index = key - "a".charCodeAt();
-    return index
+const letterToIndex = (letter) => {
+    if (!letter) return 0;
+    return letter.toLowerCase().charCodeAt(0) - "a".charCodeAt(0);
 };
 
 // Reverse of letter to index

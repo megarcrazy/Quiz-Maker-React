@@ -12,19 +12,18 @@ const Wrapper = styled.div`
 `;
 
 const TitleInput = styled.input`
-    font-family: "Gloria Hallelujah";
     font-size: 1.6em;
     width: 100%;
 `;
 
 
-export default function EditTitle({ title, onClick }) {
+export default function EditTitle({ title, onChange }) {
     return (
         <Wrapper>
             <TitleInput type="text" placeholder="Title"
-            value={title}
-            onChange={(event) => {onClick(event)}}
-            required/>
+                value={title}
+                onChange={(event) => { onChange(event) }}
+                required />
         </Wrapper>
-    )     
+    )
 }

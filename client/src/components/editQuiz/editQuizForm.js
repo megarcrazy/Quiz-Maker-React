@@ -3,80 +3,123 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 // Components
 import EditTitle from './editTitle.js';
-import EditQuizTable from './editQuizTable.js';
+import EditQuizTable from './editQuizTable';
 import ChangeQuizSizeButtons from './changeQuizSizeButtons';
 import ConfirmEditButton from './confirmEditButton';
 import { API_URL } from '../../apiConfig'
 
-export default function EditQuizForm({ quizID, quizData }) {
+export default function EditQuizForm({ quizID = -1, quizData = null }) {
     const navigate = useNavigate();
-    const [newQuizData, setNewQuizData] = useState(quizData);
 
-    // Dictionary template for question in the database
-    const newQuestion = {
-        question: "",
-        correct_answer: "",
-        incorrect_answers: ["", "", ""],
-        correct_index: 0
+    // Dictionary template for question
+    const newQuizQuestion = [
+        {
+            question_text: "",
+            answer_list: [
+                {
+                    answer_text: "",
+                    is_correct: true
+                },
+                {
+                    answer_text: "",
+                    is_correct: false
+                }
+            ]
+        }
+    ]
+
+    const _quizData = quizData || {
+        title_text: "",
+        question_list: structuredClone(newQuizQuestion)
     };
 
-    // Add new question at the location of the button
-    const increaseSize = (index) => {
-        const newQuiz = [
-            ...newQuizData.results.slice(0, index + 1),
-            newQuestion,
-            ...newQuizData.results.slice(index + 1, newQuizData.results.length)
-        ]
-        setNewQuizData({
-            title: newQuizData.title,
-            results: newQuiz
-        });
-    }
+    const [newQuizData, setNewQuizData] = useState(_quizData);
 
-    // Remove question above the button
-    const decreaseSize = (index) => {
-        if (newQuizData.results.length === 1) {
-            window.alert("Quiz cannot be empty.");
-        } else if (window.confirm(`Deleting question ${index + 1}. Are you sure?`)) {
-            const newQuiz = [
-                ...newQuizData.results.slice(0, index),
-                ...newQuizData.results.slice(index + 1, newQuizData.results.length)
-            ]
-            setNewQuizData({
-                title: newQuizData.title,
-                results: newQuiz
+    // Request user confirmation and upload the quiz dictionary to the server
+    const submitQuiz = async (event) => {
+        event.preventDefault();
+        if (!window.confirm("Are you sure?")) return;
+
+        try {
+            document.body.style.cursor = "wait";
+            const url = quizID === -1
+                ? `${API_URL}/add-quiz`
+                : `${API_URL}/update-quiz/${quizID}`;
+
+            await axios({
+                method: quizID === -1 ? "post" : "put",
+                url: url,
+                data: newQuizData,
             });
+
+            alert("Quiz submitted successfully!");
+            if (quizID === -1) {
+                navigate("/my-quizzes");
+            }
+
+        } catch (error) {
+            console.error(error);
+            alert(`Error: ${error.message}`);
+        } finally {
+            document.body.style.cursor = "default";
         }
-    }
+    };
 
-    // Update the quiz after changing a state in the child component
-    const updateQuiz = (newData, questionNumber) => {
-        setNewQuizData({
-            ...newQuizData,
-            results: Object.values({
-                ...newQuizData.results,
-                [questionNumber]: newData
-            })
-        });
-    }
+    // Increase number of questions
+    const increaseSize = (questionIndex) => {
+        const updatedQuiz = { ...newQuizData };
 
-    const handleTitleChange = (event) => {
-        setNewQuizData({
-            ...newQuizData,
-            title: event.target.value
-        });
-    }
+        // Create a new empty question
+        const newQuestion = {
+            question_text: "",
+            answer_list: [
+                { answer_text: "", is_correct: false },
+                { answer_text: "", is_correct: false }
+            ]
+        };
 
-    const tables = [...Array(newQuizData.results.length).keys()].map((questionNumber) => {
+        // Insert the new question after the specified index
+        updatedQuiz.question_list = [
+            ...updatedQuiz.question_list.slice(0, questionIndex + 1),
+            newQuestion,
+            ...updatedQuiz.question_list.slice(questionIndex + 1)
+        ];
+
+        setNewQuizData(updatedQuiz);
+    };
+
+    // Decrease number of questions
+    const decreaseSize = (questionIndex) => {
+        const updatedQuiz = { ...newQuizData };
+        if (updatedQuiz.question_list.length > 1) {
+            updatedQuiz.question_list = updatedQuiz.question_list.filter(
+                (_, index) => index !== questionIndex
+            );
+            setNewQuizData(updatedQuiz);
+        } else {
+            alert("Cannot remove the last question.");
+        }
+    };
+
+    const updateQuiz = (questionIndex, questionData) => {
+        const updatedQuiz = { ...newQuizData };
+        updatedQuiz.question_list[questionIndex] = {
+            ...updatedQuiz.question_list[questionIndex],
+            ...questionData
+        };
+        setNewQuizData(updatedQuiz);
+    };
+
+    const tables = newQuizData.question_list.map((question, index) => {
         return (
-            <div key={questionNumber}>
+            <div key={index}>
                 <EditQuizTable
-                    questionNumber={questionNumber}
-                    questionData={newQuizData.results[questionNumber]}
+                    questionNumber={index}
+                    questionData={question}
                     updateQuiz={updateQuiz}
                 />
                 <ChangeQuizSizeButtons
-                    questionNumber={questionNumber}
+                    questionNumber={index}
                     increaseSize={increaseSize}
                     decreaseSize={decreaseSize}
                 />
@@ -84,31 +127,16 @@ export default function EditQuizForm({ quizID, quizData }) {
         )
     });
 
-    // Request user confirmation and upload the quiz dictionary to the server
-    const submitQuiz = (event) => {
-        event.preventDefault();
-        if (!window.confirm("Are you sure?")) return;
-
-        document.body.style.cursor = "wait";
-
-        const url = quizID === -1
-            ? `${API_URL}/add_quiz`
-            : `${API_URL}/update-quiz/${quizID}`;
-
-        try {
-            axios.post(url, { quizData: newQuizData });
-            navigate("/my-quizzes");
-        } catch {
-            window.alert("Failed to save quiz because of unknown error.");
-        } finally {
-            document.body.style.cursor = "default";
-        }
-    };
-
     return (
         <form onSubmit={submitQuiz}>
-            <EditTitle title={newQuizData.title} onClick={handleTitleChange} />
             <ConfirmEditButton />
+            <EditTitle
+                title={newQuizData.title_text}
+                onChange={(event) => setNewQuizData({
+                    ...newQuizData,
+                    "title_text": event.target.value
+                })}
+            />
             {tables}
         </form>
     )
