@@ -8,7 +8,7 @@ import ChangeQuizSizeButtons from './changeQuizSizeButtons';
 import ConfirmEditButton from './confirmEditButton';
 import { API_URL } from '../../apiConfig'
 
-export default function EditQuizForm({ quizID = -1, quizData = null }) {
+export default function EditQuizForm({ quizID = -1, quizData = undefined }) {
     const navigate = useNavigate();
 
     // Dictionary template for question
@@ -45,18 +45,13 @@ export default function EditQuizForm({ quizID = -1, quizData = null }) {
             const url = quizID === -1
                 ? `${API_URL}/add-quiz`
                 : `${API_URL}/update-quiz/${quizID}`;
-
             await axios({
                 method: quizID === -1 ? "post" : "put",
                 url: url,
                 data: newQuizData,
             });
-
             alert("Quiz submitted successfully!");
-            if (quizID === -1) {
-                navigate("/my-quizzes");
-            }
-
+            navigate("/my-quizzes");
         } catch (error) {
             console.error(error);
             alert(`Error: ${error.message}`);
