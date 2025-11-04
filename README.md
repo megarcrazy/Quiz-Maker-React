@@ -14,6 +14,12 @@ Quizzes can be loaded from a **database** or fetched randomly from the internet.
 
 ## Getting Started
 
+If using docker:
+```
+docker compose up --build
+```
+
+Alternatively:
 Before starting the app, make sure to install dependencies in both the **frontend** and **backend**.
 
 ### Setup Steps
@@ -49,4 +55,3 @@ npm start
 ```
 The React app runs at
 http://localhost:3000
----
